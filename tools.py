@@ -3,75 +3,76 @@ from renderer import *
 import os
 
 
-def check_key_events(keys, player, scroll_map, dialog):
+def check_keydown(event, player, scroll_map, dialog):
     '''
-    :param keys: 玩家按下的按键列表
-    :param player: 玩家对象
+    :param event: 获取事件
+    :param player: 角色
+    :param scroll_map: 地图
+    :param dialog: 对话框
     :return: 无
     '''
-    if keys[K_SPACE]:
-        check_dialogue(player, scroll_map, dialog)
-    elif keys[K_RIGHT]:
+    if event.key == pygame.K_d:
         player.state = 'move_right'
-    elif keys[K_LEFT]:
+        player.moving.append(player.state)
+    elif event.key == pygame.K_a:
         player.state = 'move_left'
-    elif keys[K_UP]:
+        player.moving.append(player.state)
+    elif event.key == pygame.K_w:
         player.state = 'move_up'
-    elif keys[K_DOWN]:
+        player.moving.append(player.state)
+    elif event.key == pygame.K_s:
         player.state = 'move_down'
-    elif keys[K_RIGHT] != True and keys[K_LEFT] != True and keys[K_UP] != True and keys[K_DOWN] != True:
-        if player.state == 'move_right':
-            player.state = 'rest_right'
-        elif player.state == 'move_up':
-            player.state = 'rest_up'
-        elif player.state == 'move_down':
-            player.state = 'rest_down'
-        elif player.state == 'move_left':
-            player.state = 'rest_left'
+        player.moving.append(player.state)
+    elif event.key == pygame.K_SPACE:
+        check_dialogue(player, scroll_map, dialog)
 
-cnt = 0
+
+def check_keyup(event, player, scroll_map, dialog):
+    '''
+    :param event: 获取事件
+    :param player: 角色
+    :param scroll_map: 地图
+    :param dialog: 对话框
+    :return: 无
+    '''
+    if event.key == pygame.K_d:
+        player.moving.remove('move_right')
+        if not player.moving:
+            player.state = 'rest_right'
+        else:
+            player.state = player.moving[-1]
+    elif event.key == pygame.K_a:
+        player.moving.remove('move_left')
+        if not player.moving:
+            player.state = 'rest_left'
+        else:
+            player.state = player.moving[-1]
+    elif event.key == pygame.K_w:
+        player.moving.remove('move_up')
+        if not player.moving:
+            player.state = 'rest_up'
+        else:
+            player.state = player.moving[-1]
+    elif event.key == pygame.K_s:
+        player.moving.remove('move_down')
+        if not player.moving:
+            player.state = 'rest_down'
+        else:
+            player.state = player.moving[-1]
+
 
 def check_event(player, scroll_map, icon, dialog):
     '''
     :param player: 玩家对象
     :return: 如果
     '''
-    global cnt
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             return False
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RIGHT:
-                player.state = 'move_right'
-                cnt += 1
-            elif event.key == pygame.K_LEFT:
-                player.state = 'move_left'
-                cnt += 1
-            elif event.key == pygame.K_UP:
-                player.state = 'move_up'
-                cnt += 1
-            elif event.key == pygame.K_DOWN:
-                player.state = 'move_down'
-                cnt += 1
-            elif event.key == pygame.K_SPACE:
-                check_dialogue(player, scroll_map, dialog)
+            check_keydown(event, player, scroll_map, dialog)
         if event.type == pygame.KEYUP:
-            if player.state == 'move_right':
-                cnt -= 1
-                if not cnt:
-                    player.state = 'rest_right'
-            elif player.state == 'move_up':
-                cnt -= 1
-                if not cnt:
-                    player.state = 'rest_up'
-            elif player.state == 'move_down':
-                cnt -= 1
-                if not cnt:
-                    player.state = 'rest_down'
-            elif player.state == 'move_left':
-                cnt -= 1
-                if not cnt:
-                    player.state = 'rest_left'
+            check_keyup(event, player, scroll_map, dialog)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             buttons = pygame.mouse.get_pressed()
             for index in range(len(buttons)):
@@ -82,8 +83,6 @@ def check_event(player, scroll_map, icon, dialog):
                         icon.check_mouse_right_event(pygame.mouse.get_pos())
         elif event.type == pygame.MOUSEMOTION:
             icon.check_mouse_move_event(pygame.mouse.get_pos())
-    #keys = pygame.key.get_pressed()
-    #check_key_events(keys, player, scroll_map, dialog)
     return True
 
 

@@ -12,6 +12,7 @@ class Person(pygame.sprite.Sprite):
         self.old_state = self.state     # 人物旧的状态
         self.rect = self.image.get_rect()   #人物的位置
         self.old_rect = pygame.Rect(self.rect)  # 人物旧的位置
+        self.moving = []    #这是一个堆，玩家可能同时按下多个移动键，储存这些状态，当玩家释放移动键时可以选择角色下一个状态
         self.frame = 1      # 人物的当前图片
         self.first_frame = 1    #人物的第一个图片
         self.last_frame = 2     #人物的最后一个图片
