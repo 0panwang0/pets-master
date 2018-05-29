@@ -23,17 +23,19 @@ class Dialog:
         (screen_size[0] - self.frame.get_width()) / 2 - 220, (screen_size[1] - self.frame.get_height()) / 2)
 
 
-    def write(self, *text):
+    def draw(self, object, text):
         for i in range(len(text)):
             surface = self.font.render(text[i], True, (0, 0, 0))
             self.dialog.blit(surface, (30, 30*(i+1)))
-        self.frame.blit(self.hero, (12, 12))
+        self.frame.blit(object, (12, 12))
         self.screen.blit(self.dialog, self.dialog_position)
         self.screen.blit(self.frame, self.frame_position)
         pygame.display.update()
         self.player.dialog = True
 
 
-
-
-
+    def read(self, file_name):
+        with open(file_name) as file_object:
+            lines = file_object.readlines()
+        for i in range(len(lines)):
+            pass

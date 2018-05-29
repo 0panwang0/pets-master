@@ -147,7 +147,6 @@ def check_dialogue(player, scroll_map, dialog):
             sprite.state = "rest_down"
         else:
             continue
-        dialog.write('操你妈', '吃翔', '不爽？打我啊')
         player.dialog = True
 
 TMX = load_all_tmx(os.path.join('resources', 'tmx'))
