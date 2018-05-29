@@ -12,7 +12,6 @@ class Person(pygame.sprite.Sprite):
         self.old_state = self.state     # 人物旧的状态
         self.rect = self.image.get_rect()   #人物的位置
         self.old_rect = pygame.Rect(self.rect)  # 人物旧的位置
-        self.moving = []    #这是一个堆，玩家可能同时按下多个移动键，储存这些状态，当玩家释放移动键时可以选择角色下一个状态
         self.frame = 1      # 人物的当前图片
         self.first_frame = 1    #人物的第一个图片
         self.last_frame = 2     #人物的最后一个图片
@@ -45,18 +44,6 @@ class Person(pygame.sprite.Sprite):
             if state[:4] == 'rest':
                 list.append(_image.subsurface((32 * (_col+1), 32 * _row, 32, 32)))
                 _row += 1
-        # image["move_down"].append(_image.subsurface((32 * 0, 32 * row, 32, 32)))
-        # image["move_down"].append(_image.subsurface((32 * 2, 32 * row, 32, 32)))
-        # image["rest_down"].append(_image.subsurface((32 * 1, 32 * 0, 32, 32)))
-        # image["move_left"].append(_image.subsurface((32 * 0, 32 * 1, 32, 32)))
-        # image["move_left"].append(_image.subsurface((32 * 2, 32 * 1, 32, 32)))
-        # image["rest_left"].append(_image.subsurface((32 * 1, 32 * 1, 32, 32)))
-        # image["move_right"].append(_image.subsurface((32 * 0, 32 * 2, 32, 32)))
-        # image["move_right"].append(_image.subsurface((32 * 2, 32 * 2, 32, 32)))
-        # image["rest_right"].append(_image.subsurface((32 * 1, 32 * 2, 32, 32)))
-        # image["move_up"].append(_image.subsurface((32 * 0, 32 * 3, 32, 32)))
-        # image["move_up"].append(_image.subsurface((32 * 2, 32 * 3, 32, 32)))
-        # image["rest_up"].append(_image.subsurface((32 * 1, 32 * 3, 32, 32)))
         return image
 
     def update(self, current_time):
@@ -75,13 +62,17 @@ class Person(pygame.sprite.Sprite):
         self.rect.top += self.vary_states[self.state][0][1]
 
 
+class Hero(Person):
+    def __init__(self, file_addr, row, col, screen):
+        super().__init__(file_addr, row, col)
+        self.moving = []    #这是一个堆，玩家可能同时按下多个移动键，储存这些状态，当玩家释放移动键时可以选择角色下一个状态
+
     def move_back(self):
         """ If called after an update, the sprite can move back to give the
             illusion of the sprite not moving.
         """
         self.state = self.old_state
         self.rect.topleft = self.old_rect.topleft
-
 
 class NPC(Person):
     def __init__(self, file_addr, row, col, screen):
