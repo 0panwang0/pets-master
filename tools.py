@@ -29,15 +29,49 @@ def check_key_events(keys, player, scroll_map, dialog):
         elif player.state == 'move_left':
             player.state = 'rest_left'
 
+cnt = 0
 
 def check_event(player, scroll_map, icon, dialog):
     '''
     :param player: 玩家对象
     :return: 如果
     '''
+    global cnt
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             return False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RIGHT:
+                player.state = 'move_right'
+                cnt += 1
+            elif event.key == pygame.K_LEFT:
+                player.state = 'move_left'
+                cnt += 1
+            elif event.key == pygame.K_UP:
+                player.state = 'move_up'
+                cnt += 1
+            elif event.key == pygame.K_DOWN:
+                player.state = 'move_down'
+                cnt += 1
+            elif event.key == pygame.K_SPACE:
+                check_dialogue(player, scroll_map, dialog)
+        if event.type == pygame.KEYUP:
+            if player.state == 'move_right':
+                cnt -= 1
+                if not cnt:
+                    player.state = 'rest_right'
+            elif player.state == 'move_up':
+                cnt -= 1
+                if not cnt:
+                    player.state = 'rest_up'
+            elif player.state == 'move_down':
+                cnt -= 1
+                if not cnt:
+                    player.state = 'rest_down'
+            elif player.state == 'move_left':
+                cnt -= 1
+                if not cnt:
+                    player.state = 'rest_left'
         elif event.type == pygame.MOUSEBUTTONDOWN:
             buttons = pygame.mouse.get_pressed()
             for index in range(len(buttons)):
@@ -48,8 +82,8 @@ def check_event(player, scroll_map, icon, dialog):
                         icon.check_mouse_right_event(pygame.mouse.get_pos())
         elif event.type == pygame.MOUSEMOTION:
             icon.check_mouse_move_event(pygame.mouse.get_pos())
-    keys = pygame.key.get_pressed()
-    check_key_events(keys, player, scroll_map, dialog)
+    #keys = pygame.key.get_pressed()
+    #check_key_events(keys, player, scroll_map, dialog)
     return True
 
 

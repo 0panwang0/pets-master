@@ -3,6 +3,7 @@ import pytmx
 import pyscroll
 from person import NPC
 
+
 class Map(object):
     """
     This object renders tile maps from Tiled
