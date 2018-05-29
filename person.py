@@ -20,6 +20,7 @@ class Person(pygame.sprite.Sprite):
         self.change_image_time = 150  # 人物图片变换的时间间隔 ms
         self.dialog = False
 
+
     def get_image(self, _image, row, col):
         image = {"move_down": [(0, self.speed)],
                  "move_left": [(-self.speed, 0)],
@@ -88,3 +89,4 @@ class NPC(Person):
         super().__init__(file_addr, row, col)
         self.row = row // 4
         self.col = col // 3
+
