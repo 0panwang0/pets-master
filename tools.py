@@ -3,14 +3,14 @@ from renderer import *
 import os
 
 
-def check_key_events(keys, player, scroll_map):
+def check_key_events(keys, player, scroll_map, dialog):
     '''
     :param keys: 玩家按下的按键列表
     :param player: 玩家对象
     :return: 无
     '''
     if keys[K_SPACE]:
-        check_dialogue(player, scroll_map)
+        check_dialogue(player, scroll_map, dialog)
     elif keys[K_RIGHT]:
         player.state = 'move_right'
     elif keys[K_LEFT]:
@@ -30,7 +30,7 @@ def check_key_events(keys, player, scroll_map):
             player.state = 'rest_left'
 
 
-def check_event(player, scroll_map, icon):
+def check_event(player, scroll_map, icon, dialog):
     '''
     :param player: 玩家对象
     :return: 如果
@@ -43,11 +43,13 @@ def check_event(player, scroll_map, icon):
             for index in range(len(buttons)):
                 if buttons[index]:
                     if index == 0:
-                        icon.check_mouse_down_event(pygame.mouse.get_pos())
+                        icon.check_mouse_left_event(pygame.mouse.get_pos())
+                    elif index == 2:
+                        icon.check_mouse_right_event(pygame.mouse.get_pos())
         elif event.type == pygame.MOUSEMOTION:
             icon.check_mouse_move_event(pygame.mouse.get_pos())
     keys = pygame.key.get_pressed()
-    check_key_events(keys, player, scroll_map)
+    check_key_events(keys, player, scroll_map, dialog)
     return True
 
 
@@ -96,7 +98,7 @@ def check_collision(player, scroll_map):
             break
 
 
-def check_dialogue(player, scroll_map):
+def check_dialogue(player, scroll_map, dialog):
     for sprite in scroll_map.image_sprites:
         left = Object(pygame.Rect(sprite.rect.left-32, sprite.rect.top, sprite.rect.width, sprite.rect.height))
         right = Object(pygame.Rect(sprite.rect.left+32, sprite.rect.top, sprite.rect.width, sprite.rect.height))
@@ -110,5 +112,9 @@ def check_dialogue(player, scroll_map):
             sprite.state = "rest_up"
         elif pygame.sprite.collide_rect(player, down) and player.state[5:] == "up":
             sprite.state = "rest_down"
+        else:
+            continue
+        dialog.write('操你妈', '吃翔', '不爽？打我啊')
+        player.dialog = True
 
 TMX = load_all_tmx(os.path.join('resources', 'tmx'))

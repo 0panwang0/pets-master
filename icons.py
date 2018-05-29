@@ -13,7 +13,7 @@ font_file_name = "resources/fonts/ink.ttf"
 
 item_dict = { '萝卜':(0, 18), '洋葱':(1, 18), '土豆':(2, 18), '生肉':(3, 18), '鲜鱼':(4, 18),}
 
-class Icons:
+class Icon:
     def __init__(self, filename, screen):
         self.icon = pygame.image.load(filename).convert()
         self.screen = screen
@@ -23,6 +23,7 @@ class Icons:
         self.item_position = []
         for i in range(len(ui_file_name)):
             self.ui[ui_state_list[i]] = pygame.image.load(ui_file_name[i]).convert_alpha()
+        self.ui['bag'].blit(self.font.render('背包', True, (0, 0, 0)), (96, 65))
         self.state = 'main'
 
     def get_image(self, pos):
@@ -47,31 +48,29 @@ class Icons:
         if self.state != 'main':
             self.screen.blit(self.ui[self.state], ui_location[self.state])
         if self.state == 'bag':
-            surface = self.font.render('背包', True, (0, 0, 0))
-            self.ui['bag'].blit(surface, (96, 65))
             self.draw_item()
 
-    def check_mouse_down_event(self, pos):
+    def check_mouse_left_event(self, pos):
         if self.state == 'main':
             for i in range(len(icon_location)):
                 if pygame.Rect(20 + 50*i, 20, 32, 32).collidepoint(pos):
                     self.state = ui_state_list[i]
         elif not pygame.Rect(ui_location[self.state], (50 + self.ui[self.state].get_width(), 50 + self.ui[self.state].get_height())).collidepoint(pos):
             self.state = 'main'
+
+    def check_mouse_right_event(self, pos):
         if self.state == 'bag':
             use = []
             for i in range(len(self.item_position)):
-                if pygame.Rect(self.item_position[i], (24, 24)).collidepoint(pos):
+                if pygame.Rect(self.item_position[i], (40, 40)).collidepoint(pos):
                     use.append(i)
             for i in range(len(use)):
-                del self.item_name[i]
+                del self.item_name[use[i]]
             for i in range(len(ui_state_list)):
                 if ui_state_list[i] == 'bag':
                     self.ui['bag'] = pygame.image.load(ui_file_name[i]).convert_alpha()
+                    self.ui['bag'].blit(self.font.render('背包', True, (0, 0, 0)), (96, 65))
             self.draw_item()
-            pygame.display.update()
-
-
 
     def check_mouse_move_event(self, pos):
         if self.state == 'main':
@@ -80,5 +79,3 @@ class Icons:
                     icon_alpha[i] = 255
                 else:
                     icon_alpha[i] = 180
-
-

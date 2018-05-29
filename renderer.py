@@ -52,8 +52,9 @@ class ScrollMap:
         self.start_points = make_object(renderer, 'start point')    # 角色在一张地图的起始点
         self.sprites = make_object(renderer, 'sprite')  # 精灵对象
         self.image_sprites = []  # 储存精灵图片对象
-        self.create_sprite_object()
         self.screen = screen
+        self.create_sprite_object()
+
 
     def add(self, sprite):
         self.group.add(sprite)
@@ -71,7 +72,7 @@ class ScrollMap:
         for sprite in self.sprites:
             row = int(sprite.properties['actor']) // 4 * 4
             col = int(sprite.properties['actor']) % 4 * 3
-            image = NPC("./resources/images/Actor" + sprite.properties['__image__'] + ".png", row, col)
+            image = NPC("./resources/images/Actor" + sprite.properties['__image__'] + ".png", row, col, self.screen)
             image.rect.center = sprite.rect.center
             image.state = sprite.properties['state']
             self.add(image)

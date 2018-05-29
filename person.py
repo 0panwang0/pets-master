@@ -1,6 +1,5 @@
 import pygame
 
-
 class Person(pygame.sprite.Sprite):
     def __init__(self, file_addr, row, col):
         pygame.sprite.Sprite.__init__(self)
@@ -18,6 +17,7 @@ class Person(pygame.sprite.Sprite):
         self.last_frame = 2     #人物的最后一个图片
         self.last_time = 0      #人物图片变换的最近一次时间(时间以pygame.init()为起点)
         self.change_image_time = 150  # 人物图片变换的时间间隔 ms
+        self.dialog = False
 
     def get_image(self, _image, row, col):
         image = {"move_down": [(0, self.speed)],
@@ -83,5 +83,7 @@ class Person(pygame.sprite.Sprite):
 
 
 class NPC(Person):
-    def __init__(self, file_addr, row, col):
+    def __init__(self, file_addr, row, col, screen):
         super().__init__(file_addr, row, col)
+        self.row = row // 4
+        self.col = col // 3
