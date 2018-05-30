@@ -72,110 +72,6 @@
 7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598,7598
 </data>
  </layer>
- <objectgroup name="object">
-  <object id="42" name="blocker" x="0" y="768" width="799" height="32"/>
-  <object id="43" name="blocker" x="770" y="64" width="29" height="704"/>
-  <object id="45" name="blocker" x="0" y="64" width="30.6667" height="704"/>
-  <object id="46" name="blocker" x="0" y="-1" width="800" height="32"/>
-  <object id="48" name="blocker" x="568.333" y="511" width="23.6667" height="20.6667"/>
-  <object id="49" name="blocker" x="688" y="512" width="23" height="19.1667"/>
-  <object id="50" name="blocker" x="688.727" y="605.333" width="22.8788" height="18.1667"/>
-  <object id="51" name="blocker" x="568" y="605" width="24" height="18.5"/>
-  <object id="53" name="blocker" x="592" y="608" width="29" height="15.5"/>
-  <object id="55" name="blocker" x="576" y="545.5" width="16" height="44"/>
-  <object id="57" name="blocker" x="688" y="544" width="16" height="44"/>
-  <object id="60" name="blocker" x="592.5" y="512" width="95" height="16"/>
-  <object id="63" name="blocker" x="660.333" y="608" width="27.6667" height="15.5"/>
-  <object id="64" name="blocker" x="624" y="736.5" width="64" height="31"/>
-  <object id="65" name="blocker" x="32.5" y="608" width="31" height="64"/>
-  <object id="66" name="blocker" x="64" y="607.5" width="62" height="15.5"/>
-  <object id="68" name="blocker" x="176" y="608" width="79.5" height="15.5"/>
-  <object id="69" name="blocker" x="65.5" y="415.5" width="15.5" height="193.5"/>
-  <object id="70" name="blocker" x="238.75" y="415.75" width="17.5" height="192.5"/>
-  <object id="71" name="blocker" x="80.5" y="415.5" width="159.5" height="16.5"/>
-  <object id="75" name="start point" x="624" y="623.333" width="31.3333" height="32.6667">
-   <properties>
-    <property name="__name__" value="start_point_1"/>
-    <property name="state" value="rest_down"/>
-   </properties>
-  </object>
-  <object id="76" name="door" type="home" x="622.054" y="590" width="37.058" height="33.3333">
-   <properties>
-    <property name="start" value="start_point_1"/>
-    <property name="state" value="up"/>
-    <property name="world" value="town"/>
-   </properties>
-  </object>
-  <object id="83" name="door" x="800.304" y="31" width="29.3913" height="33.3333">
-   <properties>
-    <property name="start" value="start_point_3"/>
-    <property name="state" value="right"/>
-    <property name="world" value="home"/>
-   </properties>
-  </object>
-  <object id="84" name="door" x="-29.1957" y="32.3333" width="29.3913" height="33.3333">
-   <properties>
-    <property name="start" value="start_point_2"/>
-    <property name="state" value="left"/>
-    <property name="world" value="home"/>
-   </properties>
-  </object>
-  <object id="85" name="start point" x="0.33335" y="31.6667" width="31.3333" height="32.6667">
-   <properties>
-    <property name="__name__" value="start_point_2"/>
-    <property name="state" value="rest_right"/>
-   </properties>
-  </object>
-  <object id="86" name="start point" x="768.333" y="31.6667" width="31.3333" height="32.6667">
-   <properties>
-    <property name="__name__" value="start_point_3"/>
-    <property name="state" value="rest_left"/>
-   </properties>
-  </object>
-  <object id="87" name="door" x="129.304" y="588.333" width="46.3913" height="33.3333">
-   <properties>
-    <property name="start" value="start_point_4"/>
-    <property name="state" value="up"/>
-    <property name="world" value="home"/>
-   </properties>
-  </object>
-  <object id="88" name="start point" x="128.833" y="623.167" width="31.3333" height="32.6667">
-   <properties>
-    <property name="__name__" value="start_point_4"/>
-    <property name="state" value="rest_down"/>
-   </properties>
-  </object>
-  <object id="89" name="blocker" x="95.5" y="160" width="10.5" height="174.25"/>
-  <object id="90" name="blocker" x="272" y="160" width="9.16667" height="175"/>
-  <object id="92" name="blocker" x="111.5" y="159.5" width="161" height="16"/>
-  <object id="93" name="blocker" x="165.75" y="320.5" width="105.25" height="14.5"/>
-  <object id="94" name="blocker" x="112" y="319.5" width="10.75" height="15"/>
-  <object id="95" name="blocker" x="512" y="208" width="16" height="256.667"/>
-  <object id="96" name="blocker" x="688" y="256.667" width="16" height="208"/>
-  <object id="97" name="blocker" x="640" y="208.667" width="16" height="47.3337"/>
-  <object id="98" name="blocker" x="528" y="206.667" width="112.667" height="16.6667"/>
-  <object id="99" name="blocker" x="528" y="448" width="159.334" height="16.6667"/>
-  <object id="100" name="blocker" x="496" y="448" width="16" height="16"/>
-  <object id="101" name="blocker" x="704" y="400" width="16" height="16"/>
-  <object id="102" name="blocker" x="704" y="336" width="16" height="16"/>
-  <object id="103" name="blocker" x="704" y="272" width="16" height="16"/>
-  <object id="105" name="blocker" x="659.667" y="624" width="24.6667" height="30.1667"/>
-  <object id="106" name="blocker" x="596.333" y="624" width="24.9167" height="28.6667"/>
-  <object id="112" name="sprite" gid="9975" x="176" y="256" width="16" height="16">
-   <properties>
-    <property name="__image__" value="1"/>
-    <property name="actor" value="2"/>
-    <property name="state" value="rest_down"/>
-   </properties>
-  </object>
-  <object id="115" name="sprite" gid="9975" x="48" y="96" width="16" height="16">
-   <properties>
-    <property name="__image__" value="1"/>
-    <property name="actor" value="3"/>
-    <property name="state" value="rest_right"/>
-   </properties>
-  </object>
- </objectgroup>
  <layer name="meto1" width="50" height="50">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -284,4 +180,108 @@
 627,628,627,628,627,628,627,628,627,628,627,628,627,628,627,628,627,628,627,628,627,628,627,628,627,628,627,628,627,628,627,628,627,628,627,628,627,628,627,628,627,628,627,628,627,628,627,628,627,628
 </data>
  </layer>
+ <objectgroup name="object">
+  <object id="42" name="blocker" x="0" y="768" width="799" height="32"/>
+  <object id="43" name="blocker" x="770" y="64" width="29" height="704"/>
+  <object id="45" name="blocker" x="0" y="64" width="30.6667" height="704"/>
+  <object id="46" name="blocker" x="0" y="-1" width="800" height="32"/>
+  <object id="48" name="blocker" x="568.333" y="511" width="23.6667" height="20.6667"/>
+  <object id="49" name="blocker" x="688" y="512" width="23" height="19.1667"/>
+  <object id="50" name="blocker" x="688.727" y="605.333" width="22.8788" height="18.1667"/>
+  <object id="51" name="blocker" x="568" y="605" width="24" height="18.5"/>
+  <object id="53" name="blocker" x="592" y="608" width="29" height="15.5"/>
+  <object id="55" name="blocker" x="576" y="545.5" width="16" height="44"/>
+  <object id="57" name="blocker" x="688" y="544" width="16" height="44"/>
+  <object id="60" name="blocker" x="592.5" y="512" width="95" height="16"/>
+  <object id="63" name="blocker" x="660.333" y="608" width="27.6667" height="15.5"/>
+  <object id="64" name="blocker" x="624" y="736.5" width="64" height="31"/>
+  <object id="65" name="blocker" x="32.5" y="608" width="31" height="64"/>
+  <object id="66" name="blocker" x="64" y="607.5" width="62" height="15.5"/>
+  <object id="68" name="blocker" x="176" y="608" width="79.5" height="15.5"/>
+  <object id="69" name="blocker" x="65.5" y="415.5" width="15.5" height="193.5"/>
+  <object id="70" name="blocker" x="238.75" y="415.75" width="17.5" height="192.5"/>
+  <object id="71" name="blocker" x="80.5" y="415.5" width="159.5" height="16.5"/>
+  <object id="75" name="start point" x="624" y="623.333" width="31.3333" height="32.6667">
+   <properties>
+    <property name="__name__" value="start_point_1"/>
+    <property name="state" value="rest_down"/>
+   </properties>
+  </object>
+  <object id="76" name="door" type="home" x="622.054" y="590" width="37.058" height="33.3333">
+   <properties>
+    <property name="start" value="start_point_1"/>
+    <property name="state" value="up"/>
+    <property name="world" value="town"/>
+   </properties>
+  </object>
+  <object id="83" name="door" x="800.304" y="31" width="29.3913" height="33.3333">
+   <properties>
+    <property name="start" value="start_point_3"/>
+    <property name="state" value="right"/>
+    <property name="world" value="home"/>
+   </properties>
+  </object>
+  <object id="84" name="door" x="-29.1957" y="32.3333" width="29.3913" height="33.3333">
+   <properties>
+    <property name="start" value="start_point_2"/>
+    <property name="state" value="left"/>
+    <property name="world" value="home"/>
+   </properties>
+  </object>
+  <object id="85" name="start point" x="0.33335" y="31.6667" width="31.3333" height="32.6667">
+   <properties>
+    <property name="__name__" value="start_point_2"/>
+    <property name="state" value="rest_right"/>
+   </properties>
+  </object>
+  <object id="86" name="start point" x="768.333" y="31.6667" width="31.3333" height="32.6667">
+   <properties>
+    <property name="__name__" value="start_point_3"/>
+    <property name="state" value="rest_left"/>
+   </properties>
+  </object>
+  <object id="87" name="door" type="bighouse" x="129.304" y="588.333" width="46.3913" height="33.3333">
+   <properties>
+    <property name="start" value="start_point_4"/>
+    <property name="state" value="up"/>
+    <property name="world" value="town"/>
+   </properties>
+  </object>
+  <object id="88" name="start point" x="128.833" y="623.167" width="31.3333" height="32.6667">
+   <properties>
+    <property name="__name__" value="start_point_4"/>
+    <property name="state" value="rest_down"/>
+   </properties>
+  </object>
+  <object id="89" name="blocker" x="95.5" y="160" width="10.5" height="174.25"/>
+  <object id="90" name="blocker" x="272" y="160" width="9.16667" height="175"/>
+  <object id="92" name="blocker" x="111.5" y="159.5" width="161" height="16"/>
+  <object id="93" name="blocker" x="165.75" y="320.5" width="105.25" height="14.5"/>
+  <object id="94" name="blocker" x="112" y="319.5" width="10.75" height="15"/>
+  <object id="95" name="blocker" x="512" y="208" width="16" height="256.667"/>
+  <object id="96" name="blocker" x="688" y="256.667" width="16" height="208"/>
+  <object id="97" name="blocker" x="640" y="208.667" width="16" height="47.3337"/>
+  <object id="98" name="blocker" x="528" y="206.667" width="112.667" height="16.6667"/>
+  <object id="99" name="blocker" x="528" y="448" width="159.334" height="16.6667"/>
+  <object id="100" name="blocker" x="496" y="448" width="16" height="16"/>
+  <object id="101" name="blocker" x="704" y="400" width="16" height="16"/>
+  <object id="102" name="blocker" x="704" y="336" width="16" height="16"/>
+  <object id="103" name="blocker" x="704" y="272" width="16" height="16"/>
+  <object id="105" name="blocker" x="659.667" y="624" width="24.6667" height="30.1667"/>
+  <object id="106" name="blocker" x="596.333" y="624" width="24.9167" height="28.6667"/>
+  <object id="112" name="sprite" gid="9975" x="176" y="256" width="16" height="16">
+   <properties>
+    <property name="__image__" value="1"/>
+    <property name="actor" value="2"/>
+    <property name="state" value="rest_down"/>
+   </properties>
+  </object>
+  <object id="115" name="sprite" gid="9975" x="48" y="96" width="16" height="16">
+   <properties>
+    <property name="__image__" value="1"/>
+    <property name="actor" value="3"/>
+    <property name="state" value="rest_right"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>
