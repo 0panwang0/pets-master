@@ -253,8 +253,8 @@
     <property name="state" value="rest_down"/>
    </properties>
   </object>
-  <object id="89" name="blocker" x="95.5" y="160" width="10.5" height="174.25"/>
-  <object id="90" name="blocker" x="272" y="160" width="9.16667" height="175"/>
+  <object id="89" name="blocker" x="95.5" y="160" width="16.5" height="174.25"/>
+  <object id="90" name="blocker" x="272" y="160" width="13.6667" height="175"/>
   <object id="92" name="blocker" x="111.5" y="159.5" width="161" height="16"/>
   <object id="93" name="blocker" x="165.75" y="320.5" width="105.25" height="14.5"/>
   <object id="94" name="blocker" x="112" y="319.5" width="10.75" height="15"/>

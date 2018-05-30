@@ -152,7 +152,7 @@
     <property name="state" value="rest_up"/>
    </properties>
   </object>
-  <object id="44" name="sprite" gid="70" x="240" y="128" width="16" height="16">
+  <object id="44" name="sprite" gid="70" x="240" y="144" width="16" height="16">
    <properties>
     <property name="__image__" value="1"/>
     <property name="actor" value="7"/>
