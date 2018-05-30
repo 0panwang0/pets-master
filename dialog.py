@@ -74,9 +74,13 @@ class Dialog:
         image = self.player_image
         if content[0] == 'player':
             image = self.player_image
+            self.draw(image, content[1:])
         elif content[0] == 'npc':
             image = self.npc_image
-        self.draw(image, content[1:])
+            self.draw(image, content[1:])
+        elif content[0] == 'task':
+            pass
+
 
 
 
