@@ -36,29 +36,41 @@ def check_keyup(event, player, scroll_map, dialog):
     :return: 无
     '''
     if event.key == pygame.K_d:
-        player.moving.remove('move_right')
-        if not player.moving:
+        if player.moving:
+            player.moving.remove('move_right')
+            if not player.moving:
+                player.state = 'rest_right'
+            else:
+                player.state = player.moving[-1]
+        else:
             player.state = 'rest_right'
-        else:
-            player.state = player.moving[-1]
     elif event.key == pygame.K_a:
-        player.moving.remove('move_left')
-        if not player.moving:
+        if player.moving:
+            player.moving.remove('move_left')
+            if not player.moving:
+                player.state = 'rest_left'
+            else:
+                player.state = player.moving[-1]
+        else:
             player.state = 'rest_left'
-        else:
-            player.state = player.moving[-1]
     elif event.key == pygame.K_w:
-        player.moving.remove('move_up')
-        if not player.moving:
+        if player.moving:
+            player.moving.remove('move_up')
+            if not player.moving:
+                player.state = 'rest_up'
+            else:
+                player.state = player.moving[-1]
+        else:
             player.state = 'rest_up'
-        else:
-            player.state = player.moving[-1]
     elif event.key == pygame.K_s:
-        player.moving.remove('move_down')
-        if not player.moving:
-            player.state = 'rest_down'
+        if player.moving:
+            player.moving.remove('move_down')
+            if not player.moving:
+                player.state = 'rest_down'
+            else:
+                player.state = player.moving[-1]
         else:
-            player.state = player.moving[-1]
+            player.state = 'rest_down'
 
 
 def check_event(player, scroll_map, icon, dialog):

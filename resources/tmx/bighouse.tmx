@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextobjectid="44">
+<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextobjectid="45">
  <tileset firstgid="1" name="tileset2" tilewidth="16" tileheight="16" tilecount="110" columns="10">
   <image source="../images/tileset2.png" width="160" height="180"/>
  </tileset>
@@ -131,8 +131,6 @@
   <object id="24" name="blocker" x="70.3333" y="336.667" width="50.6667" height="79.3333"/>
   <object id="25" name="blocker" x="163.667" y="331.333" width="26" height="101"/>
   <object id="26" name="blocker" x="2" y="331.167" width="26" height="101"/>
-  <object id="27" name="blocker" x="-0.333333" y="319.667" width="11.3333" height="10.6667"/>
-  <object id="28" name="blocker" x="178.333" y="320.333" width="11.3333" height="10.6667"/>
   <object id="29" name="blocker" x="79.6667" y="290.667" width="32.3333" height="29.3333"/>
   <object id="31" name="blocker" x="64.5" y="450.333" width="63.3333" height="31"/>
   <object id="32" name="blocker" x="232.667" y="258.333" width="15.3333" height="28"/>
@@ -151,6 +149,14 @@
   <object id="43" name="start point" x="224.583" y="445.5" width="30.8333" height="31">
    <properties>
     <property name="__name__" value="start_point_1"/>
+    <property name="state" value="rest_up"/>
+   </properties>
+  </object>
+  <object id="44" name="sprite" gid="70" x="240" y="128" width="16" height="16">
+   <properties>
+    <property name="__image__" value="1"/>
+    <property name="actor" value="7"/>
+    <property name="filename" value="drama4"/>
     <property name="state" value="rest_up"/>
    </properties>
   </object>
