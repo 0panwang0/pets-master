@@ -40,7 +40,6 @@ while running:
     time = pygame.time.get_ticks()  #获得以pygame.init()为起点的时间，用于图片变换
 
     running = check_event(player, scroll_map, icon, dialog)
-
     scroll_map = check_switch_scene(player, scroll_map, screen)
 
     player.update(time)

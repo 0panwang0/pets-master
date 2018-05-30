@@ -71,6 +71,7 @@
    <properties>
     <property name="__image__" value="1"/>
     <property name="actor" value="1"/>
+    <property name="filename" value="drama1"/>
     <property name="state" value="rest_down"/>
    </properties>
   </object>

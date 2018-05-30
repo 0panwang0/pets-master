@@ -109,6 +109,8 @@ def check_switch_scene(player, scroll_map, screen):
     '''
     door_list = pygame.sprite.spritecollide(player, scroll_map.doors, False)
     if door_list and door_list[0].properties['state'] == player.state[5:]:
+        screen.fill((0, 0, 0))
+        pygame.display.flip()
         scroll_map = ScrollMap(TMX[door_list[0].properties['type']], screen)
         for door in scroll_map.doors.sprites():
             if door.properties['type'] == door_list[0].properties['world']:
@@ -139,15 +141,21 @@ def check_dialogue(player, scroll_map, dialog):
         down = Object(pygame.Rect(sprite.rect.left, sprite.rect.top+32, sprite.rect.width, sprite.rect.height))
         if pygame.sprite.collide_rect(player, left) and player.state[5:] == "right":
             sprite.state = "rest_left"
+            player.moving.clear()
         elif pygame.sprite.collide_rect(player, right) and player.state[5:] == "left":
             sprite.state = "rest_right"
+            player.moving.clear()
         elif pygame.sprite.collide_rect(player, up) and player.state[5:] == "down":
             sprite.state = "rest_up"
+            player.moving.clear()
         elif pygame.sprite.collide_rect(player, down) and player.state[5:] == "up":
             sprite.state = "rest_down"
+            player.moving.clear()
         else:
             continue
         player.power = 'dialog'
+        scroll_map.sprite_update()
+        scroll_map.draw()
         dialog.run('dates/test1.txt', sprite)
 
 TMX = load_all_tmx(os.path.join('resources', 'tmx'))

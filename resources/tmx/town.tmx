@@ -273,6 +273,7 @@
    <properties>
     <property name="__image__" value="1"/>
     <property name="actor" value="2"/>
+    <property name="filename" value="drama2"/>
     <property name="state" value="rest_down"/>
    </properties>
   </object>
@@ -280,6 +281,7 @@
    <properties>
     <property name="__image__" value="1"/>
     <property name="actor" value="3"/>
+    <property name="filename" value="drama3"/>
     <property name="state" value="rest_right"/>
    </properties>
   </object>

@@ -65,8 +65,7 @@ class Person(pygame.sprite.Sprite):
 class Hero(Person):
     def __init__(self, file_addr, row, col, screen):
         super().__init__(file_addr, row, col)
-        # 这是一个堆，玩家可能同时按下多个移动键，储存这些状态，当玩家释放移动键时可以选择角色下一个状态
-        self.moving = []
+        self.moving = [] # 这是一个堆，玩家可能同时按下多个移动键，储存这些状态，当玩家释放移动键时可以选择角色下一个状态
         self.tasks = [1, -1]
 
     def move_back(self):
@@ -77,8 +76,10 @@ class Hero(Person):
         self.rect.topleft = self.old_rect.topleft
 
 class NPC(Person):
-    def __init__(self, file_addr, row, col, screen):
+    def __init__(self, file_addr, row, col, image_num, file_name, screen):
         super().__init__(file_addr, row, col)
         self.row = row // 4
         self.col = col // 3
+        self.image_num = image_num
+        self.file_name = file_name
 
