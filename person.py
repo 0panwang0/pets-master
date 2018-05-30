@@ -17,7 +17,6 @@ class Person(pygame.sprite.Sprite):
         self.last_frame = 2     #人物的最后一个图片
         self.last_time = 0      #人物图片变换的最近一次时间(时间以pygame.init()为起点)
         self.change_image_time = 150  # 人物图片变换的时间间隔 ms
-        self.dialog = False
 
 
     def get_image(self, _image, row, col):
@@ -66,7 +65,9 @@ class Person(pygame.sprite.Sprite):
 class Hero(Person):
     def __init__(self, file_addr, row, col, screen):
         super().__init__(file_addr, row, col)
-        self.moving = []    #这是一个堆，玩家可能同时按下多个移动键，储存这些状态，当玩家释放移动键时可以选择角色下一个状态
+        # 这是一个堆，玩家可能同时按下多个移动键，储存这些状态，当玩家释放移动键时可以选择角色下一个状态
+        self.moving = []
+        self.tasks = [1, -1]
 
     def move_back(self):
         """ If called after an update, the sprite can move back to give the

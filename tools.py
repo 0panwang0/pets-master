@@ -147,6 +147,7 @@ def check_dialogue(player, scroll_map, dialog):
             sprite.state = "rest_down"
         else:
             continue
-        player.dialog = True
+        player.power = 'dialog'
+        dialog.run('dates/test1.txt', sprite)
 
 TMX = load_all_tmx(os.path.join('resources', 'tmx'))

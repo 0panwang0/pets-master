@@ -2,6 +2,7 @@ from tools import *
 from renderer import *
 from icons import *
 from dialog import *
+from person import *
 
 # global
 sprites = []
@@ -14,11 +15,12 @@ screen = pygame.display.set_mode(screen_size)
 screen.fill((255, 255, 255))
 pygame.display.set_caption("Pet Master")
 
-player = NPC('resources/images/Actor1.png', 0, 0, screen)
+player = Hero('resources/images/Actor1.png', 0, 0, screen)
 scroll_map = ScrollMap("resources/tmx/home.tmx", screen)
 icon = Icon("resources/images/IconSet.png", screen)
 dialog = Dialog(player, screen)
 
+player.power = "main"
 scroll_map.add(player)
 icon.get_item('萝卜')
 icon.get_item('鲜鱼')
@@ -46,7 +48,7 @@ while running:
     scroll_map.center(player.rect.center)
     scroll_map.sprite_update()
 
-    if player.dialog == False:
+    if player.power == 'main':
         scroll_map.draw()
         icon.draw()
         pygame.display.flip()
