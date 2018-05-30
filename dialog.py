@@ -41,8 +41,10 @@ class Dialog:
         self.screen.blit(self.frame, self.frame_position)
         pygame.display.update()
 
-    def run(self, file_name, npc):
-        with open(file_name) as file_object:
+    def run(self, npc):
+        self.npc_image_name = "resources/images/Faces/Actor" + npc.image_num + ".png"
+        self.image = pygame.image.load(self.npc_image_name)
+        with open("resources/dates/" + npc.file_name + ".txt") as file_object:
             lines = file_object.readlines()
         self.tasks = lines[0].split(' ')
         self.starts = lines[1].split(' ')

@@ -156,6 +156,6 @@ def check_dialogue(player, scroll_map, dialog):
         player.power = 'dialog'
         scroll_map.sprite_update()
         scroll_map.draw()
-        dialog.run('dates/test1.txt', sprite)
+        dialog.run(sprite)
 
 TMX = load_all_tmx(os.path.join('resources', 'tmx'))
