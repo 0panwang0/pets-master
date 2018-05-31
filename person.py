@@ -67,6 +67,78 @@ class Hero(Person):
         super().__init__(file_addr, row, col)
         self.moving = [] # 这是一个堆，玩家可能同时按下多个移动键，储存这些状态，当玩家释放移动键时可以选择角色下一个状态
         self.tasks = [1, 2, 3, 4, -1]
+        self.hp = 100
+        self.mp = 100
+        self.damage = 0
+        self.own_list = []
+        self.battle_list = []
+        self.level = ''
+        self.exp = 0
+        self.battle_nums = 4
+        self.exp_list = {
+            '1': 1000,
+            '2': 2000,
+            '3': 4000
+        }
+
+    def up_level(self):
+        for level, exp in self.exp_list:
+            if self.exp > exp and self.level < level:
+                self.level = level
+                # 提示升级了
+                self.damage = int(self.level) * 10  # 增加攻击力
+                self.hp = 100 + int(self.level) * 10  # 增加血量
+                self.mp = 100 + int(self.level) * 10  # 增加蓝量
+
+    def get_damage(self):
+        return self.damage
+
+    def get_skill_cost(self, index):
+        return self.battle_list[index].get_skill().skill_cost
+
+    def get_skill_type(self, index):
+        return self.battle_list[index].get_skill().skill_type
+
+    def get_skill_effort(self, index):
+        return self.battle_list[index].get_skill().skill_effort
+
+    def get_skill_available(self, index):
+        return self.mp >= self.get_skill_cost(index)
+
+    def use_skill(self, index):
+        self.mp -= self.get_skill_cost(index)
+        return self.get_skill_type(index), self.get_skill_effort(index)
+
+    def take_damage(self, damage):
+        self.hp -= damage
+        if self.hp < 0:
+            self.hp = 0
+
+    def take_heal(self, heal):
+        self.hp += heal
+
+    def is_alive(self):
+        return self.hp > 0
+
+    # 捕捉宠物
+    def get_pet(self, pet):
+        self.own_list.append(pet)
+
+    # 释放宠物
+    def free_pet(self, index):
+        del self.own_list[index]
+
+    # 宠物参战
+    def put_pet(self, index):
+        if len(self.battle_list) < self.battle_nums:
+            self.battle_list.append(self.own_list[index])
+        else:
+            # 提示出战宠物已满
+            pass
+
+    # 参战宠物休息
+    def rest_pet(self, index):
+        del self.battle_list[index]
 
     def move_back(self):
         """ If called after an update, the sprite can move back to give the
