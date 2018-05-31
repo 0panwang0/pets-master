@@ -10,13 +10,15 @@ ui_location = {'bag':(50, 50), 'map':(100, 50)}
 ui_state_list = ['bag', 'map', 'main']
 ui_file_name = ["resources/images/bag.tga", "resources/images/map.png"]
 font_file_name = "resources/fonts/ink.ttf"
+icon_file_name = "resources/images/IconSet.png"
 
 item_dict = { '萝卜':(0, 18), '洋葱':(1, 18), '土豆':(2, 18), '生肉':(3, 18), '鲜鱼':(4, 18),}
 
 class Icon:
-    def __init__(self, filename, screen):
-        self.icon = pygame.image.load(filename).convert()
+    def __init__(self, dialog, screen):
+        self.icon = pygame.image.load(icon_file_name).convert()
         self.screen = screen
+        self.dialog = dialog
         self.font = pygame.font.Font(font_file_name, 40)
         self.ui = {}
         self.item_name = []

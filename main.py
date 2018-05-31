@@ -17,8 +17,10 @@ pygame.display.set_caption("Pet Master")
 
 player = Hero('resources/images/Actor1.png', 0, 0, screen)
 scroll_map = ScrollMap("resources/tmx/home.tmx", screen)
-icon = Icon("resources/images/IconSet.png", screen)
+
 dialog = Dialog(player, screen)
+icon = Icon(dialog, screen)
+
 
 player.power = "main"
 scroll_map.add(player)

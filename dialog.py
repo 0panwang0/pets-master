@@ -82,9 +82,6 @@ class Dialog:
         elif content[0] == 'npc':
             image = self.npc_image
             self.draw(image, content[1:])
-        elif content[0] == 'task':
-            pass
-
 
 
 
