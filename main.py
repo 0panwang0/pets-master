@@ -19,10 +19,10 @@ player = Hero('resources/images/Actor1.png', 0, 0, screen)
 scroll_map = ScrollMap("resources/tmx/home.tmx", screen)
 
 dialog = Dialog(player, screen)
-icon = Icon(dialog, screen)
+icon = Icon(player, dialog, screen)
 
 
-player.power = "main"
+player.controller = "main"
 scroll_map.add(player)
 icon.get_item('萝卜')
 icon.get_item('鲜鱼')
@@ -49,7 +49,7 @@ while running:
     scroll_map.center(player.rect.center)
     scroll_map.sprite_update()
 
-    if player.power == 'main':
+    if player.controller == 'main':
         scroll_map.draw()
         icon.draw()
         pygame.display.flip()

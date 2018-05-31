@@ -5,6 +5,7 @@ from sys import exit
 dialog_file_name = "resources/images/dialog.png"
 player_file_name = "resources/images/Faces/Actor1.png"
 frame_file_name = "resources/images/frame.tga"
+prompt_file_name = "resources/images/prompt.tga"
 font_file_name = "resources/fonts/ink.ttf"
 screen_size = (800, 600)
 
@@ -17,6 +18,7 @@ class Dialog:
         self.dialog = pygame.image.load(dialog_file_name).convert_alpha()
         self.frame = pygame.image.load(frame_file_name).convert_alpha()
         self.frame = pygame.transform.scale(self.frame, (120, 120))
+        self.prompt = pygame.image.load(prompt_file_name).convert_alpha()
         self.image = pygame.image.load(player_file_name).convert_alpha()
         self.player_image = self.image.subsurface(0, 0, 96, 96)
         self.npc_image = self.image.subsurface(0, 0, 96, 96)
@@ -24,10 +26,11 @@ class Dialog:
         (screen_size[0] - self.dialog.get_width()) / 2, (screen_size[1] - self.dialog.get_height()) / 2)
         self.frame_position = (
         (screen_size[0] - self.frame.get_width()) / 2 - 220, (screen_size[1] - self.frame.get_height()) / 2)
+        self.prompt_position = (
+        (screen_size[0] - self.prompt.get_width()) / 2 + 120, (screen_size[1] - self.prompt.get_height()) / 2)
         self.tasks = []
         self.starts = []
         self.ends = []
-
 
     def draw(self, image, text):
         self.dialog = pygame.image.load(dialog_file_name).convert_alpha()
@@ -48,7 +51,7 @@ class Dialog:
             with open("resources/dates/" + npc.file_name + ".txt") as file_object:
                 lines = file_object.readlines()
         except:
-            self.player.power = 'main'
+            self.player.controller = 'main'
             return
         self.tasks = lines[0].split(' ')
         self.starts = lines[1].split(' ')
@@ -69,10 +72,9 @@ class Dialog:
                     exit()
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                     i += 1
-        self.player.power = 'main'
+        self.player.controller = 'main'
         if order >= 0:
             self.player.tasks.remove(order)
-
 
     def speak(self, content):
         image = self.player_image
@@ -82,6 +84,14 @@ class Dialog:
         elif content[0] == 'npc':
             image = self.npc_image
             self.draw(image, content[1:])
+
+    def info(self, text):
+        self.prompt = pygame.image.load(prompt_file_name).convert_alpha()
+        surface = self.font.render(text.rstrip(), True, (0, 0, 0))
+        position = ((self.prompt.get_width()-surface.get_width())/2, (self.prompt.get_height()-surface.get_height())/2)
+        self.prompt.blit(surface, position)
+        self.screen.blit(self.prompt, self.prompt_position)
+        pygame.display.update()
 
 
 

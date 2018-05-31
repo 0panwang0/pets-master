@@ -165,9 +165,12 @@ def check_dialogue(player, scroll_map, dialog):
             player.moving.clear()
         else:
             continue
-        player.power = 'dialog'
+        player.controller = 'dialog'
         scroll_map.sprite_update()
         scroll_map.draw()
+        pygame.display.update()
         dialog.run(sprite)
+
+
 
 TMX = load_all_tmx(os.path.join('resources', 'tmx'))

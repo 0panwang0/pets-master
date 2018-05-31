@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+from sys import exit
 
 screen_size = (800, 600)
 
@@ -15,10 +16,11 @@ icon_file_name = "resources/images/IconSet.png"
 item_dict = { '萝卜':(0, 18), '洋葱':(1, 18), '土豆':(2, 18), '生肉':(3, 18), '鲜鱼':(4, 18),}
 
 class Icon:
-    def __init__(self, dialog, screen):
+    def __init__(self, player, dialog, screen):
         self.icon = pygame.image.load(icon_file_name).convert()
-        self.screen = screen
+        self.player = player
         self.dialog = dialog
+        self.screen = screen
         self.font = pygame.font.Font(font_file_name, 40)
         self.ui = {}
         self.item_name = []
@@ -62,17 +64,30 @@ class Icon:
 
     def check_mouse_right_event(self, pos):
         if self.state == 'bag':
-            use = []
+            use = -1
             for i in range(len(self.item_position)):
                 if pygame.Rect(self.item_position[i], (40, 40)).collidepoint(pos):
-                    use.append(i)
-            for i in range(len(use)):
-                del self.item_name[use[i]]
+                    use = i
+                    break
+            if use < 0:
+                return
+            item_name = self.item_name[use]
+            del self.item_name[use]
             for i in range(len(ui_state_list)):
                 if ui_state_list[i] == 'bag':
                     self.ui['bag'] = pygame.image.load(ui_file_name[i]).convert_alpha()
                     self.ui['bag'].blit(self.font.render('背包', True, (0, 0, 0)), (96, 65))
             self.draw_item()
+            pygame.display.update()
+
+            self.player.controller = 'info'
+            self.dialog.info("使用了物品["+item_name+"]!")
+            while self.player.controller != 'main':
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        exit()
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE or event.type == pygame.MOUSEBUTTONDOWN:
+                        self.player.controller = 'main'
 
     def check_mouse_move_event(self, pos):
         if self.state == 'main':
