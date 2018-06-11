@@ -4,7 +4,7 @@ class Person(pygame.sprite.Sprite):
     def __init__(self, file_addr, row, col):
         pygame.sprite.Sprite.__init__(self)
         # vary_states[self.state][0]:速度元组，vary_states[self.state][1(2)]，图片。(注意rest状态只有1张图片)
-        self.speed = 2
+        self.speed = 8
         _image = pygame.image.load(file_addr).convert_alpha()
         self.vary_states = self.get_image(_image, row, col) # 获得人物各个状态的速度及图片, row, col表示该人物块左上角的行列
         self.state = "rest_down"       # 人物状态

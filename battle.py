@@ -167,6 +167,7 @@ class Battle:
                     pass
 
                 if len(self.enermy_pets ) == 0:
+                    self.battle_state = BattleState.SelectAction
                     self.battle_result = BattleResult.Victory
                     return
                 else:

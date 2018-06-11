@@ -29,12 +29,10 @@ def check_keydown(event, player, scroll_map, dialog):
         check_dialogue(player, scroll_map, dialog)
 
 
-def check_keyup(event, player, scroll_map, dialog):
+def check_keyup(event, player):
     '''
     :param event: 获取事件
     :param player: 角色
-    :param scroll_map: 地图
-    :param dialog: 对话框
     :return: 无
     '''
     if event.key == pygame.K_d:
@@ -86,7 +84,7 @@ def check_event(player, scroll_map, icon, dialog):
         elif event.type == pygame.KEYDOWN:
             check_keydown(event, player, scroll_map, dialog)
         if event.type == pygame.KEYUP:
-            check_keyup(event, player, scroll_map, dialog)
+            check_keyup(event, player)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             buttons = pygame.mouse.get_pressed()
             for index in range(len(buttons)):
@@ -148,9 +146,9 @@ def check_collision(player, scroll_map):
 
 def check_battle(player, scroll_map, screen):
     if scroll_map.nobattle_area:
-        if not pygame.sprite.spritecollideany(player, scroll_map.nobattle_area):
-            start_batlle = random.randint(0, 100)
-            if start_batlle < 10:
+        if not pygame.sprite.spritecollideany(player, scroll_map.nobattle_area) and player.moving:
+            start_batlle = random.randint(0, 500)
+            if start_batlle < 1:
                 skill1 = Skill("Area", SkillType.AreaDamage, 5, 10)
                 skill2 = Skill("Direct", SkillType.DirectDamage, 6, 5)
                 skill3 = Skill("Heal", SkillType.Heal, 10, 5)
@@ -161,10 +159,11 @@ def check_battle(player, scroll_map, screen):
                 own_list = [frined_pet1, frined_pet2]
                 battle_list = [frined_pet1, frined_pet2, frined_pet3]
                 enermy_list = [enermy_pet1]
-
                 _player = Player("Jack", 30, 40, 5, own_list, battle_list)
                 battle = Battle(screen, _player, enermy_list)
                 battle.start_battle()
+                player.state = "rest_" + player.moving[-1][5:]
+                player.moving.clear()
 
 def check_dialogue(player, scroll_map, dialog):
     for sprite in scroll_map.image_sprites:
