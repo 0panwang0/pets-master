@@ -3,6 +3,7 @@ from renderer import *
 from icons import *
 from dialog import *
 from person import *
+from shop import *
 
 
 # global
@@ -21,7 +22,7 @@ scroll_map = ScrollMap("resources/tmx/home.tmx", screen)
 
 dialog = Dialog(player, screen)
 icon = Icon(player, dialog, screen)
-
+shop = Shop(player, screen)
 
 player.controller = "main"
 scroll_map.add(player)
@@ -34,6 +35,7 @@ for start_point in scroll_map.start_points:
         break
 scroll_map.center(player.rect.center)
 
+#shop.draw()
 
 # main loop
 running = True

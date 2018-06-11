@@ -1,4 +1,4 @@
-import pygame
+﻿import pygame
 from pygame.locals import *
 from sys import exit
 
@@ -7,9 +7,9 @@ screen_size = (800, 600)
 icon_size = (32, 32)
 icon_alpha = [180, 180, 180]
 icon_location = [(8, 16), (7, 14), (9, 7)]
-ui_location = {'bag':(50, 60), 'map':(100, 70), 'people':(150, 60)}
-ui_state_list = ['bag', 'map', 'people', 'main']
-ui_file_name = ["resources/images/bag.tga", "resources/images/map.png", "resources/images/people.tga"]
+ui_location = {'bag':(50, 60), 'map':(100, 70), 'panel':(150, 60)}
+ui_state_list = ['bag', 'map', 'panel', 'main']
+ui_file_name = ["resources/images/bag.tga", "resources/images/map.png", "resources/images/panel.tga"]
 font_file_name = "resources/fonts/ink.ttf"
 icon_file_name = "resources/images/IconSet.png"
 
@@ -22,7 +22,7 @@ class Icon:
         self.dialog = dialog
         self.screen = screen
         self.bag_font = pygame.font.Font(font_file_name, 40)
-        self.people_font = pygame.font.Font(font_file_name, 25)
+        self.panel_font = pygame.font.Font(font_file_name, 25)
         self.gold_font = pygame.font.Font(font_file_name, 20)
         self.ui = {}
         self.item_name = []
@@ -48,17 +48,14 @@ class Icon:
 
     def draw_value(self):
         for i in range(len(ui_state_list)):
-            if ui_state_list[i] == 'people':
-                self.ui['people'] = pygame.image.load(ui_file_name[i]).convert_alpha()
-        self.ui['people'].blit(self.people_font.render('生命值：' + str(self.player.hp) + '/' + str(self.player.max_hp), True, (0, 0, 0)), (25, 130))
-        self.ui['people'].blit(self.people_font.render('法力值：' + str(self.player.mp) + '/' + str(self.player.max_mp), True, (0, 0, 0)), (25, 170))
-        self.ui['people'].blit(self.people_font.render('攻击力：' + str(self.player.attack), True, (0, 0, 0)), (25, 210))
-        self.ui['people'].blit(self.people_font.render('防御力：' + str(self.player.defense), True, (0, 0, 0)), (25, 250))
-        self.ui['people'].blit(self.people_font.render('经验值：' + str(self.player.exp) + '/' + str(self.player.exp_list[self.player.level]), True, (0, 0, 0)), (25, 290))
-        self.ui['people'].blit(self.bag_font.render('人物', True, (0, 0, 0)), (96, 65))
-
-
-
+            if ui_state_list[i] == 'panel':
+                self.ui['panel'] = pygame.image.load(ui_file_name[i]).convert_alpha()
+        self.ui['panel'].blit(self.panel_font.render('生命值：' + str(self.player.hp) + '/' + str(self.player.max_hp), True, (0, 0, 0)), (25, 130))
+        self.ui['panel'].blit(self.panel_font.render('法力值：' + str(self.player.mp) + '/' + str(self.player.max_mp), True, (0, 0, 0)), (25, 170))
+        self.ui['panel'].blit(self.panel_font.render('攻击力：' + str(self.player.attack), True, (0, 0, 0)), (25, 210))
+        self.ui['panel'].blit(self.panel_font.render('防御力：' + str(self.player.defense), True, (0, 0, 0)), (25, 250))
+        self.ui['panel'].blit(self.panel_font.render('经验值：' + str(self.player.exp) + '/' + str(self.player.exp_list[self.player.level]), True, (0, 0, 0)), (25, 290))
+        self.ui['panel'].blit(self.bag_font.render('人物', True, (0, 0, 0)), (96, 65))
 
     def draw(self):
         for i in range(len(icon_location)):
@@ -69,7 +66,7 @@ class Icon:
             self.screen.blit(self.ui[self.state], ui_location[self.state])
         if self.state == 'bag':
             self.draw_item()
-        if self.state == 'people':
+        if self.state == 'panel':
             self.draw_value()
 
     def check_mouse_left_event(self, pos):
@@ -99,7 +96,6 @@ class Icon:
             self.draw_item()
             pygame.display.update()
             self.dialog.info("使用了物品["+item_name+"]!")
-
 
     def update_bag(self):
         for i in range(len(ui_state_list)):

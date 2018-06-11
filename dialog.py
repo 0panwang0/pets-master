@@ -93,6 +93,9 @@ class Dialog:
         self.prompt.blit(surface, position)
         self.screen.blit(self.prompt, self.prompt_position)
         pygame.display.update()
+        self.take_control()
+
+    def take_control(self):
         while self.player.controller != 'main':
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
