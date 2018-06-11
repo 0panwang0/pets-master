@@ -68,18 +68,21 @@ class Hero(Person):
         self.moving = [] # 这是一个堆，玩家可能同时按下多个移动键，储存这些状态，当玩家释放移动键时可以选择角色下一个状态
         self.tasks = [1, 2, 3, 4, -1]
         self.money = 100
-        self.hp = 100
-        self.mp = 100
-        self.damage = 0
+        self.hp = 80
+        self.max_hp = 100
+        self.mp = 55
+        self.max_mp = 60
+        self.attack = 17
+        self.defense = 13
         self.own_list = []
         self.battle_list = []
-        self.level = ''
+        self.level = 1
         self.exp = 0
         self.battle_nums = 4
         self.exp_list = {
-            '1': 1000,
-            '2': 2000,
-            '3': 4000
+            1: 1000,
+            2: 2000,
+            3: 4000
         }
 
     def up_level(self):
@@ -87,12 +90,12 @@ class Hero(Person):
             if self.exp > exp and self.level < level:
                 self.level = level
                 # 提示升级了
-                self.damage = int(self.level) * 10  # 增加攻击力
+                self.attack = int(self.level) * 10  # 增加攻击力
                 self.hp = 100 + int(self.level) * 10  # 增加血量
                 self.mp = 100 + int(self.level) * 10  # 增加蓝量
 
     def get_damage(self):
-        return self.damage
+        return self.attack
 
     def get_skill_cost(self, index):
         return self.battle_list[index].get_skill().skill_cost
@@ -113,8 +116,8 @@ class Hero(Person):
         self.mp -= self.get_skill_cost(index)
         return self.get_skill_type(index), self.get_skill_effort(index), self.get_skill_cost(index)
 
-    def take_damage(self, damage):
-        self.hp -= damage
+    def take_damage(self, attack):
+        self.hp -= attack
         if self.hp < 0:
             self.hp = 0
 
