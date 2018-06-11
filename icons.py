@@ -79,15 +79,8 @@ class Icon:
                     self.ui['bag'].blit(self.font.render('背包', True, (0, 0, 0)), (96, 65))
             self.draw_item()
             pygame.display.update()
-
-            self.player.controller = 'info'
             self.dialog.info("使用了物品["+item_name+"]!")
-            while self.player.controller != 'main':
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        exit()
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE or event.type == pygame.MOUSEBUTTONDOWN:
-                        self.player.controller = 'main'
+
 
     def check_mouse_move_event(self, pos):
         if self.state == 'main':
