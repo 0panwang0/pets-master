@@ -66,8 +66,10 @@ class Pet:
 class Player:
     def __init__(self, name, hp, mp, damage, own_list, battle_list):
         self.name = name
-        self.hp = hp
-        self.mp = mp
+        self.hp_total = hp
+        self.hp_left = hp
+        self.mp_total = mp
+        self.mp_left = mp
         self.damage = damage
         self.own_list = own_list
         self.battle_list = battle_list
@@ -85,22 +87,24 @@ class Player:
         return self.battle_list[index].get_skill().skill_effort
 
     def get_skill_available(self, index):
-        return self.mp >= self.get_skill_cost(index)
+        return self.mp_left >= self.get_skill_cost(index)
 
     def get_skill_info(self, index):
         return self.get_skill_type(index), self.get_skill_effort(index), self.get_skill_cost(index)
 
     def use_skill(self, index):
-        self.mp -= self.get_skill_cost(index)
+        self.mp_left -= self.get_skill_cost(index)
         return self.get_skill_type(index), self.get_skill_effort(index), self.get_skill_cost(index)
 
     def take_damage(self, damage):
-        self.hp -= damage
-        if self.hp < 0:
-            self.hp = 0
+        self.hp_left -= damage
+        if self.hp_left < 0:
+            self.hp_left = 0
 
     def take_heal(self, heal):
-        self.hp += heal
+        self.hp_left += heal
+        if self.hp_left > self.hp_total:
+            self.hp_left = self.hp_total
 
     def is_alive(self):
-        return self.hp > 0
+        return self.hp_left > 0
