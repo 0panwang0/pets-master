@@ -22,12 +22,14 @@ class Icon:
         self.dialog = dialog
         self.screen = screen
         self.font = pygame.font.Font(font_file_name, 40)
+        self.gold_font = pygame.font.Font(font_file_name, 20)
         self.ui = {}
         self.item_name = []
         self.item_position = []
         for i in range(len(ui_file_name)):
             self.ui[ui_state_list[i]] = pygame.image.load(ui_file_name[i]).convert_alpha()
         self.ui['bag'].blit(self.font.render('背包', True, (0, 0, 0)), (96, 65))
+        self.ui['bag'].blit(self.gold_font.render('金币', True, (0, 0, 0)), (200, 468))
         self.state = 'main'
 
     def get_image(self, pos):
@@ -77,6 +79,7 @@ class Icon:
                 if ui_state_list[i] == 'bag':
                     self.ui['bag'] = pygame.image.load(ui_file_name[i]).convert_alpha()
                     self.ui['bag'].blit(self.font.render('背包', True, (0, 0, 0)), (96, 65))
+                    self.ui['bag'].blit(self.gold_font.render('金币', True, (0, 0, 0)), (200, 468))
             self.draw_item()
             pygame.display.update()
             self.dialog.info("使用了物品["+item_name+"]!")
