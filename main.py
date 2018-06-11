@@ -4,6 +4,7 @@ from icons import *
 from dialog import *
 from person import *
 
+
 # global
 sprites = []
 frame_rate = pygame.time.Clock()
@@ -47,11 +48,15 @@ while running:
     player.update(time)
     check_collision(player, scroll_map)
     scroll_map.center(player.rect.center)
+    check_battle(player, scroll_map, screen)
     scroll_map.sprite_update()
 
     if player.controller == 'main':
         scroll_map.draw()
         icon.draw()
         pygame.display.flip()
+    # elif player.controller == 'battle':
+    #     battle = Battle(screen, player, enermy_list)
+    #     battle.start_battle()
 
 pygame.quit()

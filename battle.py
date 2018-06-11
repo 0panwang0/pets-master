@@ -63,9 +63,6 @@ class Battle:
                 print(self.battle_result)
                 break
             pygame.display.flip()
-        while True:
-            self.check_events()
-            pygame.display.flip()
 
     def check_events(self):
         for event in pygame.event.get():
@@ -267,25 +264,3 @@ class Battle:
 
         self.hp_bar.draw()
         self.mp_bar.draw()
-
-
-pygame.init(),
-_screen = pygame.display.set_mode((800, 600))
-pygame.display.set_caption("Pet Master")
-
-skill1 = Skill("Area", SkillType.AreaDamage, 5, 10)
-skill2 = Skill("Direct", SkillType.DirectDamage, 6, 5)
-skill3 = Skill("Heal", SkillType.Heal, 10, 5)
-frined_pet1 = Pet("Friend Pet1", 20, 5, skill1, "sunflower.jpg", 18)
-frined_pet2 = Pet("Friend Pet2", 20, 5, skill2, "pet1.png")
-frined_pet3 = Pet("Friend Pet2", 20, 5, skill3, "pet2.png")
-enermy_pet1 = Pet("Enermy Pet1", 21, 2, skill1, "pet1.png")
-enermy_pet2 = Pet("Enermy Pet2", 22, 2, skill2, "pet2.png")
-enermy_pet3 = Pet("Enermy Pet3", 23, 2, skill1, "pet1.png")
-enermy_pet4 = Pet("Enermy Pet3", 24, 2, skill1, "pet1.png")
-own_list = [frined_pet1, frined_pet2]
-battle_list = [frined_pet1, frined_pet2, frined_pet3]
-enermy_list = [enermy_pet1, enermy_pet2, enermy_pet3, enermy_pet4]
-_player = Player("Jack", 30, 40, 5, own_list, battle_list)
-battle = Battle(_screen, _player, enermy_list)
-battle.start_battle()

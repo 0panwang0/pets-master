@@ -1,5 +1,7 @@
 from pygame import *
 from renderer import *
+from battle import *
+import random
 import os
 
 
@@ -144,6 +146,25 @@ def check_collision(player, scroll_map):
             player.move_back()
             break
 
+def check_battle(player, scroll_map, screen):
+    if scroll_map.nobattle_area:
+        if not pygame.sprite.spritecollideany(player, scroll_map.nobattle_area):
+            start_batlle = random.randint(0, 100)
+            if start_batlle < 10:
+                skill1 = Skill("Area", SkillType.AreaDamage, 5, 10)
+                skill2 = Skill("Direct", SkillType.DirectDamage, 6, 5)
+                skill3 = Skill("Heal", SkillType.Heal, 10, 5)
+                frined_pet1 = Pet("Friend Pet1", 20, 5, skill1, "sunflower.jpg", 18)
+                frined_pet2 = Pet("Friend Pet2", 20, 5, skill2, "pet1.png")
+                frined_pet3 = Pet("Friend Pet2", 20, 5, skill3, "pet2.png")
+                enermy_pet1 = Pet("Enermy Pet1", 21, 2, skill1, "pet1.png")
+                own_list = [frined_pet1, frined_pet2]
+                battle_list = [frined_pet1, frined_pet2, frined_pet3]
+                enermy_list = [enermy_pet1]
+
+                _player = Player("Jack", 30, 40, 5, own_list, battle_list)
+                battle = Battle(screen, _player, enermy_list)
+                battle.start_battle()
 
 def check_dialogue(player, scroll_map, dialog):
     for sprite in scroll_map.image_sprites:
