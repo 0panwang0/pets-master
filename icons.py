@@ -28,8 +28,7 @@ class Icon:
         self.item_position = []
         for i in range(len(ui_file_name)):
             self.ui[ui_state_list[i]] = pygame.image.load(ui_file_name[i]).convert_alpha()
-        self.ui['bag'].blit(self.font.render('背包', True, (0, 0, 0)), (96, 65))
-        self.ui['bag'].blit(self.gold_font.render('金币', True, (0, 0, 0)), (200, 468))
+        self.update_bag()
         self.state = 'main'
 
     def get_image(self, pos):
@@ -73,17 +72,22 @@ class Icon:
                     break
             if use < 0:
                 return
+            self.update_bag()
             item_name = self.item_name[use]
             del self.item_name[use]
-            for i in range(len(ui_state_list)):
-                if ui_state_list[i] == 'bag':
-                    self.ui['bag'] = pygame.image.load(ui_file_name[i]).convert_alpha()
-                    self.ui['bag'].blit(self.font.render('背包', True, (0, 0, 0)), (96, 65))
-                    self.ui['bag'].blit(self.gold_font.render('金币', True, (0, 0, 0)), (200, 468))
             self.draw_item()
             pygame.display.update()
             self.dialog.info("使用了物品["+item_name+"]!")
 
+
+    def update_bag(self):
+        for i in range(len(ui_state_list)):
+            if ui_state_list[i] == 'bag':
+                self.ui['bag'] = pygame.image.load(ui_file_name[i]).convert_alpha()
+                self.ui['bag'].blit(self.font.render('背包', True, (0, 0, 0)), (96, 65))
+                self.ui['bag'].blit(self.gold_font.render('金币', True, (0, 0, 0)), (200, 468))
+                gold_font = self.gold_font.render(str(self.player.money), True, (254, 254, 65))
+                self.ui['bag'].blit(gold_font, (110 - gold_font.get_width()/2, 468))
 
     def check_mouse_move_event(self, pos):
         if self.state == 'main':
