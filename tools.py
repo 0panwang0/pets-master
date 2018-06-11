@@ -144,11 +144,12 @@ def check_collision(player, scroll_map):
             player.move_back()
             break
 
+# 检查什么时候触发战斗
 def check_battle(player, scroll_map, screen):
     if scroll_map.nobattle_area:
         if not pygame.sprite.spritecollideany(player, scroll_map.nobattle_area) and player.moving:
-            start_batlle = random.randint(0, 500)
-            if start_batlle < 1:
+            start_batlle = random.randint(0, 250)
+            if start_batlle < 5:
                 skill1 = Skill("Area", SkillType.AreaDamage, 5, 10)
                 skill2 = Skill("Direct", SkillType.DirectDamage, 6, 5)
                 skill3 = Skill("Heal", SkillType.Heal, 10, 5)

@@ -99,14 +99,3 @@ class Dialog:
                     exit()
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE or event.type == pygame.MOUSEBUTTONDOWN:
                     self.player.controller = 'main'
-
-
-
-
-
-
-
-
-
-
-
