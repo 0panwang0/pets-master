@@ -105,9 +105,12 @@ class Hero(Person):
     def get_skill_available(self, index):
         return self.mp >= self.get_skill_cost(index)
 
+    def get_skill_info(self, index):
+        return self.get_skill_type(index), self.get_skill_effort(index), self.get_skill_cost(index)
+
     def use_skill(self, index):
         self.mp -= self.get_skill_cost(index)
-        return self.get_skill_type(index), self.get_skill_effort(index)
+        return self.get_skill_type(index), self.get_skill_effort(index), self.get_skill_cost(index)
 
     def take_damage(self, damage):
         self.hp -= damage
@@ -119,14 +122,6 @@ class Hero(Person):
 
     def is_alive(self):
         return self.hp > 0
-
-    # 捕捉宠物
-    def get_pet(self, pet):
-        self.own_list.append(pet)
-
-    # 释放宠物
-    def free_pet(self, index):
-        del self.own_list[index]
 
     # 宠物参战
     def put_pet(self, index):

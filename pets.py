@@ -3,9 +3,10 @@ from enum import Enum
 
 class SkillType(Enum):
     NormalAttack = 0
-    DirectDamage = 1
-    AreaDamage = 2
-    Heal = 3
+    CatchPet = 1
+    DirectDamage = 2
+    AreaDamage = 3
+    Heal = 4
 
 
 class Skill:
@@ -16,7 +17,7 @@ class Skill:
         self.skill_cost = skill_cost
 
 class Pet:
-    def __init__(self, pet_name, pet_hp, pet_damage, pet_skill, pet_file, level, exp):
+    def __init__(self, pet_name, pet_hp, pet_damage, pet_skill, level, exp, pet_file, image_number=1):
         self.pet_name = pet_name
         self.pet_hp = pet_hp
         self.pet_hp_left = pet_hp
@@ -24,6 +25,7 @@ class Pet:
         self.pet_skill = pet_skill
         self.pet_skill.skill_name += '(' + self.level + ')'
         self.pet_file = pet_file
+        self.image_number = image_number
         self.level = level
         self.exp = exp
         self.exp_list = {
