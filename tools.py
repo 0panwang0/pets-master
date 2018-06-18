@@ -160,10 +160,10 @@ def check_battle(player, scroll_map, screen):
 
 def check_dialogue(player, scroll_map, dialog):
     for sprite in scroll_map.image_sprites:
-        left = Object(pygame.Rect(sprite.rect.left-32, sprite.rect.top, sprite.rect.width, sprite.rect.height))
-        right = Object(pygame.Rect(sprite.rect.left+32, sprite.rect.top, sprite.rect.width, sprite.rect.height))
-        up = Object(pygame.Rect(sprite.rect.left, sprite.rect.top-32, sprite.rect.width, sprite.rect.height))
-        down = Object(pygame.Rect(sprite.rect.left, sprite.rect.top+32, sprite.rect.width, sprite.rect.height))
+        left = Object(pygame.Rect(sprite.rect.left-sprite.rect.width, sprite.rect.top, sprite.rect.width, sprite.rect.height))
+        right = Object(pygame.Rect(sprite.rect.left+sprite.rect.width, sprite.rect.top, sprite.rect.width, sprite.rect.height))
+        up = Object(pygame.Rect(sprite.rect.left, sprite.rect.top-sprite.rect.height, sprite.rect.width, sprite.rect.height))
+        down = Object(pygame.Rect(sprite.rect.left, sprite.rect.top+sprite.rect.height, sprite.rect.width, sprite.rect.height))
         if pygame.sprite.collide_rect(player, left) and player.state[5:] == "right":
             sprite.state = "rest_left"
             player.moving.clear()
