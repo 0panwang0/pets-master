@@ -29,7 +29,7 @@ scroll_map = ScrollMap("resources/tmx/home.tmx", screen)
 
 dialog = Dialog(player, screen)
 icon = Icon(player, dialog, screen)
-shop = Shop(player, screen)
+shop = Shop(player, icon, dialog, screen)
 
 player.controller = "main"
 scroll_map.add(player)

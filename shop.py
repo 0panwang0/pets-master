@@ -10,12 +10,14 @@ font_file_name = "resources/fonts/ink.ttf"
 item_dict = { '萝卜':(0, 18), '洋葱':(1, 18), '土豆':(2, 18), '生肉':(3, 18), '鲜鱼':(4, 18),}
 
 class Shop:
-    def __init__(self, player, screen):
+    def __init__(self, player, icon, dialog, screen):
         self.player = player
+        self.icon = icon
+        self.dialog = dialog
         self.screen = screen
         self.large_font = pygame.font.Font(font_file_name, 40)
         self.small_font = pygame.font.Font(font_file_name, 20)
-        self.icon = pygame.image.load(icon_file_name).convert()
+        self.icons = pygame.image.load(icon_file_name).convert()
         self.arrow = pygame.image.load(arrow_file_name).convert_alpha()
         self.shop = pygame.image.load(shop_file_name).convert_alpha()
         self.shop_item = ["萝卜", "洋葱", "土豆", "生肉", "鲜鱼"]
@@ -69,7 +71,7 @@ class Shop:
         self.shop.blit(self.arrow, (320, 280))
 
     def get_image(self, pos):
-        return self.icon.subsurface(24 * pos[0], 24 * pos[1], 24, 24)
+        return self.icons.subsurface(24 * pos[0], 24 * pos[1], 24, 24)
 
     def take_control(self):
         while self.player.controller != 'main':
@@ -78,11 +80,23 @@ class Shop:
                     exit()
                 elif event.type == pygame.KEYDOWN and (event.key == pygame.K_SPACE or event.key == pygame.K_ESCAPE):
                     self.player.controller = 'main'
-                elif event.type == pygame.MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0] and pygame.Rect(
-                    320 + (screen_size[0] - self.shop.get_width()) / 2,
-                    280 + (screen_size[1] - self.shop.get_height()) / 2, self.arrow.get_width(),
-                    self.arrow.get_height()).collidepoint(pygame.mouse.get_pos()):
-                    self.state = (self.state + 1) % 2
-                    self.draw()
+                elif event.type == pygame.MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
+                    if pygame.Rect(320 + (screen_size[0] - self.shop.get_width()) / 2, 280 + (screen_size[1] - self.shop.get_height()) / 2, self.arrow.get_width(),self.arrow.get_height()).collidepoint(pygame.mouse.get_pos()):
+                        self.state = (self.state + 1) % 2
+                        self.draw()
+                    self.buy_item(pygame.mouse.get_pos())
+
+    def buy_item(self, pos):
+        for i in range(len(self.shop_item)):
+            if pygame.Rect(20+(screen_size[0]-self.shop.get_width())/2, (screen_size[1]-self.shop.get_height())/2+120+i*30, 24, 24).collidepoint(pos):
+                if self.player.money >= self.item_price[self.shop_item[i]]:
+                    self.dialog.info("购买了物品["+self.shop_item[i]+"]!")
+                    self.icon.get_item(self.shop_item[i])
+                    self.player.money -= self.item_price[self.shop_item[i]]
+                    self.icon.update_bag()
+                    pygame.display.update()
+                else :
+                    self.dialog.info("金钱不足!")
+
 
 
