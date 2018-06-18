@@ -10,10 +10,10 @@ font_file_name = "resources/fonts/ink.ttf"
 item_dict = { '萝卜':(0, 18), '洋葱':(1, 18), '土豆':(2, 18), '生肉':(3, 18), '鲜鱼':(4, 18),}
 
 class Shop:
-    def __init__(self, player, icon, dialog, screen):
+    def __init__(self, player, icon, screen):
         self.player = player
         self.icon = icon
-        self.dialog = dialog
+        self.dialog = icon.dialog
         self.screen = screen
         self.large_font = pygame.font.Font(font_file_name, 40)
         self.small_font = pygame.font.Font(font_file_name, 20)
@@ -83,20 +83,20 @@ class Shop:
                 elif event.type == pygame.MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
                     if pygame.Rect(320 + (screen_size[0] - self.shop.get_width()) / 2, 280 + (screen_size[1] - self.shop.get_height()) / 2, self.arrow.get_width(),self.arrow.get_height()).collidepoint(pygame.mouse.get_pos()):
                         self.state = (self.state + 1) % 2
-                        self.draw()
                     self.buy_item(pygame.mouse.get_pos())
+                    self.draw()
 
     def buy_item(self, pos):
         for i in range(len(self.shop_item)):
             if pygame.Rect(20+(screen_size[0]-self.shop.get_width())/2, (screen_size[1]-self.shop.get_height())/2+120+i*30, 24, 24).collidepoint(pos):
                 if self.player.money >= self.item_price[self.shop_item[i]]:
-                    self.dialog.info("购买了物品["+self.shop_item[i]+"]!")
+                    self.dialog.info("购买了物品["+self.shop_item[i]+"]!", "mid")
                     self.icon.get_item(self.shop_item[i])
                     self.player.money -= self.item_price[self.shop_item[i]]
                     self.icon.update_bag()
                     pygame.display.update()
                 else :
-                    self.dialog.info("金钱不足!")
+                    self.dialog.info("金钱不足!", "mid")
 
 
 

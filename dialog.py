@@ -85,13 +85,17 @@ class Dialog:
             image = self.npc_image
             self.draw(image, content[1:])
 
-    def info(self, text):
+    def info(self, text, flag = "right"):
         self.player.controller = 'info'
         self.prompt = pygame.image.load(prompt_file_name).convert_alpha()
         surface = self.font.render(text.rstrip(), True, (0, 0, 0))
         position = ((self.prompt.get_width()-surface.get_width())/2, (self.prompt.get_height()-surface.get_height())/2)
         self.prompt.blit(surface, position)
-        self.screen.blit(self.prompt, self.prompt_position)
+        if flag == "right":
+            pos = self.prompt_position
+        elif flag == "mid":
+            pos = ((self.screen.get_width()-self.prompt.get_width())/2, (self.screen.get_height()-self.prompt.get_height())/2)
+        self.screen.blit(self.prompt, pos)
         pygame.display.update()
         self.take_control()
 
