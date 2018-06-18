@@ -33,7 +33,8 @@ class Skill:
 
 
 class Pet:
-    def __init__(self, pet_name, pet_hp, pet_damage, pet_skill, level, exp, pet_file, image_number=1):
+    def __init__(self, pet_name, pet_hp, pet_damage, pet_skill, level, exp, beated_exp,
+                 beated_money, pet_file, image_number=1):
         self.pet_name = pet_name
         self.pet_hp = pet_hp
         self.pet_hp_left = pet_hp
@@ -43,6 +44,8 @@ class Pet:
         self.pet_file = pet_file
         self.image_number = image_number
         self.exp = exp
+        self.beated_exp = beated_exp
+        self.beated_money = beated_money
         self.exp_list = {
             1: 1000,
             2: 10000,
@@ -76,3 +79,4 @@ class Pet:
             self.attack = int(self.attack * 1.2)    # 增加攻击力
             self.max_hp = int(self.max_hp * 1.2)    # 增加血量
             self.max_mp = int(self.max_mp * 1.2)    # 增加蓝量
+
