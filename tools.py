@@ -151,7 +151,7 @@ def check_battle(player, scroll_map, screen):
             start_batlle = random.randint(0, 250)
             if start_batlle < 5:
                 skill4 = Skill("Area", SkillType.AreaDamage, 5, 10)
-                enermy_pet1 = Pet("Enermy Pet1", 21, 5, skill4, 2, 20,"resources\\images\\pet03.png", 18)
+                enermy_pet1 = Pet("Enermy Pet1", 21, 5, skill4, 2, 20, 500, 20,  "resources\\images\\pet03.png", 18)
                 enermy_list = [enermy_pet1]
                 battle = Battle(screen, player, enermy_list)
                 battle.start_battle()

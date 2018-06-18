@@ -68,7 +68,7 @@ class Hero(Person):
         self.moving = [] # 这是一个堆，玩家可能同时按下多个移动键，储存这些状态，当玩家释放移动键时可以选择角色下一个状态
         self.tasks = [1, 2, 3, 4, -1]
         self.money = 100
-        self.hp = 80
+        self.hp = 10
         self.max_hp = 100
         self.mp = 55
         self.max_mp = 60
@@ -92,6 +92,10 @@ class Hero(Person):
             self.attack = int(self.attack * 1.2)    # 增加攻击力
             self.max_hp = int(self.max_hp * 1.2)    # 增加血量
             self.max_mp = int(self.max_mp * 1.2)    # 增加蓝量
+            self.exp -= self.exp_list[self.level]
+
+    def gain_money(self, money):
+        self.money += money
 
     def get_damage(self):
         return self.attack
@@ -103,7 +107,8 @@ class Hero(Person):
         return self.battle_list[index].get_skill().skill_type
 
     def get_skill_effort(self, index):
-        return self.battle_list[index].get_skill().skill_effort
+        print("---", self.battle_list[index].get_skill().skill_effort)
+        return int(self.battle_list[index].get_skill().skill_effort * (0.5 + self.battle_list[index].level * 0.5))
 
     def get_skill_available(self, index):
         return self.mp >= self.get_skill_cost(index)

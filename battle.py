@@ -54,9 +54,11 @@ class Battle:
         self.skill_effort = 0
         self.skill_cost = 0
         self.select_enermy = 0
-        self.start_battle()
 
     def start_battle(self):
+        if self.player.hp <= 0:
+            print("Player seriously injured, could not enter a battle!!!")
+            return
         while True:
             self.check_events()
             self.execute_state()
@@ -64,9 +66,17 @@ class Battle:
             self.draw_screen()
             if BattleResult.Victory == self.battle_result or self.battle_result == BattleResult.Defeat or \
                     self.battle_result == BattleResult.Escape:
-                print(self.battle_result)
+                if BattleResult.Victory:
+                    self.gain_reward()
                 break
             pygame.display.flip()
+
+    def gain_reward(self):
+        for killed_enermy in self.killed_enermys:
+            self.player.gain_exp(killed_enermy.beated_exp)
+            self.player.gain_money(killed_enermy.beated_money)
+            for pet in self.player.battle_list:
+                pet.gain_exp(killed_enermy.beated_exp)
 
     def check_events(self):
         for event in pygame.event.get():
@@ -103,6 +113,7 @@ class Battle:
                     skill_index = self.battle_region - 3
                     if len(self.friend_pets) > skill_index and self.player.get_skill_available(skill_index):
                         self.skill_type, self.skill_effort, self.skill_cost = self.player.get_skill_info(skill_index)
+                        print("***", self.skill_effort)
                         print("\tSkill Type: ", self.skill_type)
                         print("\tSkill Effort", self.skill_effort)
                         print("\tSkill Cost:\t", self.skill_cost)
@@ -126,7 +137,7 @@ class Battle:
                     self.friend_attack()
                     self.enermy_pets[self.select_enermy].take_damage(self.skill_effort)
                     print("\tEnermy Index: ", self.select_enermy)
-                    print("\tEnermy HP: ", self.enermy_pets[self.select_enermy].pet_hp)
+                    print("\tEnermy HP: ", self.enermy_pets[self.select_enermy].pet_hp_left)
                     if not self.enermy_pets[self.select_enermy].is_alive():
                         print("\tEnermy ", self.enermy_pets[self.select_enermy].get_name(), " die.")
                         self.killed_enermys.append(self.enermy_pets[self.select_enermy])
@@ -228,6 +239,58 @@ class Battle:
         else:
             return None
 
+    def create_buttons(self):
+        button = ButtonImage(self.screen, self.button_width, self.button_height, "resources\\images\\button1.png", "Attack", 24)
+        self.button_images.append(button)
+        button = ButtonImage(self.screen, self.button_width, self.button_height, "resources\\images\\button2.png", "Catch", 24)
+        self.button_images.append(button)
+        button = ButtonImage(self.screen, self.button_width, self.button_height, "resources\\images\\button3.png", "Escape", 24)
+        self.button_images.append(button)
+        for i in range(len(self.friend_pets)):
+            button = ButtonImage(self.screen, self.button_width, self.button_height, "resources\\images\\button"+str(i+4)+".png",
+                                 self.friend_pets[i].get_skill().skill_name + "(" + str(self.friend_pets[i].level) +  ")", 24)
+            self.button_images.append(button)
+
+    def update_screen(self):
+        self.friend_pet_images = []
+        self.enermy_pet_images = []
+        self.enermy_hp_bars = []
+
+        for i in range(len(self.enermy_pets)):
+            pet_image = PetImage(self.screen, self.enermy_pets[i].pet_file, self.enermy_pets[i].image_number)
+            self.enermy_pet_images.append(pet_image)
+            self.enermy_pet_images[i].update((self.enermy_image_startx+i*self.pet_width, self.enermy_image_starty))
+            enermy_hp_bar = BarImage(self.screen, self.pet_width, self.bar_height, (255, 0, 0),
+                                     (255, 255, 255), "HP", 22, self.enermy_pets[i].pet_hp, self.enermy_pets[i].pet_hp)
+            enermy_hp_bar.update(self.enermy_pets[i].get_hp(),
+                                 (self.enermy_bar_startx + i * self.pet_width, self.enermy_bar_starty))
+            self.enermy_hp_bars.append(enermy_hp_bar)
+
+        for i in range(len(self.friend_pets)):
+            pet_image = PetImage(self.screen, self.friend_pets[i].pet_file, self.friend_pets[i].image_number)
+            self.friend_pet_images.append(pet_image)
+            self.friend_pet_images[i].update((self.friend_image_startx-i*self.pet_width, self.friend_image_starty))
+
+        for i in range(len(self.button_images)):
+            self.button_images[i].update((self.button_image_startx + i // 3 * self.button_width,
+                                          self.button_image_starty + i % 3 * self.button_height))
+        self.hp_bar.update(self.player.hp, (5, self.button_image_starty - self.bar_height))
+        self.mp_bar.update(self.player.mp, (405, self.button_image_starty - self.bar_height))
+
+    def draw_screen(self):
+        self.screen.blit(self.background_image, (0, 0))
+        for friend_pet in self.friend_pet_images:
+            friend_pet.draw()
+        for enermy_pet in self.enermy_pet_images:
+            enermy_pet.draw()
+        for button in self.button_images:
+            button.draw()
+        for enermy_hp_bar in self.enermy_hp_bars:
+            enermy_hp_bar.draw()
+
+        self.hp_bar.draw()
+        self.mp_bar.draw()
+
     def click_button(self):
         if self.battle_region != None and self.battle_state == BattleState.SelectAction:
             self.button_images[self.battle_region].click()
@@ -328,54 +391,4 @@ class Battle:
             last_time = current_time
             current_time = time.time()
 
-    def create_buttons(self):
-        button = ButtonImage(self.screen, self.button_width, self.button_height, "resources\\images\\button1.png", "Attack", 24)
-        self.button_images.append(button)
-        button = ButtonImage(self.screen, self.button_width, self.button_height, "resources\\images\\button2.png", "Catch", 24)
-        self.button_images.append(button)
-        button = ButtonImage(self.screen, self.button_width, self.button_height, "resources\\images\\button3.png", "Escape", 24)
-        self.button_images.append(button)
-        for i in range(len(self.friend_pets)):
-            button = ButtonImage(self.screen, self.button_width, self.button_height, "resources\\images\\button"+str(i+4)+".png",
-                                 self.friend_pets[i].get_skill().skill_name + "(" + str(self.friend_pets[i].level) +  ")", 24)
-            self.button_images.append(button)
 
-    def update_screen(self):
-        self.friend_pet_images = []
-        self.enermy_pet_images = []
-        self.enermy_hp_bars = []
-
-        for i in range(len(self.enermy_pets)):
-            pet_image = PetImage(self.screen, self.enermy_pets[i].pet_file, self.enermy_pets[i].image_number)
-            self.enermy_pet_images.append(pet_image)
-            self.enermy_pet_images[i].update((self.enermy_image_startx+i*self.pet_width, self.enermy_image_starty))
-            enermy_hp_bar = BarImage(self.screen, self.pet_width, self.bar_height, (255, 0, 0),
-                                     (255, 255, 255), "HP", 22, self.enermy_pets[i].pet_hp, self.enermy_pets[i].pet_hp)
-            enermy_hp_bar.update(self.enermy_pets[i].get_hp(),
-                                 (self.enermy_bar_startx + i * self.pet_width, self.enermy_bar_starty))
-            self.enermy_hp_bars.append(enermy_hp_bar)
-
-        for i in range(len(self.friend_pets)):
-            pet_image = PetImage(self.screen, self.friend_pets[i].pet_file, self.friend_pets[i].image_number)
-            self.friend_pet_images.append(pet_image)
-            self.friend_pet_images[i].update((self.friend_image_startx-i*self.pet_width, self.friend_image_starty))
-
-        for i in range(len(self.button_images)):
-            self.button_images[i].update((self.button_image_startx + i // 3 * self.button_width,
-                                          self.button_image_starty + i % 3 * self.button_height))
-        self.hp_bar.update(self.player.hp, (5, self.button_image_starty - self.bar_height))
-        self.mp_bar.update(self.player.mp, (405, self.button_image_starty - self.bar_height))
-
-    def draw_screen(self):
-        self.screen.blit(self.background_image, (0, 0))
-        for friend_pet in self.friend_pet_images:
-            friend_pet.draw()
-        for enermy_pet in self.enermy_pet_images:
-            enermy_pet.draw()
-        for button in self.button_images:
-            button.draw()
-        for enermy_hp_bar in self.enermy_hp_bars:
-            enermy_hp_bar.draw()
-
-        self.hp_bar.draw()
-        self.mp_bar.draw()

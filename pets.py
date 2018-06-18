@@ -74,9 +74,10 @@ class Pet:
 
     def gain_exp(self, exp):
         self.exp += exp
-        while self.exp > self.exp_list[self.level]:
-            self.level = str(int(self.level) + 1)
-            self.attack = int(self.attack * 1.2)    # 增加攻击力
-            self.max_hp = int(self.max_hp * 1.2)    # 增加血量
-            self.max_mp = int(self.max_mp * 1.2)    # 增加蓝量
+        if self.exp >= self.exp_list[self.level]:
+            print(self.pet_name, self.exp,  "level up!", self.exp_list[self.level])
+        while self.exp >= self.exp_list[self.level]:
+            self.level = self.level + 1
+            self.exp -= self.exp_list[self.level]
+
 
