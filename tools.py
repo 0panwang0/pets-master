@@ -1,11 +1,12 @@
 from pygame import *
 from renderer import *
 from battle import *
+from shop import *
 import random
 import os
 
 
-def check_keydown(event, player, scroll_map, dialog):
+def check_keydown(event, player, scroll_map, dialog, shop):
     '''
     :param event: 获取事件
     :param player: 角色
@@ -26,7 +27,7 @@ def check_keydown(event, player, scroll_map, dialog):
         player.state = 'move_down'
         player.moving.append(player.state)
     elif event.key == pygame.K_SPACE:
-        check_dialogue(player, scroll_map, dialog)
+        check_dialogue(player, scroll_map, dialog, shop)
 
 
 def check_keyup(event, player):
@@ -73,7 +74,7 @@ def check_keyup(event, player):
             player.state = 'rest_down'
 
 
-def check_event(player, scroll_map, icon, dialog):
+def check_event(player, scroll_map, icon, dialog, shop):
     '''
     :param player: 玩家对象
     :return: 如果
@@ -82,7 +83,7 @@ def check_event(player, scroll_map, icon, dialog):
         if event.type == pygame.QUIT:
             return False
         elif event.type == pygame.KEYDOWN:
-            check_keydown(event, player, scroll_map, dialog)
+            check_keydown(event, player, scroll_map, dialog, shop)
         if event.type == pygame.KEYUP:
             check_keyup(event, player)
         elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -158,10 +159,10 @@ def check_battle(player, scroll_map, screen):
                 player.state = "rest_" + player.moving[-1][5:]
                 player.moving.clear()
 
-def check_dialogue(player, scroll_map, dialog):
+def check_dialogue(player, scroll_map, dialog, shop):
     for sprite in scroll_map.image_sprites:
         if sprite.file_name == "shop":
-            pass
+            shop.draw()
         else:
             left = Object(pygame.Rect(sprite.rect.left-sprite.rect.width, sprite.rect.top, sprite.rect.width, sprite.rect.height))
             right = Object(pygame.Rect(sprite.rect.left+sprite.rect.width, sprite.rect.top, sprite.rect.width, sprite.rect.height))

@@ -42,7 +42,6 @@ for start_point in scroll_map.start_points:
         break
 scroll_map.center(player.rect.center)
 
-shop.draw()
 
 # main loop
 running = True
@@ -51,7 +50,7 @@ while running:
     frame_rate.tick(60)    # 设置帧数
     time = pygame.time.get_ticks()  #获得以pygame.init()为起点的时间，用于图片变换
 
-    running = check_event(player, scroll_map, icon, dialog)
+    running = check_event(player, scroll_map, icon, dialog, shop)
     scroll_map = check_switch_scene(player, scroll_map, screen)
 
     player.update(time)
