@@ -49,6 +49,7 @@ class Shop:
         self.shop = pygame.image.load(shop_file_name).convert_alpha()
         self.shop.blit(self.large_font.render('商店', True, (0, 0, 0)), (170, 50))
         self.draw_arrow()
+        self.draw_money()
         for i in range(len(self.shop_item)):
             self.shop.blit(self.get_image(item_dict[self.shop_item[i]]), (20, 120+i*30))
         if self.state == 0:
@@ -69,6 +70,11 @@ class Shop:
 
     def draw_arrow(self):
         self.shop.blit(self.arrow, (320, 280))
+
+    def draw_money(self):
+        self.shop.blit(self.get_image((9, 22)), (20, 270))
+        self.shop.blit(self.small_font.render('金币：', True, (0, 0, 0)), (50, 270))
+        self.shop.blit(self.small_font.render(str(self.player.money), True, (0, 0, 0)),(110, 270))
 
     def get_image(self, pos):
         return self.icons.subsurface(24 * pos[0], 24 * pos[1], 24, 24)
