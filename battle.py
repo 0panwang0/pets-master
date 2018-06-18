@@ -28,6 +28,7 @@ class Battle:
         self.player = player
         self.friend_pets = player.battle_list
         self.enermy_pets = enermy_pets
+        self.killed_enermys = []
 
         self.friend_pet_images = []
         self.enermy_pet_images = []
@@ -128,6 +129,7 @@ class Battle:
                     print("\tEnermy HP: ", self.enermy_pets[self.select_enermy].pet_hp)
                     if not self.enermy_pets[self.select_enermy].is_alive():
                         print("\tEnermy ", self.enermy_pets[self.select_enermy].get_name(), " die.")
+                        self.killed_enermys.append(self.enermy_pets[self.select_enermy])
                         del(self.enermy_pets[self.select_enermy])
                 elif self.skill_type == SkillType.DirectDamage:
                     self.player.use_skill(self.skill_index)
@@ -137,6 +139,7 @@ class Battle:
                     print("\tEnermy HP: ", self.enermy_pets[self.select_enermy].pet_hp)
                     if not self.enermy_pets[self.select_enermy].is_alive():
                         print("\tEnermy ", self.enermy_pets[self.select_enermy].get_name(), " die.")
+                        self.killed_enermys.append(self.enermy_pets[self.select_enermy])
                         del(self.enermy_pets[self.select_enermy])
                 elif self.skill_type == SkillType.AreaDamage:
                     self.player.use_skill(self.skill_index)
@@ -150,6 +153,7 @@ class Battle:
                         for i in range(len(self.enermy_pets)):
                             if not self.enermy_pets[i].is_alive():
                                 print("\tEnermy ", self.enermy_pets[i].get_name(), " die.")
+                                self.killed_enermys.append(self.enermy_pets[self.select_enermy])
                                 del(self.enermy_pets[i])
                                 finish = False
                                 break
@@ -333,7 +337,7 @@ class Battle:
         self.button_images.append(button)
         for i in range(len(self.friend_pets)):
             button = ButtonImage(self.screen, self.button_width, self.button_height, "resources\\images\\button"+str(i+4)+".png",
-                                 self.friend_pets[i].get_skill().skill_name, 24)
+                                 self.friend_pets[i].get_skill().skill_name + "(" + str(self.friend_pets[i].level) +  ")", 24)
             self.button_images.append(button)
 
     def update_screen(self):

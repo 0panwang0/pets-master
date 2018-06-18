@@ -40,14 +40,13 @@ class Pet:
         self.pet_damage = pet_damage
         self.level = level
         self.pet_skill = pet_skill
-        self.pet_skill.skill_name += '(' + self.level + ')'
         self.pet_file = pet_file
         self.image_number = image_number
         self.exp = exp
         self.exp_list = {
-            '1': 1000,
-            '2': 10000,
-            '3': 100000
+            1: 1000,
+            2: 10000,
+            3: 100000
         }
 
     def get_name(self):
@@ -70,10 +69,10 @@ class Pet:
     def is_alive(self):
         return self.pet_hp_left > 0
 
-    def up_level(self):
-        for level, exp in self.exp_list:
-            if self.exp > exp and self.level < level:
-                self.level = level
-                # 提示升级了
-                self.pet_skill.skill_effort = int(self.level) * 10 # 增加攻击力
-                self.pet_skill.skill_name = self.pet_skill.skill_name[:-3] + '(' + self.level + ')'
+    def gain_exp(self, exp):
+        self.exp += exp
+        while self.exp > self.exp_list[self.level]:
+            self.level = str(int(self.level) + 1)
+            self.attack = int(self.attack * 1.2)    # 增加攻击力
+            self.max_hp = int(self.max_hp * 1.2)    # 增加血量
+            self.max_mp = int(self.max_mp * 1.2)    # 增加蓝量

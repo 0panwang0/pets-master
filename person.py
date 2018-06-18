@@ -85,14 +85,13 @@ class Hero(Person):
             3: 4000
         }
 
-    def up_level(self):
-        for level, exp in self.exp_list:
-            if self.exp > exp and self.level < level:
-                self.level = level
-                # 提示升级了
-                self.attack = int(self.level) * 10  # 增加攻击力
-                self.hp = 100 + int(self.level) * 10  # 增加血量
-                self.mp = 100 + int(self.level) * 10  # 增加蓝量
+    def gain_exp(self, exp):
+        self.exp += exp
+        while self.exp >= self.exp_list[self.level]:
+            self.level = self.level + 1
+            self.attack = int(self.attack * 1.2)    # 增加攻击力
+            self.max_hp = int(self.max_hp * 1.2)    # 增加血量
+            self.max_mp = int(self.max_mp * 1.2)    # 增加蓝量
 
     def get_damage(self):
         return self.attack
