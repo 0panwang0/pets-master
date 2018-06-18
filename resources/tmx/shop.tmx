@@ -98,7 +98,7 @@
    <properties>
     <property name="__image__" value="1"/>
     <property name="actor" value="4"/>
-    <property name="filename" value="drama5"/>
+    <property name="filename" value="shop"/>
     <property name="state" value="rest_down"/>
    </properties>
   </object>

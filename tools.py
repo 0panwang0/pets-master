@@ -160,29 +160,32 @@ def check_battle(player, scroll_map, screen):
 
 def check_dialogue(player, scroll_map, dialog):
     for sprite in scroll_map.image_sprites:
-        left = Object(pygame.Rect(sprite.rect.left-sprite.rect.width, sprite.rect.top, sprite.rect.width, sprite.rect.height))
-        right = Object(pygame.Rect(sprite.rect.left+sprite.rect.width, sprite.rect.top, sprite.rect.width, sprite.rect.height))
-        up = Object(pygame.Rect(sprite.rect.left, sprite.rect.top-sprite.rect.height, sprite.rect.width, sprite.rect.height))
-        down = Object(pygame.Rect(sprite.rect.left, sprite.rect.top+sprite.rect.height, sprite.rect.width, sprite.rect.height))
-        if pygame.sprite.collide_rect(player, left) and player.state[5:] == "right":
-            sprite.state = "rest_left"
-            player.moving.clear()
-        elif pygame.sprite.collide_rect(player, right) and player.state[5:] == "left":
-            sprite.state = "rest_right"
-            player.moving.clear()
-        elif pygame.sprite.collide_rect(player, up) and player.state[5:] == "down":
-            sprite.state = "rest_up"
-            player.moving.clear()
-        elif pygame.sprite.collide_rect(player, down) and player.state[5:] == "up":
-            sprite.state = "rest_down"
-            player.moving.clear()
+        if sprite.file_name == "shop":
+            pass
         else:
-            continue
-        player.controller = 'dialog'
-        scroll_map.sprite_update()
-        scroll_map.draw()
-        pygame.display.update()
-        dialog.run(sprite)
+            left = Object(pygame.Rect(sprite.rect.left-sprite.rect.width, sprite.rect.top, sprite.rect.width, sprite.rect.height))
+            right = Object(pygame.Rect(sprite.rect.left+sprite.rect.width, sprite.rect.top, sprite.rect.width, sprite.rect.height))
+            up = Object(pygame.Rect(sprite.rect.left, sprite.rect.top-sprite.rect.height, sprite.rect.width, sprite.rect.height))
+            down = Object(pygame.Rect(sprite.rect.left, sprite.rect.top+sprite.rect.height, sprite.rect.width, sprite.rect.height))
+            if pygame.sprite.collide_rect(player, left) and player.state[5:] == "right":
+                sprite.state = "rest_left"
+                player.moving.clear()
+            elif pygame.sprite.collide_rect(player, right) and player.state[5:] == "left":
+                sprite.state = "rest_right"
+                player.moving.clear()
+            elif pygame.sprite.collide_rect(player, up) and player.state[5:] == "down":
+                sprite.state = "rest_up"
+                player.moving.clear()
+            elif pygame.sprite.collide_rect(player, down) and player.state[5:] == "up":
+                sprite.state = "rest_down"
+                player.moving.clear()
+            else:
+                continue
+            player.controller = 'dialog'
+            scroll_map.sprite_update()
+            scroll_map.draw()
+            pygame.display.update()
+            dialog.run(sprite)
 
 
 
