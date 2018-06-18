@@ -36,7 +36,7 @@ def check_keyup(event, player):
     :return: 无
     '''
     if event.key == pygame.K_d:
-        if player.moving:
+        if 'move_right' in player.moving:
             player.moving.remove('move_right')
             if not player.moving:
                 player.state = 'rest_right'
@@ -45,7 +45,7 @@ def check_keyup(event, player):
         else:
             player.state = 'rest_right'
     elif event.key == pygame.K_a:
-        if player.moving:
+        if 'move_left' in player.moving:
             player.moving.remove('move_left')
             if not player.moving:
                 player.state = 'rest_left'
@@ -54,7 +54,7 @@ def check_keyup(event, player):
         else:
             player.state = 'rest_left'
     elif event.key == pygame.K_w:
-        if player.moving:
+        if 'move_up' in player.moving:
             player.moving.remove('move_up')
             if not player.moving:
                 player.state = 'rest_up'
@@ -63,7 +63,7 @@ def check_keyup(event, player):
         else:
             player.state = 'rest_up'
     elif event.key == pygame.K_s:
-        if player.moving:
+        if 'move_down' in player.moving:
             player.moving.remove('move_down')
             if not player.moving:
                 player.state = 'rest_down'
