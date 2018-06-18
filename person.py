@@ -123,6 +123,8 @@ class Hero(Person):
 
     def take_heal(self, heal):
         self.hp += heal
+        if self.hp > self.max_hp:
+            self.hp = self.max_mp
 
     def is_alive(self):
         return self.hp > 0

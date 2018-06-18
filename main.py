@@ -18,6 +18,13 @@ screen.fill((255, 255, 255))
 pygame.display.set_caption("Pet Master")
 
 player = Hero('resources/images/Actor1.png', 0, 0, screen)
+skill1 = Skill("Direct", SkillType.DirectDamage, 6, 5)
+skill2 = Skill("Heal", SkillType.Heal, 10, 5)
+frined_pet1 = Pet("Friend Pet1", 20, 5, skill1, "2", 20,  "resources\\images\\pet00.png", 18)
+frined_pet2 = Pet("Friend Pet2", 20, 5, skill2, "2", 20,"resources\\images\\pet01.png", 18)
+player.own_list = [frined_pet1, frined_pet2]
+player.battle_list = [frined_pet1, frined_pet2]
+
 scroll_map = ScrollMap("resources/tmx/home.tmx", screen)
 
 dialog = Dialog(player, screen)

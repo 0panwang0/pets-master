@@ -85,14 +85,14 @@ class ButtonImage:
 
 
 class BarImage:
-    def __init__(self, screen, width, height, bar_color, text_color, text, font_size, total):
+    def __init__(self, screen, width, height, bar_color, text_color, text, font_size, total, left):
         self.screen = screen
         self.width = width
         self.height = height
         self.screen_rect = self.screen.get_rect()
 
         self.total = total
-        self.left = self.total
+        self.left = left
         self.bar_color = bar_color
         self.text_color = text_color
 

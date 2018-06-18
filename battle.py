@@ -2,7 +2,7 @@ import sys
 import random
 import time
 import pygame
-from data import *
+from pets import BattleState, BattleResult, SkillType, Skill, Pet
 from image import *
 
 
@@ -35,9 +35,9 @@ class Battle:
         self.button_images = []
 
         self.hp_bar = BarImage(self.screen, self.screen.get_width() / 2, self.bar_height, (255, 0, 0),
-                               (255, 255, 255), "HP", 24, self.player.hp_left)
+                               (255, 255, 255), "HP", 24, self.player.max_hp, self.player.hp)
         self.mp_bar = BarImage(self.screen, self.screen.get_width() / 2, self.bar_height, (0, 0, 255),
-                               (255, 255, 255), "MP", 24, self.player.mp_left)
+                               (255, 255, 255), "MP", 24, self.player.max_mp, self.player.mp)
 
         self.create_buttons()
         self.update_screen()
@@ -48,6 +48,7 @@ class Battle:
         self.battle_region = 0
         self.battle_continue = False
         self.want_escape = False
+        self.skill_index = 0
         self.skill_type = SkillType.NormalAttack
         self.skill_effort = 0
         self.skill_cost = 0
@@ -120,7 +121,6 @@ class Battle:
                 self.battle_state = BattleState.FriendRound
                 self.battle_continue = True
             elif self.battle_state == BattleState.FriendRound:
-                skill_index = self.battle_region - 3
                 if self.skill_type == SkillType.NormalAttack:
                     self.friend_attack()
                     self.enermy_pets[self.select_enermy].take_damage(self.skill_effort)
@@ -130,7 +130,7 @@ class Battle:
                         print("\tEnermy ", self.enermy_pets[self.select_enermy].get_name(), " die.")
                         del(self.enermy_pets[self.select_enermy])
                 elif self.skill_type == SkillType.DirectDamage:
-                    self.player.use_skill(skill_index)
+                    self.player.use_skill(self.skill_index)
                     self.friend_attack()
                     self.enermy_pets[self.select_enermy].take_damage(self.skill_effort)
                     print("\tEnermy Index: ", self.select_enermy)
@@ -139,7 +139,7 @@ class Battle:
                         print("\tEnermy ", self.enermy_pets[self.select_enermy].get_name(), " die.")
                         del(self.enermy_pets[self.select_enermy])
                 elif self.skill_type == SkillType.AreaDamage:
-                    self.player.use_skill(skill_index)
+                    self.player.use_skill(self.skill_index)
                     self.friend_attack()
                     for i in range(len(self.enermy_pets)):
                         self.enermy_pets[i].take_damage(self.skill_effort)
@@ -156,8 +156,8 @@ class Battle:
                         if finish:
                             break
                 elif self.skill_type == SkillType.Heal:
-                    self.player.use_skill(skill_index)
-                    print("\tPlayer HP: ", self.player.hp_left)
+                    self.player.use_skill(self.skill_index)
+                    print("\tPlayer HP: ", self.player.hp)
                     self.player.take_heal(self.skill_effort)
                 elif self.skill_type == SkillType.CatchPet:
                     judge = random.randint(0, 10)
@@ -185,8 +185,8 @@ class Battle:
                 for i in range(len(self.enermy_pets)):
                     self.enermy_attack(i)
                     self.player.take_damage(self.enermy_pets[i].get_damage())
-                    print("\tPlayer HP:\t", self.player.hp_left)
-                    if self.player.hp_left == 0:
+                    print("\tPlayer HP:\t", self.player.hp)
+                    if self.player.hp == 0:
                         self.battle_result = BattleResult.Defeat
                         return
                 if self.want_escape:
@@ -203,6 +203,7 @@ class Battle:
                     print("\tEscape Successful!")
                     return
                 else:
+                    self.battle_result = BattleResult.Match
                     self.battle_state = BattleState.SelectAction
                     self.battle_continue = False
                     print("\tEscape Fail!")
@@ -345,7 +346,7 @@ class Battle:
             self.enermy_pet_images.append(pet_image)
             self.enermy_pet_images[i].update((self.enermy_image_startx+i*self.pet_width, self.enermy_image_starty))
             enermy_hp_bar = BarImage(self.screen, self.pet_width, self.bar_height, (255, 0, 0),
-                                     (255, 255, 255), "HP", 22, self.enermy_pets[i].pet_hp)
+                                     (255, 255, 255), "HP", 22, self.enermy_pets[i].pet_hp, self.enermy_pets[i].pet_hp)
             enermy_hp_bar.update(self.enermy_pets[i].get_hp(),
                                  (self.enermy_bar_startx + i * self.pet_width, self.enermy_bar_starty))
             self.enermy_hp_bars.append(enermy_hp_bar)
@@ -358,8 +359,8 @@ class Battle:
         for i in range(len(self.button_images)):
             self.button_images[i].update((self.button_image_startx + i // 3 * self.button_width,
                                           self.button_image_starty + i % 3 * self.button_height))
-        self.hp_bar.update(self.player.hp_left, (5, self.button_image_starty - self.bar_height))
-        self.mp_bar.update(self.player.mp_left, (405, self.button_image_starty - self.bar_height))
+        self.hp_bar.update(self.player.hp, (5, self.button_image_starty - self.bar_height))
+        self.mp_bar.update(self.player.mp, (405, self.button_image_starty - self.bar_height))
 
     def draw_screen(self):
         self.screen.blit(self.background_image, (0, 0))
@@ -374,4 +375,3 @@ class Battle:
 
         self.hp_bar.draw()
         self.mp_bar.draw()
-
