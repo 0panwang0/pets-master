@@ -35,7 +35,7 @@ for start_point in scroll_map.start_points:
         break
 scroll_map.center(player.rect.center)
 
-#shop.draw()
+shop.draw()
 
 # main loop
 running = True

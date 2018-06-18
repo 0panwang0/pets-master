@@ -33,7 +33,7 @@ class Icon:
         self.state = 'main'
 
     def get_image(self, pos):
-        return pygame.transform.scale(self.icon.subsurface(24 * pos[0], 24 * pos[1], 24, 24), icon_size)
+        return self.icon.subsurface(24 * pos[0], 24 * pos[1], 24, 24)
 
     def get_item(self, item_name):
         self.item_name.append(item_name)
@@ -43,8 +43,8 @@ class Icon:
         for i in range(len(self.item_name)):
             col = i // 6
             row = i % 6
-            self.ui[self.state].blit(self.get_image(item_dict[self.item_name[i]]), (18 + 40 * row, 130 + 40 * col))
-            self.item_position.append((68 + 40 * row, 180 + 40 * col))
+            self.ui[self.state].blit(self.get_image(item_dict[self.item_name[i]]), (22 + 40 * row, 134 + 40 * col))
+            self.item_position.append((72 + 40 * row, 184 + 40 * col))
 
     def draw_value(self):
         for i in range(len(ui_state_list)):
