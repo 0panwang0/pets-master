@@ -153,10 +153,11 @@ class Hero(Person):
         self.rect.topleft = self.old_rect.topleft
 
 class NPC(Person):
-    def __init__(self, file_addr, row, col, image_num, file_name, screen):
+    def __init__(self, file_addr, row, col, image_num, file_name, properties):
         super().__init__(file_addr, row, col)
         self.row = row // 4
         self.col = col // 3
         self.image_num = image_num
         self.file_name = file_name
+        self.properties = properties
 
