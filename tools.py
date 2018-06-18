@@ -161,7 +161,6 @@ def check_battle(player, scroll_map, screen):
 
 def check_dialogue(player, scroll_map, dialog, shop):
     for sprite in scroll_map.image_sprites:
-        print(sprite.rect)
         left = Object(pygame.Rect(sprite.rect.left-sprite.rect.width, sprite.rect.top, sprite.rect.width, sprite.rect.height))
         right = Object(pygame.Rect(sprite.rect.left+sprite.rect.width, sprite.rect.top, sprite.rect.width, sprite.rect.height))
         up = Object(pygame.Rect(sprite.rect.left, sprite.rect.top-sprite.rect.height, sprite.rect.width, sprite.rect.height))
