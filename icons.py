@@ -5,11 +5,11 @@ from sys import exit
 screen_size = (800, 600)
 
 icon_size = (32, 32)
-icon_alpha = [180, 180, 180]
-icon_location = [(8, 16), (7, 14), (9, 7)]
-ui_location = {'bag':(50, 60), 'map':(100, 70), 'panel':(150, 60)}
-ui_state_list = ['bag', 'map', 'panel', 'main']
-ui_file_name = ["resources/images/bag.tga", "resources/images/map.png", "resources/images/panel.tga"]
+icon_alpha = [180, 180, 180, 180]
+icon_location = [(8, 16), (7, 14), (9, 7), (0, 14)]
+ui_location = {'bag':(50, 60), 'map':(100, 70), 'panel':(150, 60), 'sprite':(200, 60)}
+ui_state_list = ['bag', 'map', 'panel', 'sprite', 'main']
+ui_file_name = ["resources/images/bag.tga", "resources/images/map.png", "resources/images/panel.tga", "resources/images/sprite.tga"]
 font_file_name = "resources/fonts/ink.ttf"
 icon_file_name = "resources/images/IconSet.png"
 
