@@ -96,6 +96,7 @@ class Icon:
             self.draw_item()
             pygame.display.update()
             self.dialog.info("使用了物品["+item_name+"]!")
+            self.player.controller = 'main'
 
     def update_bag(self):
         for i in range(len(ui_state_list)):

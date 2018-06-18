@@ -96,9 +96,11 @@ class Dialog:
         self.take_control()
 
     def take_control(self):
-        while self.player.controller != 'main':
+        flag = True
+        while flag:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     exit()
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE or event.type == pygame.MOUSEBUTTONDOWN:
-                    self.player.controller = 'main'
+                    flag = False
+                    break
