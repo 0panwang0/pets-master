@@ -41,18 +41,18 @@ class Map(object):
         return temp_surface
 
 
-class ScrollMap:
+class ScrollMap(Map):
     def __init__(self, filename, screen):
-        renderer = Map(filename)
-        self.map_data = pyscroll.data.TiledMapData(renderer.tmx_data)
+        super().__init__(filename)
+        self.map_data = pyscroll.data.TiledMapData(self.tmx_data)
         self.map_layer = pyscroll.BufferedRenderer(self.map_data, (screen.get_rect().width
                                                                    , screen.get_rect().height), clamp_camera=True)
         self.group = pyscroll.PyscrollGroup(map_layer=self.map_layer)
-        self.blockers = make_object(renderer, 'blocker')    # 禁止角色横跨的位置
-        self.doors = make_object(renderer, 'door')  # 通往其它地图的门
-        self.start_points = make_object(renderer, 'start point')    # 角色在一张地图的起始点
-        self.sprites = make_object(renderer, 'sprite')  # 精灵对象
-        self.nobattle_area = make_object(renderer, 'nobattle')  # 非战斗区域
+        self.blockers = make_object(self, 'blocker')    # 禁止角色横跨的位置
+        self.doors = make_object(self, 'door')  # 通往其它地图的门
+        self.start_points = make_object(self, 'start point')    # 角色在一张地图的起始点
+        self.sprites = make_object(self, 'sprite')  # 精灵对象
+        self.nobattle_area = make_object(self, 'nobattle')  # 非战斗区域
         self.image_sprites = []  # 储存精灵图片对象
         self.screen = screen
         self.create_sprite_object()
