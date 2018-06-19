@@ -74,7 +74,7 @@ class ScrollMap:
         for sprite in self.sprites:
             row = int(sprite.properties['actor']) // 4 * 4
             col = int(sprite.properties['actor']) % 4 * 3
-            image = NPC("./resources/images/Actor" + sprite.properties['__image__'] + ".png", row,
+            image = NPC("./resources/images/Actor/Actor" + sprite.properties['__image__'] + ".png", row,
                         col, sprite.properties['__image__'], sprite.properties['filename'])
             image.rect = sprite.rect
             image.state = sprite.properties['state']

@@ -4,7 +4,7 @@ from battle import *
 from shop import *
 import random
 import os
-
+import pickle
 
 def check_keydown(event, player, scroll_map, dialog, shop):
     '''
@@ -145,15 +145,23 @@ def check_collision(player, scroll_map):
             player.move_back()
             break
 
+def random_choose_enermy(enermy_list):
+    random_num = random.randint(1, 4)
+    for _ in range(random_num):
+        random_enermy = random.randint(1, 3)
+        with open('resources\pet_bin\\forest\\' + str(random_enermy) + '.bin', "rb") as object:
+            bin = object.read()
+            enermy = pickle.loads(bin)
+        enermy_list.append(enermy)
+
 # 检查什么时候触发战斗
 def check_battle(player, scroll_map, screen):
     if scroll_map.nobattle_area:
         if not pygame.sprite.spritecollideany(player, scroll_map.nobattle_area) and player.moving:
             start_batlle = random.randint(0, 250)
             if start_batlle < 5:
-                skill4 = Skill("Area", SkillType.AreaDamage, 5, 10)
-                enermy_pet1 = Pet("Enermy Pet1", 21, 5, skill4, 2, 20, 500, 20,  "resources\\images\\pet03.png", 18)
-                enermy_list = [enermy_pet1]
+                enermy_list = []
+                random_choose_enermy(enermy_list)
                 battle = Battle(screen, player, enermy_list)
                 battle.start_battle()
                 player.state = "rest_" + player.moving[-1][5:]
