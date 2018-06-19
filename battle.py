@@ -1,5 +1,6 @@
 import sys
 import random
+import copy
 import time
 import pygame
 from pets import BattleState, BattleResult, SkillType, Skill, Pet
@@ -55,11 +56,18 @@ class Battle:
         self.skill_cost = 0
         self.select_enermy = 0
 
+        self.hit_sound = pygame.mixer.Sound("hit_sound.ogg")
+        self.heal_sound = pygame.mixer.Sound("heal_sound.ogg")
+        pygame.mixer.music.load("battle_bgm.ogg")
+
     def start_battle(self):
         if self.player.hp <= 0:
             print("Player seriously injured, could not enter a battle!!!")
             return
         self.battle_info("战斗开始!")
+        pygame.mixer.music.load("battle_bgm.ogg")
+        TRACK_END = pygame.USEREVENT + 1
+        pygame.mixer.music.play()
         while True:
             self.check_events()
             self.execute_state()
@@ -67,6 +75,7 @@ class Battle:
             self.draw_screen()
             if self.battle_result == BattleResult.Victory or self.battle_result == BattleResult.Defeat or \
                     self.battle_result == BattleResult.Escape:
+                pygame.mixer.music.stop()
                 if self.battle_result == BattleResult.Victory:
                     text = "胜利!"
                 elif self.battle_result == BattleResult.Defeat:
@@ -77,6 +86,9 @@ class Battle:
                 if BattleResult.Victory:
                     self.gain_reward()
                 break
+            if pygame.mixer.music.get_pos() > 92000:
+                pygame.mixer.music.stop()
+                pygame.mixer.music.play()
             pygame.display.flip()
 
     def battle_info(self, text):
@@ -157,8 +169,8 @@ class Battle:
                 self.battle_state = BattleState.FriendRound
                 self.battle_continue = True
             elif self.battle_state == BattleState.FriendRound:
+                self.friend_round()
                 if self.skill_type == SkillType.NormalAttack:
-                    self.friend_attack()
                     self.enermy_pets[self.select_enermy].take_damage(self.skill_effort)
                     print("\tEnermy Index: ", self.select_enermy)
                     print("\tEnermy HP: ", self.enermy_pets[self.select_enermy].pet_hp_left)
@@ -168,7 +180,6 @@ class Battle:
                         del(self.enermy_pets[self.select_enermy])
                 elif self.skill_type == SkillType.DirectDamage:
                     self.player.use_skill(self.skill_index)
-                    self.friend_attack()
                     self.enermy_pets[self.select_enermy].take_damage(self.skill_effort)
                     print("\tEnermy Index: ", self.select_enermy)
                     print("\tEnermy HP: ", self.enermy_pets[self.select_enermy].pet_hp)
@@ -178,7 +189,6 @@ class Battle:
                         del(self.enermy_pets[self.select_enermy])
                 elif self.skill_type == SkillType.AreaDamage:
                     self.player.use_skill(self.skill_index)
-                    self.friend_attack()
                     for i in range(len(self.enermy_pets)):
                         self.enermy_pets[i].take_damage(self.skill_effort)
                         print("\tEnermy Index: ", i)
@@ -222,7 +232,7 @@ class Battle:
                     self.battle_continue = True
             elif self.battle_state == BattleState.EnermyRound:
                 for i in range(len(self.enermy_pets)):
-                    self.enermy_attack(i)
+                    self.enermy_around(i)
                     self.player.take_damage(self.enermy_pets[i].get_damage())
                     print("\tPlayer HP:\t", self.player.hp)
                     if self.player.hp == 0:
@@ -323,62 +333,66 @@ class Battle:
         if self.battle_region != None:
             self.button_images[self.battle_region].release()
 
-    def friend_attack(self):
+    def friend_round(self):
         initial_time = time.time()
         current_time = time.time()
         move = 0
         last_time = current_time
         current_time = time.time()
-        while True:
+        if self.skill_type == SkillType.AreaDamage or self.skill_type == SkillType.DirectDamage or self.skill_type == SkillType.NormalAttack:
+            self.hit_sound.play()
+            while True:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        sys.exit()
+                move += (current_time - last_time) * 50
+                if move > 20:
+                    break
+                self.update_screen()
+                if self.skill_type == SkillType.NormalAttack or self.skill_type == SkillType.DirectDamage:
+                    self.enermy_pet_images[self.select_enermy].update((self.enermy_image_startx + self.select_enermy * self.pet_width, self.enermy_image_starty - move))
+                elif self.skill_type == SkillType.AreaDamage:
+                    for i in range(len(self.enermy_pet_images)):
+                        self.enermy_pet_images[i].update((self.enermy_image_startx + i * self.pet_width, self.enermy_image_starty - move))
+                self.draw_screen()
+                pygame.display.flip()
+                last_time = current_time
+                current_time = time.time()
+            while True:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        sys.exit()
+                move -= (current_time - last_time) * 80
+                if move < 0:
+                    break
+                self.update_screen()
+                if self.skill_type == SkillType.NormalAttack or self.skill_type == SkillType.DirectDamage:
+                    self.enermy_pet_images[self.select_enermy].update((self.enermy_image_startx + self.select_enermy * self.pet_width, self.enermy_image_starty - move))
+                elif self.skill_type == SkillType.AreaDamage:
+                    for i in range(len(self.enermy_pet_images)):
+                        self.enermy_pet_images[i].update((self.enermy_image_startx + i * self.pet_width, self.enermy_image_starty - move))
+                self.draw_screen()
+                pygame.display.flip()
+                last_time = current_time
+                current_time = time.time()
+        elif self.skill_type == SkillType.Heal:
+            self.heal_sound.play()
+        while current_time - initial_time < 1:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
-            move += (current_time - last_time) * 50
-            if move > 20:
-                break
-            self.update_screen()
-            if self.skill_type == SkillType.NormalAttack or self.skill_type == SkillType.DirectDamage:
-                self.enermy_pet_images[self.select_enermy].update((self.enermy_image_startx + self.select_enermy * self.pet_width, self.enermy_image_starty - move))
-            elif self.skill_type == SkillType.AreaDamage:
-                for i in range(len(self.enermy_pet_images)):
-                    self.enermy_pet_images[i].update((self.enermy_image_startx + i * self.pet_width, self.enermy_image_starty - move))
-            self.draw_screen()
-            pygame.display.flip()
-            last_time = current_time
-            current_time = time.time()
-        while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
-            move -= (current_time - last_time) * 80
-            if move < 0:
-                break
-            self.update_screen()
-            if self.skill_type == SkillType.NormalAttack or self.skill_type == SkillType.DirectDamage:
-                self.enermy_pet_images[self.select_enermy].update((self.enermy_image_startx + self.select_enermy * self.pet_width, self.enermy_image_starty - move))
-            elif self.skill_type == SkillType.AreaDamage:
-                for i in range(len(self.enermy_pet_images)):
-                    self.enermy_pet_images[i].update((self.enermy_image_startx + i * self.pet_width, self.enermy_image_starty - move))
-            self.draw_screen()
-            pygame.display.flip()
-            last_time = current_time
-            current_time = time.time()
-        while current_time - initial_time < 0.8:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
             self.update_screen()
             self.draw_screen()
             pygame.display.flip()
-            last_time = current_time
             current_time = time.time()
 
-    def enermy_attack(self, enermy_index):
+    def enermy_around(self, enermy_index):
         initial_time = time.time()
         current_time = time.time()
         move = 0
         last_time = current_time
         current_time = time.time()
+        self.hit_sound.play()
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -412,7 +426,6 @@ class Battle:
             self.update_screen()
             self.draw_screen()
             pygame.display.flip()
-            last_time = current_time
             current_time = time.time()
 
 

@@ -11,6 +11,7 @@ sprites = []
 frame_rate = pygame.time.Clock()
 
 # main
+pygame.mixer.pre_init(44100, 16, 2, 1024*4)
 pygame.init()
 screen_size = (800, 600)
 screen = pygame.display.set_mode(screen_size)
