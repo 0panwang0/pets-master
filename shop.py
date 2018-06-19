@@ -62,11 +62,13 @@ class Shop:
 
     def draw_introduce(self):
         for i in range(len(self.shop_item)):
-            self.shop.blit(self.small_font.render(self.shop_item[i]+"："+self.item_introduce[self.shop_item[i]], True, (0, 0, 0)), (50, 120+i*30))
+            self.shop.blit(self.small_font.render(self.shop_item[i]+"："+self.item_introduce[self.shop_item[i]],
+                                                  True, (0, 0, 0)), (50, 120+i*30))
 
     def draw_change(self):
         for i in range(len(self.shop_item)):
-            self.shop.blit(self.small_font.render(self.shop_item[i] + "：" + self.item_change[self.shop_item[i]], True, (0, 0, 0)), (50, 120 + i * 30))
+            self.shop.blit(self.small_font.render(self.shop_item[i] + "：" + self.item_change[self.shop_item[i]],
+                                                  True, (0, 0, 0)), (50, 120 + i * 30))
 
     def draw_arrow(self):
         self.shop.blit(self.arrow, (320, 280))

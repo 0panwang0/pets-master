@@ -189,6 +189,7 @@ def check_dialogue(player, scroll_map, dialog, shop):
             player.moving.clear()
         elif pygame.sprite.collide_rect(player, down) and player.state[5:] == "up":
             if sprite.file_name == "shop":
+                dialog.info('欢迎，我们为您提供了许多东西~',  'mid')
                 shop.draw()
             else:
                 sprite.state = "rest_down"
