@@ -6,6 +6,10 @@ import pygame
 from pets import BattleState, BattleResult, SkillType, Skill, Pet
 from image import *
 
+IMAGE_DIR = "resources\\images\\"
+PET_DIR = IMAGE_DIR + "Pets\\"
+MUSIC_DIR = "resources\\music\\"
+
 
 class Battle:
     def __init__(self, screen, player, enermy_pets):
@@ -15,7 +19,7 @@ class Battle:
         self.button_width = self.screen.get_width() / 2
         self.button_height = 80
         self.bar_height = 15
-        self.background_image = pygame.image.load("resources\\images\\background.png").convert()
+        self.background_image = pygame.image.load(IMAGE_DIR + "background.png").convert()
 
         self.button_image_startx = 0
         self.button_image_starty = self.screen.get_height() - 3 * self.button_height
@@ -56,17 +60,18 @@ class Battle:
         self.skill_cost = 0
         self.select_enermy = 0
 
-        self.hit_sound = pygame.mixer.Sound("hit_sound.ogg")
-        self.heal_sound = pygame.mixer.Sound("heal_sound.ogg")
-        self.victory_sound = pygame.mixer.Sound("victory_sound.ogg")
-        self.defeat_sound = pygame.mixer.Sound("defeat_sound.ogg")
+        self.open_sound = pygame.mixer.Sound(MUSIC_DIR + "open_sound.ogg")
+        self.hit_sound = pygame.mixer.Sound(MUSIC_DIR + "hit_sound.ogg")
+        self.heal_sound = pygame.mixer.Sound(MUSIC_DIR + "heal_sound.ogg")
+        self.victory_sound = pygame.mixer.Sound(MUSIC_DIR + "victory_sound.ogg")
+        self.defeat_sound = pygame.mixer.Sound(MUSIC_DIR + "defeat_sound.ogg")
 
     def start_battle(self):
         if self.player.hp <= 0:
             print("Player seriously injured, could not enter a battle!!!")
             return
-        self.battle_info("战斗开始!")
-        pygame.mixer.music.load("battle_bgm.ogg")
+        self.battle_info("战斗开始!", self.open_sound, 1)
+        pygame.mixer.music.load(MUSIC_DIR + "battle_bgm.ogg")
         pygame.mixer.music.play()
         while True:
             self.check_events()
@@ -77,14 +82,18 @@ class Battle:
                     self.battle_result == BattleResult.Escape:
                 pygame.mixer.music.stop()
                 if self.battle_result == BattleResult.Victory:
-                    self.victory_sound.play()
+                    music = self.victory_sound
+                    delay = 4
                     text = "胜利!"
                 elif self.battle_result == BattleResult.Defeat:
-                    self.defeat_sound.play()
+                    music = self.defeat_sound
+                    delay = 3
                     text = "失败!"
                 else:
+                    music = self.open_sound
+                    delay = 2
                     text = "逃脱!"
-                self.battle_info(text)
+                self.battle_info(text, music, delay)
                 if BattleResult.Victory:
                     self.gain_reward()
                 break
@@ -93,14 +102,15 @@ class Battle:
                 pygame.mixer.music.play()
             pygame.display.flip()
 
-    def battle_info(self, text):
+    def battle_info(self, text, music, delay):
+        music.play()
         initial_time = time.time()
         current_time = time.time()
         font = pygame.font.Font("resources//fonts//ink.ttf", 48)
         text_image = font.render(text, True, (25, 25, 112))
         text_rect = text_image.get_rect()
         text_rect.center = self.screen.get_rect().center
-        while current_time - initial_time < 3:
+        while current_time - initial_time < delay:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
@@ -276,14 +286,14 @@ class Battle:
             return None
 
     def create_buttons(self):
-        button = ButtonImage(self.screen, self.button_width, self.button_height, "resources\\images\\Buttons\\button1.png", "Attack", 24)
+        button = ButtonImage(self.screen, self.button_width, self.button_height, IMAGE_DIR + "Buttons\\button1.png", "Attack", 24)
         self.button_images.append(button)
-        button = ButtonImage(self.screen, self.button_width, self.button_height, "resources\\images\\Buttons\\button2.png", "Catch", 24)
+        button = ButtonImage(self.screen, self.button_width, self.button_height, IMAGE_DIR + "Buttons\\button2.png", "Catch", 24)
         self.button_images.append(button)
-        button = ButtonImage(self.screen, self.button_width, self.button_height, "resources\\images\\Buttons\\button3.png", "Escape", 24)
+        button = ButtonImage(self.screen, self.button_width, self.button_height, IMAGE_DIR + "Buttons\\button3.png", "Escape", 24)
         self.button_images.append(button)
         for i in range(len(self.friend_pets)):
-            button = ButtonImage(self.screen, self.button_width, self.button_height, "resources\\images\\Buttons\\button"+str(i+4)+".png",
+            button = ButtonImage(self.screen, self.button_width, self.button_height, IMAGE_DIR + "Buttons\\button"+str(i+4)+".png",
                                  self.friend_pets[i].get_skill().skill_name + "(" + str(self.friend_pets[i].level) +  ")", 24)
             self.button_images.append(button)
 
