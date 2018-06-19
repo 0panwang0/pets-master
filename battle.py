@@ -58,7 +58,6 @@ class Battle:
 
         self.hit_sound = pygame.mixer.Sound("hit_sound.ogg")
         self.heal_sound = pygame.mixer.Sound("heal_sound.ogg")
-        pygame.mixer.music.load("battle_bgm.ogg")
 
     def start_battle(self):
         if self.player.hp <= 0:
@@ -66,7 +65,6 @@ class Battle:
             return
         self.battle_info("战斗开始!")
         pygame.mixer.music.load("battle_bgm.ogg")
-        TRACK_END = pygame.USEREVENT + 1
         pygame.mixer.music.play()
         while True:
             self.check_events()
