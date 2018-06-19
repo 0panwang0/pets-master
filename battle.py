@@ -58,6 +58,8 @@ class Battle:
 
         self.hit_sound = pygame.mixer.Sound("hit_sound.ogg")
         self.heal_sound = pygame.mixer.Sound("heal_sound.ogg")
+        self.victory_sound = pygame.mixer.Sound("victory_sound.ogg")
+        self.defeat_sound = pygame.mixer.Sound("defeat_sound.ogg")
 
     def start_battle(self):
         if self.player.hp <= 0:
@@ -75,8 +77,10 @@ class Battle:
                     self.battle_result == BattleResult.Escape:
                 pygame.mixer.music.stop()
                 if self.battle_result == BattleResult.Victory:
+                    self.victory_sound.play()
                     text = "胜利!"
                 elif self.battle_result == BattleResult.Defeat:
+                    self.defeat_sound.play()
                     text = "失败!"
                 else:
                     text = "逃脱!"
@@ -96,7 +100,7 @@ class Battle:
         text_image = font.render(text, True, (25, 25, 112))
         text_rect = text_image.get_rect()
         text_rect.center = self.screen.get_rect().center
-        while current_time - initial_time < 1:
+        while current_time - initial_time < 3:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
