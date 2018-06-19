@@ -59,17 +59,41 @@ class Battle:
         if self.player.hp <= 0:
             print("Player seriously injured, could not enter a battle!!!")
             return
+        self.battle_info("战斗开始!")
         while True:
             self.check_events()
             self.execute_state()
             self.update_screen()
             self.draw_screen()
-            if BattleResult.Victory == self.battle_result or self.battle_result == BattleResult.Defeat or \
+            if self.battle_result == BattleResult.Victory or self.battle_result == BattleResult.Defeat or \
                     self.battle_result == BattleResult.Escape:
+                if self.battle_result == BattleResult.Victory:
+                    text = "胜利!"
+                elif self.battle_result == BattleResult.Defeat:
+                    text = "失败!"
+                else:
+                    text = "逃脱!"
+                self.battle_info(text)
                 if BattleResult.Victory:
                     self.gain_reward()
                 break
             pygame.display.flip()
+
+    def battle_info(self, text):
+        initial_time = time.time()
+        current_time = time.time()
+        font = pygame.font.Font("resources//fonts//ink.ttf", 48)
+        text_image = font.render(text, True, (25, 25, 112))
+        text_rect = text_image.get_rect()
+        text_rect.center = self.screen.get_rect().center
+        while current_time - initial_time < 1:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+            self.screen.blit(self.background_image, (0, 0))
+            self.screen.blit(text_image, text_rect)
+            pygame.display.flip()
+            current_time = time.time()
 
     def gain_reward(self):
         for killed_enermy in self.killed_enermys:

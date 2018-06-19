@@ -68,7 +68,7 @@ class Hero(Person):
         self.moving = [] # 这是一个堆，玩家可能同时按下多个移动键，储存这些状态，当玩家释放移动键时可以选择角色下一个状态
         self.tasks = [1, 2, 3, 4, -1]
         self.money = 100
-        self.hp = 100
+        self.hp = 50
         self.max_hp = 100
         self.mp = 55
         self.max_mp = 60
@@ -87,12 +87,16 @@ class Hero(Person):
 
     def gain_exp(self, exp):
         self.exp += exp
+        level_up = 0
         while self.exp >= self.exp_list[self.level]:
+            level_up = level_up + 1
             self.level = self.level + 1
             self.attack = int(self.attack * 1.2)    # 增加攻击力
             self.max_hp = int(self.max_hp * 1.2)    # 增加血量
             self.max_mp = int(self.max_mp * 1.2)    # 增加蓝量
             self.exp -= self.exp_list[self.level]
+        return level_up
+
 
     def gain_money(self, money):
         self.money += money

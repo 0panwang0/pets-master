@@ -74,11 +74,12 @@ class Pet:
 
     def gain_exp(self, exp):
         self.exp += exp
-        if self.exp >= self.exp_list[self.level]:
-            print(self.pet_name, self.exp,  "level up!", self.exp_list[self.level])
+        level_up = 0
         while self.exp >= self.exp_list[self.level]:
+            level_up = level_up + 1
             self.level = self.level + 1
             self.exp -= self.exp_list[self.level]
+        return level_up
 
 
     def obj2json(self, obj):
