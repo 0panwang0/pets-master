@@ -272,7 +272,7 @@
   <object id="103" name="blocker" x="704" y="272" width="16" height="16"/>
   <object id="105" name="blocker" x="659.667" y="624" width="24.6667" height="30.1667"/>
   <object id="106" name="blocker" x="596.333" y="624" width="24.9167" height="28.6667"/>
-  <object id="112" name="sprite" gid="9975" x="176" y="256" width="16" height="16">
+  <object id="112" name="sprite" gid="9975" x="168.667" y="262" width="32" height="32">
    <properties>
     <property name="__image__" value="1"/>
     <property name="actor" value="2"/>
@@ -280,7 +280,7 @@
     <property name="state" value="rest_down"/>
    </properties>
   </object>
-  <object id="115" name="sprite" gid="9975" x="48" y="96" width="16" height="16">
+  <object id="115" name="sprite" gid="9975" x="58.6667" y="110.667" width="32" height="32">
    <properties>
     <property name="__image__" value="1"/>
     <property name="actor" value="3"/>

@@ -67,7 +67,7 @@
   <object id="18" name="blocker" x="181.167" y="320.583" width="139.167" height="10.3333"/>
   <object id="19" name="blocker" x="112" y="288" width="28" height="30.5"/>
   <object id="20" name="blocker" x="180" y="287.75" width="28" height="30.5"/>
-  <object id="25" name="sprite" gid="9339" x="240" y="208" width="16" height="16">
+  <object id="25" name="sprite" gid="9339" x="244" y="207.333" width="32" height="32">
    <properties>
     <property name="__image__" value="1"/>
     <property name="actor" value="1"/>

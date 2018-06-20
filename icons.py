@@ -161,8 +161,10 @@ class Icon:
                 self.player.mp = self.player.max_mp
         elif item_name == "生肉":
             self.player.max_hp += 10
+            self.dialog.info('生命上限+10')
         elif item_name == "鲜鱼":
             self.player.max_mp += 10
+            self.dialog.info('魔法上限+10')
 
 
     def update_bag(self):
