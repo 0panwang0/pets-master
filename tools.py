@@ -122,6 +122,7 @@ def check_switch_scene(player, scroll_map, screen):
     '''
     door_list = pygame.sprite.spritecollide(player, scroll_map.doors, False)
     if door_list and door_list[0].properties['state'] == player.state[5:]:
+        scroll_map.BGM.stop()
         screen.fill((0, 0, 0))
         pygame.display.flip()
         scroll_map = ScrollMap(TMX[door_list[0].properties['type']], screen)
@@ -134,6 +135,8 @@ def check_switch_scene(player, scroll_map, screen):
                         player.rect.bottom = start_point.rect.bottom
         scroll_map.add(player)
         scroll_map.center(player.rect.center)
+        scroll_map.BGM = pygame.mixer.Sound(MUSIC_DIR + door_list[0].properties['type'] + ".ogg")
+        scroll_map.BGM.play()
     return scroll_map
 
 
@@ -165,12 +168,14 @@ def check_battle(player, scroll_map, screen):
         if not pygame.sprite.spritecollideany(player, scroll_map.nobattle_area) and player.moving:
             start_batlle = random.randint(0, 250)
             if start_batlle < 5:
+                scroll_map.BGM.stop()
                 enermy_list = []
                 random_choose_enermy(enermy_list, scroll_map)
                 battle = Battle(screen, player, enermy_list)
                 battle.start_battle()
                 player.state = "rest_" + player.moving[-1][5:]
                 player.moving.clear()
+                scroll_map.BGM.play(loops=True)
 
 def check_dialogue(player, scroll_map, dialog, shop):
     for sprite in scroll_map.image_sprites:

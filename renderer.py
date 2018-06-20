@@ -55,6 +55,7 @@ class ScrollMap(Map):
         self.nobattle_area = make_object(self, 'nobattle')  # 非战斗区域
         self.image_sprites = []  # 储存精灵图片对象
         self.screen = screen
+        self.BGM = ''
         self.create_sprite_object()
 
 
