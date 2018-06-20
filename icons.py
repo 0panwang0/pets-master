@@ -1,6 +1,8 @@
 ﻿import pygame
 from pygame.locals import *
 from sys import exit
+import const
+
 
 screen_size = (800, 600)
 
@@ -145,25 +147,37 @@ class Icon:
 
     def use_item(self, item_name):
         if item_name == "萝卜":
-            self.player.hp += 100
+            self.player.hp += const.CARROT_HP
             if self.player.hp > self.player.max_hp:
+                self.dialog.info('回复了' + str(const.CARROT_HP - self.player.hp + self.player.max_hp) + '生命')
                 self.player.hp = self.player.max_hp
+            else:
+                self.dialog.info('回复了' + str(const.CARROT_HP) + '生命')
         elif item_name == "洋葱":
-            self.player.mp += 100
+            self.player.mp += const.ONION_MP
             if self.player.mp > self.player.max_mp:
+                self.dialog.info('回复了' + str(const.ONION_MP - self.player.mp + self.player.max_mp) + '魔法')
                 self.player.mp = self.player.max_mp
+            else:
+                self.dialog.info('回复了' + str(const.ONION_MP) + '魔法')
         elif item_name == "土豆":
-            self.player.hp += 50
-            self.player.mp += 50
+            self.player.hp += const.POTATO_HP
+            self.player.mp += const.POTATO_MP
             if self.player.hp > self.player.max_hp:
+                self.dialog.info('回复了' + str(const.POTATO_HP - self.player.hp + self.player.max_hp) + '生命')
                 self.player.hp = self.player.max_hp
+            else:
+                self.dialog.info('回复了' + str(const.POTATO_HP) + '生命')
             if self.player.mp > self.player.max_mp:
+                self.dialog.info('回复了' + str(const.POTATO_MP - self.player.mp + self.player.max_mp) + '魔法')
                 self.player.mp = self.player.max_mp
+            else:
+                self.dialog.info('回复了' + str(const.POTATO_MP) + '魔法')
         elif item_name == "生肉":
-            self.player.max_hp += 10
+            self.player.max_hp += const.MEAT_MAX_HP
             self.dialog.info('生命上限+10')
         elif item_name == "鲜鱼":
-            self.player.max_mp += 10
+            self.player.max_mp += const.FISH_MAX_MP
             self.dialog.info('魔法上限+10')
 
 
