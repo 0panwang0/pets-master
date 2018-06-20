@@ -12,6 +12,8 @@ ui_state_list = ['bag', 'map', 'panel', 'sprite', 'main']
 ui_file_name = ["resources/images/bag.tga", "resources/images/map.png", "resources/images/panel.tga", "resources/images/sprite.tga"]
 font_file_name = "resources/fonts/ink.ttf"
 icon_file_name = "resources/images/IconSet.png"
+arrow_file_name = "resources/images/arrow.png"
+pets_file_name = ['resources/images/1 (7).gif','resources/images/1 (9).gif']
 
 item_dict = { '萝卜':(0, 18), '洋葱':(1, 18), '土豆':(2, 18), '生肉':(3, 18), '鲜鱼':(4, 18),}
 
@@ -23,13 +25,17 @@ class Icon:
         self.screen = screen
         self.bag_font = pygame.font.Font(font_file_name, 40)
         self.sprite_font = pygame.font.Font(font_file_name, 30)
+        self.description_font = pygame.font.Font(font_file_name, 20)
         self.panel_font = pygame.font.Font(font_file_name, 25)
         self.gold_font = pygame.font.Font(font_file_name, 20)
         self.ui = {}
         self.item_name = []
         self.item_position = []
+        self.sprite_index = 0
+        self.description_item = ["等级", "伤害", "技能"]
         for i in range(len(ui_file_name)):
             self.ui[ui_state_list[i]] = pygame.image.load(ui_file_name[i]).convert_alpha()
+        self.arrow = pygame.image.load(arrow_file_name).convert_alpha()
         self.update_bag()
         self.state = 'main'
 
@@ -63,6 +69,17 @@ class Icon:
             if ui_state_list[i] == 'sprite':
                 self.ui['sprite'] = pygame.image.load(ui_file_name[i]).convert_alpha()
         self.ui['sprite'].blit(self.sprite_font.render('精灵', True, (0, 0, 0)), (175, 65))
+        self.ui['sprite'].blit(self.arrow, (320, 280))
+        sprite = self.player.own_list[self.sprite_index]
+        sprite_image = pygame.image.load(pets_file_name[self.sprite_index]).convert_alpha()
+        sprite_value = []
+        sprite_value.append(str(sprite.level))
+        sprite_value.append(str(sprite.pet_damage))
+        sprite_value.append(str(sprite.pet_skill.skill_name))
+        self.ui['sprite'].blit(sprite_image, (50, 150))
+        for i in range(3):
+            self.ui['sprite'].blit(self.description_font.render(self.description_item[i]+"："+sprite_value[i], True, (0, 0, 0)), (200, 145 + i * 30))
+
 
 
     def draw(self):
@@ -91,6 +108,10 @@ class Icon:
                     break
             icon_alpha[i] = 180
             self.state = 'main'
+        if self.state == 'sprite' and pygame.Rect(320 + (screen_size[0] - self.ui['sprite'].get_width()) / 2,215 + (screen_size[1] - self.ui['sprite'].get_height()) / 2, self.arrow.get_width(),self.arrow.get_height()).collidepoint(pos):
+            self.sprite_index = (self.sprite_index + 1) % len(self.player.own_list)
+
+
 
     def check_mouse_right_event(self, pos):
         if self.state == 'bag':
