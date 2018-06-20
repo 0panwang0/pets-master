@@ -15,7 +15,6 @@ ui_file_name = ["resources/images/bag.tga", "resources/images/map.png", "resourc
 font_file_name = "resources/fonts/ink.ttf"
 icon_file_name = "resources/images/IconSet.png"
 arrow_file_name = "resources/images/arrow.png"
-pets_file_name = ['resources/images/1 (7).gif','resources/images/1 (9).gif']
 
 item_dict = { '萝卜':(0, 18), '洋葱':(1, 18), '土豆':(2, 18), '生肉':(3, 18), '鲜鱼':(4, 18),}
 
@@ -73,7 +72,8 @@ class Icon:
         self.ui['sprite'].blit(self.sprite_font.render('精灵', True, (0, 0, 0)), (175, 65))
         self.ui['sprite'].blit(self.arrow, (320, 280))
         sprite = self.player.own_list[self.sprite_index]
-        sprite_image = pygame.image.load(pets_file_name[self.sprite_index]).convert_alpha()
+        pet_file_name = sprite.pet_file[:-3]+"gif"
+        sprite_image = pygame.image.load(pet_file_name).convert_alpha()
         sprite_value = []
         sprite_value.append(str(sprite.level))
         sprite_value.append(str(sprite.pet_damage))
@@ -113,7 +113,9 @@ class Icon:
             icon_alpha[i] = 180
             self.state = 'main'
         if self.state == 'sprite':
-            sprite_image = pygame.image.load(pets_file_name[self.sprite_index]).convert_alpha()
+            sprite = self.player.own_list[self.sprite_index]
+            pet_file_name = sprite.pet_file[:-3] + "gif"
+            sprite_image = pygame.image.load(pet_file_name).convert_alpha()
             if pygame.Rect(320 +(screen_size[0]-self.ui['sprite'].get_width())/2,215+(screen_size[1]-self.ui['sprite'].get_height())/2,self.arrow.get_width(),self.arrow.get_height()).collidepoint(pos):
                 self.sprite_index = (self.sprite_index + 1) % len(self.player.own_list)
             elif pygame.Rect(50+(screen_size[0]-self.ui['sprite'].get_width())/2,75+(screen_size[1]-self.ui['sprite'].get_height())/2,sprite_image.get_width(),sprite_image.get_height()).collidepoint(pos):
@@ -139,7 +141,9 @@ class Icon:
             self.use_item(item_name)
             self.player.controller = 'main'
         if self.state == 'sprite':
-            sprite_image = pygame.image.load(pets_file_name[self.sprite_index]).convert_alpha()
+            sprite = self.player.own_list[self.sprite_index]
+            pet_file_name = sprite.pet_file[:-3] + "gif"
+            sprite_image = pygame.image.load(pet_file_name).convert_alpha()
             if pygame.Rect(50+(screen_size[0]-self.ui['sprite'].get_width())/2,75+(screen_size[1]-self.ui['sprite'].get_height())/2,sprite_image.get_width(),sprite_image.get_height()).collidepoint(pos):
                 if self.player.own_list[self.sprite_index] in self.player.battle_list:
                     self.player.battle_list.remove(self.player.own_list[self.sprite_index])
