@@ -64,6 +64,9 @@ class Pet:
     def get_skill(self):
         return self.pet_skill
 
+    def get_effort(self):
+        return int(self.pet_skill.skill_effort * (0.5 + 0.2 * self.level))
+
     def take_damage(self, damage):
         self.pet_hp_left -= damage
         if self.pet_hp_left < 0:
@@ -74,12 +77,9 @@ class Pet:
 
     def gain_exp(self, exp):
         self.exp += exp
-        level_up = 0
         while self.exp >= self.exp_list[self.level]:
-            level_up = level_up + 1
             self.level = self.level + 1
             self.exp -= self.exp_list[self.level]
-        return level_up
 
 
     def obj2json(self, obj):

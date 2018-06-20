@@ -87,16 +87,15 @@ class Hero(Person):
 
     def gain_exp(self, exp):
         self.exp += exp
-        level_up = 0
-        while self.exp >= self.exp_list[self.level]:
-            level_up = level_up + 1
-            self.level = self.level + 1
-            self.attack = int(self.attack * 1.2)    # 增加攻击力
-            self.max_hp = int(self.max_hp * 1.2)    # 增加血量
-            self.max_mp = int(self.max_mp * 1.2)    # 增加蓝量
-            self.exp -= self.exp_list[self.level]
-        return level_up
-
+        if self.exp >= self.exp_list[self.level]:
+            while self.exp >= self.exp_list[self.level]:
+                self.level = self.level + 1
+                self.attack = int(self.attack * 1.2)    # 增加攻击力
+                self.max_hp = int(self.max_hp * 1.2)    # 增加血量
+                self.max_mp = int(self.max_mp * 1.2)    # 增加蓝量
+                self.exp -= self.exp_list[self.level]
+            self.hp = self.max_hp
+            self.mp = self.max_mp
 
     def gain_money(self, money):
         self.money += money
@@ -111,8 +110,7 @@ class Hero(Person):
         return self.battle_list[index].get_skill().skill_type
 
     def get_skill_effort(self, index):
-        print("---", self.battle_list[index].get_skill().skill_effort)
-        return int(self.battle_list[index].get_skill().skill_effort * (0.5 + self.battle_list[index].level * 0.5))
+        return int(self.battle_list[index].get_effort())
 
     def get_skill_available(self, index):
         return self.mp >= self.get_skill_cost(index)
