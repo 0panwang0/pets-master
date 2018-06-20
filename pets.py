@@ -65,7 +65,7 @@ class Pet:
         return self.pet_skill
 
     def get_effort(self):
-        return int(self.pet_skill.skill_effort * (0.5 + 0.2 * self.level))
+        return int(self.pet_skill.skill_effort * (0.8 + 0.2 * self.level))
 
     def take_damage(self, damage):
         self.pet_hp_left -= damage

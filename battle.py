@@ -157,7 +157,6 @@ class Battle:
                     skill_index = self.battle_region - 3
                     if len(self.friend_pets) > skill_index and self.player.get_skill_available(skill_index):
                         self.skill_type, self.skill_effort, self.skill_cost = self.player.get_skill_info(skill_index)
-                        print("***", self.skill_effort)
                         print("\tSkill Type: ", self.skill_type)
                         print("\tSkill Effort", self.skill_effort)
                         print("\tSkill Cost:\t", self.skill_cost)
