@@ -26,8 +26,8 @@ frined_pet2 = Pet("Friend Pet2", 20, 5, skill2, 1, 20, 500, 20, const.PET_DIR + 
 player.own_list = [frined_pet1, frined_pet2]
 player.battle_list = [frined_pet1, frined_pet2]
 
-scroll_map = ScrollMap("resources/tmx/home.tmx", screen)
-scroll_map.BGM = pygame.mixer.Sound('resources\music\\' + "home.ogg")
+scroll_map = ScrollMap(const.TMX_DIR + "home.tmx", screen)
+scroll_map.BGM = pygame.mixer.Sound(const.MUSIC_DIR + "home.ogg")
 scroll_map.BGM.play(loops=True)
 dialog = Dialog(player, screen)
 icon = Icon(player, dialog, screen)

@@ -10,3 +10,4 @@ FISH_MAX_MP = 10
 IMAGE_DIR = "resources\\images\\"
 PET_DIR = IMAGE_DIR + "Pets\\"
 MUSIC_DIR = "resources\\music\\"
+TMX_DIR = "resources\\tmx\\"
