@@ -22,6 +22,7 @@ class Icon:
         self.dialog = dialog
         self.screen = screen
         self.bag_font = pygame.font.Font(font_file_name, 40)
+        self.sprite_font = pygame.font.Font(font_file_name, 30)
         self.panel_font = pygame.font.Font(font_file_name, 25)
         self.gold_font = pygame.font.Font(font_file_name, 20)
         self.ui = {}
@@ -57,6 +58,13 @@ class Icon:
         self.ui['panel'].blit(self.panel_font.render('经验值：' + str(self.player.exp) + '/' + str(self.player.exp_list[self.player.level]), True, (0, 0, 0)), (25, 290))
         self.ui['panel'].blit(self.bag_font.render('人物', True, (0, 0, 0)), (96, 65))
 
+    def draw_sprite(self):
+        for i in range(len(ui_state_list)):
+            if ui_state_list[i] == 'sprite':
+                self.ui['sprite'] = pygame.image.load(ui_file_name[i]).convert_alpha()
+        self.ui['sprite'].blit(self.sprite_font.render('精灵', True, (0, 0, 0)), (175, 65))
+
+
     def draw(self):
         for i in range(len(icon_location)):
             image = self.get_image(icon_location[i])
@@ -66,8 +74,11 @@ class Icon:
             self.screen.blit(self.ui[self.state], ui_location[self.state])
         if self.state == 'bag':
             self.draw_item()
-        if self.state == 'panel':
+            self.update_bag()
+        elif self.state == 'panel':
             self.draw_value()
+        elif self.state == 'sprite':
+            self.draw_sprite()
 
     def check_mouse_left_event(self, pos):
         if self.state == 'main':
