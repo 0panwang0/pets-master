@@ -92,8 +92,8 @@ class Icon:
         if self.state != 'main':
             self.screen.blit(self.ui[self.state], ui_location[self.state])
         if self.state == 'bag':
-            self.draw_item()
             self.update_bag()
+            self.draw_item()
         elif self.state == 'panel':
             self.draw_value()
         elif self.state == 'sprite':
@@ -134,6 +134,7 @@ class Icon:
             self.draw_item()
             pygame.display.update()
             self.dialog.info("使用了物品["+item_name+"]!")
+            self.use_item(item_name)
             self.player.controller = 'main'
         if self.state == 'sprite':
             sprite_image = pygame.image.load(pets_file_name[self.sprite_index]).convert_alpha()
@@ -141,6 +142,27 @@ class Icon:
                 if self.player.own_list[self.sprite_index] in self.player.battle_list:
                     self.player.battle_list.remove(self.player.own_list[self.sprite_index])
                 self.draw_sprite()
+
+    def use_item(self, item_name):
+        if item_name == "萝卜":
+            self.player.hp += 100
+            if self.player.hp > self.player.max_hp:
+                self.player.hp = self.player.max_hp
+        elif item_name == "洋葱":
+            self.player.mp += 100
+            if self.player.mp > self.player.max_mp:
+                self.player.mp = self.player.max_mp
+        elif item_name == "土豆":
+            self.player.hp += 50
+            self.player.mp += 50
+            if self.player.hp > self.player.max_hp:
+                self.player.hp = self.player.max_hp
+            if self.player.mp > self.player.max_mp:
+                self.player.mp = self.player.max_mp
+        elif item_name == "生肉":
+            self.player.max_hp += 10
+        elif item_name == "鲜鱼":
+            self.player.max_mp += 10
 
 
     def update_bag(self):
