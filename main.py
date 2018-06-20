@@ -32,7 +32,6 @@ scroll_map.BGM.play(loops=True)
 dialog = Dialog(player, screen)
 icon = Icon(player, dialog, screen)
 shop = Shop(player, icon, screen)
-
 player.controller = "main"
 scroll_map.add(player)
 icon.get_item('萝卜')
