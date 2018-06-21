@@ -78,7 +78,10 @@ class Icon:
         self.ui['setting'].blit(title, ((self.ui['sprite'].get_width()-title.get_width())/2, 65))
         for i in range(len(self.description_setting)):
             self.ui['setting'].blit(self.panel_font.render(self.description_setting[i],True, (0, 0, 0)), (50, 140 + i * 50))
-        
+        plus = pygame.image.load(plus_file_name)
+        minus = pygame.image.load(minus_file_name)
+        self.ui['setting'].blit(plus, (200, 140))
+        self.ui['setting'].blit(minus, (300, 140))
 
     def draw_sprite(self):
         for i in range(len(ui_state_list)):

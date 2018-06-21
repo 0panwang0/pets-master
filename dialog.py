@@ -88,7 +88,6 @@ class Dialog:
             self.draw(image, content[1:])
 
     def info(self, text, flag = "right"):
-        self.player.controller = 'info'
         self.prompt = pygame.image.load(prompt_file_name).convert_alpha()
         surface = self.font.render(text.rstrip(), True, (0, 0, 0))
         position = ((self.prompt.get_width()-surface.get_width())/2, (self.prompt.get_height()-surface.get_height())/2)
