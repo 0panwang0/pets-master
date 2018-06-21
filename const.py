@@ -9,6 +9,7 @@ FISH_MAX_MP = 10
 # 路径
 IMAGE_DIR = "resources\\images\\"
 PET_DIR = IMAGE_DIR + "Pets\\"
+BUTTON_DIR = IMAGE_DIR + "Buttons\\"
 MUSIC_DIR = "resources\\music\\"
 TMX_DIR = "resources\\tmx\\"
 

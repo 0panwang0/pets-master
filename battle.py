@@ -121,8 +121,9 @@ class Battle:
             for killed_enermy in self.killed_enermys:
                 beated_exp += killed_enermy.beated_exp
                 beated_money += killed_enermy.beated_money
+            self.dialog.info("获得金币:  " + str(beated_exp), "mid")
+            self.dialog.info("获得经验:  " + str(beated_exp), "mid")
             self.player.gain_money(beated_money)
-            self.dialog.write("获得金币", [str(beated_exp)])
             ori_lv = self.player.level
             ori_hp = self.player.max_hp
             ori_mp = self.player.max_mp
@@ -314,15 +315,15 @@ class Battle:
             return None
 
     def create_buttons(self):
-        button = ButtonImage(self.screen, self.button_width, self.button_height, const.IMAGE_DIR + "Buttons\\button1.png", "Attack", 24)
+        button = ButtonImage(self.screen, self.button_width, self.button_height, const.BUTTON_DIR + "button1.png", "Attack", 24)
         self.button_images.append(button)
-        button = ButtonImage(self.screen, self.button_width, self.button_height, const.IMAGE_DIR + "Buttons\\button2.png", "Catch", 24)
+        button = ButtonImage(self.screen, self.button_width, self.button_height, const.BUTTON_DIR + "button2.png", "Catch", 24)
         self.button_images.append(button)
-        button = ButtonImage(self.screen, self.button_width, self.button_height, const.IMAGE_DIR + "Buttons\\button3.png", "Escape", 24)
+        button = ButtonImage(self.screen, self.button_width, self.button_height, const.BUTTON_DIR + "button3.png", "Escape", 24)
         self.button_images.append(button)
         for i in range(len(self.friend_pets)):
-            button = ButtonImage(self.screen, self.button_width, self.button_height, const.IMAGE_DIR + "Buttons\\button"+str(i+4)+".png",
-                                 self.friend_pets[i].get_skill().skill_name + "(" + str(self.friend_pets[i].level) +  ")", 24)
+            button = ButtonImage(self.screen, self.button_width, self.button_height, const.BUTTON_DIR + "button"+ str(i+4)+".png",
+                                 self.friend_pets[i].get_skill().skill_name + "(" + str(self.friend_pets[i].level) + ")", 24)
             self.button_images.append(button)
 
     def update_screen(self):
