@@ -136,11 +136,11 @@ class Battle:
                 dst_defense = self.player.defense
                 info = []
                 info.append("等 级:  " + str(ori_lv) + " -> " + str(dst_lv))
-                info.append("生命值:  " + str(ori_hp) + " -> " + str(dst_hp))
-                info.append("法力值:  " + str(ori_mp) + " -> " + str(dst_mp))
-                info.append("攻击力:  " + str(ori_attack) + " -> " + str(dst_attack))
-                info.append("防御力：  " + str(ori_defense) + " -> " + str(dst_defense))
-                self.dialog.write("Test", info)
+                info.append("生命值: " + str(ori_hp) + " -> " + str(dst_hp))
+                info.append("法力值: " + str(ori_mp) + " -> " + str(dst_mp))
+                info.append("攻击力: " + str(ori_attack) + " -> " + str(dst_attack))
+                info.append("防御力: " + str(ori_defense) + " -> " + str(dst_defense))
+                self.dialog.write("勇者", info)
             for pet in self.player.battle_list:
                 ori_lv = pet.level
                 ori_effort = pet.get_effort()
@@ -148,11 +148,10 @@ class Battle:
                     dst_lv = pet.level
                     dst_effort = pet.get_effort()
                     info = []
-                    info.append("宠物：  " + pet.pet_name)
                     info.append("等 级:  " + str(ori_lv) + " -> " + str(dst_lv))
                     info.append("技能：  " + pet.pet_skill.skill_name)
                     info.append("威力：  " + str(ori_effort) + " -> " + str(dst_effort))
-                    self.dialog.write("Test", info)
+                    self.dialog.write(pet.pet_name, info)
         else:
             pass
 
