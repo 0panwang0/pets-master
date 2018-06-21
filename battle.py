@@ -146,16 +146,26 @@ class Battle:
             for pet in self.player.battle_list:
                 ori_lv = pet.level
                 ori_effort = pet.get_effort()
+                skill_name = pet.pet_skill.skill_name
                 if pet.gain_exp(beated_exp):
                     dst_lv = pet.level
                     dst_effort = pet.get_effort()
                     info = []
-                    info.append("等 级:  " + str(ori_lv) + " -> " + str(dst_lv))
-                    info.append("技能：  " + pet.pet_skill.skill_name)
-                    info.append("威力：  " + str(ori_effort) + " -> " + str(dst_effort))
+                    info.append("等级:  " + str(ori_lv) + " -> " + str(dst_lv))
+                    info.append("技能： " + skill_name)
+                    info.append("威力： " + str(ori_effort) + " -> " + str(dst_effort))
                     self.dialog.write(pet.pet_name, info)
         if len(self.caught_enermys) > 0:
-            pass
+            for pet in self.caught_enermys:
+                lv = pet.level
+                effort = pet.get_effort()
+                skill_name = pet.pet_skill.skill_name
+                info = []
+                info.append("名称:  " + pet.pet_name)
+                info.append("等级:  " + str(lv))
+                info.append("技能： " + skill_name)
+                info.append("威力： " + str(effort))
+                self.dialog.write("新宠物", info)
 
     def check_events(self):
         for event in pygame.event.get():
