@@ -97,7 +97,6 @@ class Battle:
                     self.gain_reward()
                 break
             pygame.display.flip()
-        print("----")
 
     def battle_info(self, text, music, delay):
         music.play()
@@ -155,6 +154,8 @@ class Battle:
                     info.append("技能：  " + pet.pet_skill.skill_name)
                     info.append("威力：  " + str(ori_effort) + " -> " + str(dst_effort))
                     self.dialog.write(pet.pet_name, info)
+        if len(self.caught_enermys) > 0:
+            pass
 
     def check_events(self):
         for event in pygame.event.get():
