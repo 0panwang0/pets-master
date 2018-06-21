@@ -32,6 +32,7 @@ class Battle:
         self.friend_pets = player.battle_list
         self.enermy_pets = enermy_pets
         self.killed_enermys = []
+        self.caught_enermys = []
 
         self.friend_pet_images = []
         self.enermy_pet_images = []
@@ -96,6 +97,7 @@ class Battle:
                     self.gain_reward()
                 break
             pygame.display.flip()
+        print("----")
 
     def battle_info(self, text, music, delay):
         music.play()
@@ -153,8 +155,6 @@ class Battle:
                     info.append("技能：  " + pet.pet_skill.skill_name)
                     info.append("威力：  " + str(ori_effort) + " -> " + str(dst_effort))
                     self.dialog.write(pet.pet_name, info)
-        else:
-            pass
 
     def check_events(self):
         for event in pygame.event.get():
@@ -250,10 +250,12 @@ class Battle:
                     print("\tPlayer HP: ", self.player.hp)
                     self.player.take_heal(self.skill_effort)
                 elif self.skill_type == SkillType.CatchPet:
-                    judge = random.randint(0, 10)
+                    judge = random.randint(0, 100)
                     print("\tJudge Num:\t", judge)
-                    if judge < 10:
+                    if judge < 10 * (6 + self.player.level - self.enermy_pets[self.select_enermy].level *
+                            (1 - 0.4 * self.enermy_pets[self.select_enermy].pet_hp_left / self.enermy_pets[self.select_enermy].pet_hp)):
                         print("\tCatch Successful!")
+                        self.caught_enermys.append(self.enermy_pets[self.select_enermy])
                         self.player.own_list.append(self.enermy_pets[self.select_enermy])
                         del (self.enermy_pets[self.select_enermy])
                         print("\tPlayer Own list:")
@@ -286,9 +288,9 @@ class Battle:
                     self.battle_state = BattleState.SelectAction
                     self.battle_continue = False
             else:
-                judge = random.randint(0, 10)
+                judge = random.randint(0, 100)
                 print("\tJudge Num:\t", judge)
-                if judge < 6:
+                if judge < 10 * (5 + 3 * self.player.level - len(self.enermy_pets)):
                     self.battle_result = BattleResult.Escape
                     print("\tEscape Successful!")
                     return

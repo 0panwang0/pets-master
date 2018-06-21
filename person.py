@@ -156,6 +156,7 @@ class Hero(Person):
         self.state = self.old_state
         self.rect.topleft = self.old_rect.topleft
 
+
 class NPC(Person):
     def __init__(self, file_addr, row, col, image_num, file_name):
         super().__init__(file_addr, row, col)
