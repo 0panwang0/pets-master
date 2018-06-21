@@ -77,8 +77,8 @@ class Pet:
         if self.exp >= self.lvup_exp:
             while self.exp >= self.lvup_exp:
                 self.level = self.level + 1
-                self.lvup_exp = floor(pow((self.level + 1), const.DOD) * 100 + pow(self.level, 1 / const.DOD) * 100)
                 self.exp -= self.lvup_exp
+                self.lvup_exp = floor(pow((self.level + 1), const.DOD) * 100 + pow(self.level, 1 / const.DOD) * 100)
             return True
         else:
             return False

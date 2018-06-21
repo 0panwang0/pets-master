@@ -328,14 +328,14 @@ class Battle:
             return None
 
     def create_buttons(self):
-        button = ButtonImage(self.screen, self.button_width, self.button_height, const.BUTTON_DIR + "button1.png", "Attack", 24)
+        button = ButtonImage(self.screen, self.button_width, self.button_height, const.BUTTON_DIR + "button0.png", "Attack", 24)
         self.button_images.append(button)
-        button = ButtonImage(self.screen, self.button_width, self.button_height, const.BUTTON_DIR + "button2.png", "Catch", 24)
+        button = ButtonImage(self.screen, self.button_width, self.button_height, const.BUTTON_DIR + "button1.png", "Catch", 24)
         self.button_images.append(button)
-        button = ButtonImage(self.screen, self.button_width, self.button_height, const.BUTTON_DIR + "button3.png", "Escape", 24)
+        button = ButtonImage(self.screen, self.button_width, self.button_height, const.BUTTON_DIR + "button2.png", "Escape", 24)
         self.button_images.append(button)
         for i in range(len(self.friend_pets)):
-            button = ButtonImage(self.screen, self.button_width, self.button_height, const.BUTTON_DIR + "button"+ str(i+4)+".png",
+            button = ButtonImage(self.screen, self.button_width, self.button_height, const.BUTTON_DIR + "button"+ str(i+3)+".png",
                                  self.friend_pets[i].get_skill().skill_name + "(" + str(self.friend_pets[i].level) + ")", 24)
             self.button_images.append(button)
 
