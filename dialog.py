@@ -113,7 +113,8 @@ class Dialog:
 
     def write(self, title, text):
         up_image = pygame.image.load(up_file_name).convert_alpha()
-        up_image.blit(self.title.render(title, True, (0, 0, 0)), (170, 50))
+        title_image = self.title.render(title, True, (0, 0, 0))
+        up_image.blit(title_image, ((up_image.get_width()-title_image.get_width())/2, 50))
         for i in range(len(text)):
             up_image.blit(self.font.render(text[i], True, (0, 0, 0)), (40, 120+i*30))
         self.screen.blit(up_image,((screen_size[0]-up_image.get_width())/2, (screen_size[1]-up_image.get_height())/2,))

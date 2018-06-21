@@ -33,7 +33,7 @@ class Icon:
         self.item_name = []
         self.item_position = []
         self.sprite_index = 0
-        self.description_item = ["等级", "伤害", "技能", "状态"]
+        self.description_item = ["等级", "经验", "伤害", "技能", "状态"]
         for i in range(len(ui_file_name)):
             self.ui[ui_state_list[i]] = pygame.image.load(ui_file_name[i]).convert_alpha()
         self.arrow = pygame.image.load(arrow_file_name).convert_alpha()
@@ -69,13 +69,15 @@ class Icon:
         for i in range(len(ui_state_list)):
             if ui_state_list[i] == 'sprite':
                 self.ui['sprite'] = pygame.image.load(ui_file_name[i]).convert_alpha()
-        self.ui['sprite'].blit(self.sprite_font.render('精灵', True, (0, 0, 0)), (175, 65))
         self.ui['sprite'].blit(self.arrow, (320, 280))
         sprite = self.player.own_list[self.sprite_index]
+        name = self.sprite_font.render(sprite.pet_name, True, (0, 0, 0))
+        self.ui['sprite'].blit(name, ((self.ui['sprite'].get_width()-name.get_width())/2, 65))
         pet_file_name = sprite.pet_file[:-3]+"gif"
         sprite_image = pygame.image.load(pet_file_name).convert_alpha()
         sprite_value = []
         sprite_value.append(str(sprite.level))
+        sprite_value.append(str(sprite.exp))
         sprite_value.append(str(sprite.pet_damage))
         sprite_value.append(str(sprite.pet_skill.skill_name))
         if sprite in self.player.battle_list:
@@ -83,8 +85,8 @@ class Icon:
         else:
             sprite_value.append("未出战")
         self.ui['sprite'].blit(sprite_image, (50, 150))
-        for i in range(4):
-            self.ui['sprite'].blit(self.description_font.render(self.description_item[i]+"："+sprite_value[i], True, (0, 0, 0)), (200, 130 + i * 30))
+        for i in range(len(self.description_item)):
+            self.ui['sprite'].blit(self.description_font.render(self.description_item[i]+"："+sprite_value[i], True, (0, 0, 0)), (200, 120 + i * 30))
 
     def draw(self):
         for i in range(len(icon_location)):
