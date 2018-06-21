@@ -6,6 +6,7 @@ dialog_file_name = "resources/images/dialog.png"
 player_file_name = "resources/images/Faces/Actor1.png"
 frame_file_name = "resources/images/frame.tga"
 prompt_file_name = "resources/images/prompt.tga"
+up_file_name = "resources/images/up.tga"
 font_file_name = "resources/fonts/ink.ttf"
 screen_size = (800, 600)
 
@@ -15,6 +16,7 @@ class Dialog:
         self.player = player
         self.screen = screen
         self.font = pygame.font.Font(font_file_name, 20)
+        self.title = pygame.font.Font(font_file_name, 40)
         self.dialog = pygame.image.load(dialog_file_name).convert_alpha()
         self.frame = pygame.image.load(frame_file_name).convert_alpha()
         self.frame = pygame.transform.scale(self.frame, (120, 120))
@@ -108,3 +110,12 @@ class Dialog:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE or event.type == pygame.MOUSEBUTTONDOWN:
                     flag = False
                     break
+
+    def write(self, title, text):
+        up_image = pygame.image.load(up_file_name).convert_alpha()
+        up_image.blit(self.title.render(title, True, (0, 0, 0)), (170, 50))
+        for i in range(len(text)):
+            up_image.blit(self.font.render(text[i], True, (0, 0, 0)), (40, 120+i*30))
+        self.screen.blit(up_image,((screen_size[0]-up_image.get_width())/2, (screen_size[1]-up_image.get_height())/2,))
+        pygame.display.update()
+        self.take_control()
