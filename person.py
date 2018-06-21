@@ -81,14 +81,14 @@ class Hero(Person):
         self.level = 1
         self.exp = 0
         self.battle_nums = 4
-        self.lvup_exp = pow((self.level+1), const.DOD) * 1000 + pow(self.level, 1 / const.DOD) * 1000
+        self.lvup_exp = floor(pow((self.level+1), const.DOD) * 100 + pow(self.level, 1 / const.DOD) * 100)
 
     def gain_exp(self, exp):
         self.exp += exp
         if self.exp >= self.lvup_exp:
             while self.exp >= self.lvup_exp:
                 self.level = self.level + 1
-                self.lvup_exp = pow((self.level + 1), const.DOD) * 1000 + pow(self.level, 1 / const.DOD) * 1000
+                self.lvup_exp = floor(pow((self.level + 1), const.DOD) * 100 + pow(self.level, 1 / const.DOD) * 100)
                 self.attack = int(self.attack * 1.2)    # 增加攻击力
                 self.max_hp = int(self.max_hp * 1.2)    # 增加血量1
                 self.max_mp = int(self.max_mp * 1.2)    # 增加蓝量

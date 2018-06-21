@@ -62,7 +62,7 @@ class Icon:
         self.ui['panel'].blit(self.panel_font.render('法力值：' + str(self.player.mp) + '/' + str(self.player.max_mp), True, (0, 0, 0)), (25, 170))
         self.ui['panel'].blit(self.panel_font.render('攻击力：' + str(self.player.attack), True, (0, 0, 0)), (25, 210))
         self.ui['panel'].blit(self.panel_font.render('防御力：' + str(self.player.defense), True, (0, 0, 0)), (25, 250))
-        self.ui['panel'].blit(self.panel_font.render('经验值：' + str(self.player.exp) + '/' + str(self.player.exp_list[self.player.level]), True, (0, 0, 0)), (25, 290))
+        self.ui['panel'].blit(self.panel_font.render('经验值：' + str(self.player.exp) + '/' + str(self.player.lvup_exp), True, (0, 0, 0)), (25, 290))
         self.ui['panel'].blit(self.bag_font.render('人物', True, (0, 0, 0)), (96, 65))
 
     def draw_sprite(self):
