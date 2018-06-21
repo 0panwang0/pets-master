@@ -81,29 +81,3 @@ class Pet:
             return True
         else:
             return False
-
-
-    def obj2json(self, obj):
-        return{
-            "pet_name": obj.pet_name,
-            "pet_hp": obj.pet_hp,
-            "pet_damage": obj.pet_damage,
-            "level": obj.level,
-            "pet_skill": {
-                "skill_name": obj.pet_skill.skill_name,
-                "skill_type": obj.pet_skill.skill_type,
-                "skill_effort": obj.pet_skill.skill_effort,
-                "skill_cost": obj.pet_skill.skill_cost
-            },
-            "pet_file": obj.pet_file,
-            "image_number": obj.image_number,
-            "exp": obj.exp,
-            "beated_exp": obj.beated_exp,
-            "beated_money": obj.beated_money,
-        }
-
-    def handle(self, obj):
-        skill = Skill(obj['pet_skill']["skill_name"], obj['pet_skill']["skill_type"],
-                      obj['pet_skill']["skill_effort"], obj['pet_skill']["skill_cost"])
-        return Pet(obj['pet_name'], obj['pet_hp'], obj['pet_damage'], skill, obj['level'], obj['exp'], obj['beated_exp'],
-                   obj['beated_money'], obj['pet_file'], obj['image_number'])
