@@ -7,6 +7,7 @@ from pets import BattleState, BattleResult, SkillType, Skill, Pet
 from image import *
 import const
 
+
 class Battle:
     def __init__(self, screen, player, enermy_pets):
         self.screen = screen
@@ -68,7 +69,7 @@ class Battle:
             return
         self.battle_info("战斗开始!", self.open_sound, 1)
         pygame.mixer.music.load(const.MUSIC_DIR + "battle_bgm.ogg")
-        pygame.mixer.music.play()
+        pygame.mixer.music.play(loops=-1)
         while True:
             self.check_events()
             self.execute_state()
@@ -93,9 +94,6 @@ class Battle:
                 if BattleResult.Victory:
                     self.gain_reward()
                 break
-            if pygame.mixer.music.get_pos() > 92000:
-                pygame.mixer.music.stop()
-                pygame.mixer.music.play()
             pygame.display.flip()
 
     def battle_info(self, text, music, delay):
@@ -116,11 +114,47 @@ class Battle:
             current_time = time.time()
 
     def gain_reward(self):
-        for killed_enermy in self.killed_enermys:
-            self.player.gain_exp(killed_enermy.beated_exp)
-            self.player.gain_money(killed_enermy.beated_money)
+        if len(self.killed_enermys) > 0:
+            beated_exp = 0
+            beated_money = 0
+            for killed_enermy in self.killed_enermys:
+                beated_exp += killed_enermy.beated_exp
+                beated_money += killed_enermy.beated_money
+            self.player.gain_money(beated_money)
+            info = ["获得金币：", "    " + str(beated_exp)]
+            print(info)
+            ori_lv = self.player.level
+            ori_hp = self.player.max_hp
+            ori_mp = self.player.max_mp
+            ori_attack = self.player.attack
+            ori_defense = self.player.defense
+            if self.player.gain_exp(beated_exp):
+                dst_lv = self.player.level
+                dst_hp = self.player.max_hp
+                dst_mp = self.player.max_mp
+                dst_attack = self.player.attack
+                dst_defense = self.player.defense
+                info = []
+                info.append("等 级:  " + str(ori_lv) + " -> " + str(dst_lv))
+                info.append("生命值:  " + str(ori_hp) + " -> " + str(dst_hp))
+                info.append("法力值:  " + str(ori_mp) + " -> " + str(dst_mp))
+                info.append("攻击力:  " + str(ori_attack) + " -> " + str(dst_attack))
+                info.append("防御力：  " + str(ori_defense) + " -> " + str(dst_defense))
+                print(info)
             for pet in self.player.battle_list:
-                pet.gain_exp(killed_enermy.beated_exp)
+                ori_lv = pet.level
+                ori_effort = pet.get_effort()
+                if pet.gain_exp(beated_exp):
+                    dst_lv = pet.level
+                    dst_effort = pet.get_effort()
+                    info = []
+                    info.append("宠物：  " + pet.pet_name)
+                    info.append("等 级:  " + str(ori_lv) + " -> " + str(dst_lv))
+                    info.append("技能：  " + pet.pet_skill.skill_name)
+                    info.append("威力：  " + str(ori_effort) + " -> " + str(dst_effort))
+                    print(info)
+        else:
+            pass
 
     def check_events(self):
         for event in pygame.event.get():

@@ -96,6 +96,9 @@ class Hero(Person):
                 self.exp -= self.exp_list[self.level]
             self.hp = self.max_hp
             self.mp = self.max_mp
+            return True
+        else:
+            return False
 
     def gain_money(self, money):
         self.money += money
