@@ -7,14 +7,17 @@ import const
 screen_size = (800, 600)
 
 icon_size = (32, 32)
-icon_alpha = [180, 180, 180, 180]
-icon_location = [(8, 16), (7, 14), (9, 7), (0, 14)]
-ui_location = {'bag':(50, 60), 'map':(100, 70), 'panel':(150, 60), 'sprite':(200, 60)}
-ui_state_list = ['bag', 'map', 'panel', 'sprite', 'main']
-ui_file_name = ["resources/images/bag.tga", "resources/images/map.png", "resources/images/panel.tga", "resources/images/sprite.tga"]
+icon_alpha = [180, 180, 180, 180, 180]
+icon_location = [(8, 16), (7, 14), (9, 7), (3, 7), (5, 7)]
+ui_location = {'bag':(50, 60), 'map':(100, 70), 'panel':(150, 60), 'sprite':(200, 60),'setting':(250, 60)}
+ui_state_list = ['bag', 'map', 'panel', 'sprite', 'setting','main']
+ui_file_name = ["resources/images/bag.tga", "resources/images/map.png", "resources/images/panel.tga", "resources/images/sprite.tga", "resources/images/setting.tga"]
 font_file_name = "resources/fonts/ink.ttf"
 icon_file_name = "resources/images/IconSet.png"
 arrow_file_name = "resources/images/arrow.png"
+plus_file_name = "resources/images/plus.tga"
+minus_file_name = "resources/images/minus.tga"
+
 
 item_dict = { '萝卜':(0, 18), '洋葱':(1, 18), '土豆':(2, 18), '生肉':(3, 18), '鲜鱼':(4, 18),}
 
@@ -25,6 +28,7 @@ class Icon:
         self.dialog = dialog
         self.screen = screen
         self.bag_font = pygame.font.Font(font_file_name, 40)
+        self.setting_font = pygame.font.Font(font_file_name, 35)
         self.sprite_font = pygame.font.Font(font_file_name, 30)
         self.description_font = pygame.font.Font(font_file_name, 20)
         self.panel_font = pygame.font.Font(font_file_name, 25)
@@ -34,6 +38,7 @@ class Icon:
         self.item_position = []
         self.sprite_index = 0
         self.description_item = ["等级", "经验", "伤害", "技能", "状态"]
+        self.description_setting = ["音量", "存档", "读档"]
         for i in range(len(ui_file_name)):
             self.ui[ui_state_list[i]] = pygame.image.load(ui_file_name[i]).convert_alpha()
         self.arrow = pygame.image.load(arrow_file_name).convert_alpha()
@@ -64,6 +69,16 @@ class Icon:
         self.ui['panel'].blit(self.panel_font.render('防御力：' + str(self.player.defense), True, (0, 0, 0)), (25, 250))
         self.ui['panel'].blit(self.panel_font.render('经验值：' + str(self.player.exp) + '/' + str(self.player.lvup_exp), True, (0, 0, 0)), (25, 290))
         self.ui['panel'].blit(self.bag_font.render('人物', True, (0, 0, 0)), (96, 65))
+
+    def draw_setting(self):
+        for i in range(len(ui_state_list)):
+            if ui_state_list[i] == 'setting':
+                self.ui['setting'] = pygame.image.load(ui_file_name[i]).convert_alpha()
+        title = self.setting_font.render('设置', True, (0, 0, 0))
+        self.ui['setting'].blit(title, ((self.ui['sprite'].get_width()-title.get_width())/2, 65))
+        for i in range(len(self.description_setting)):
+            self.ui['setting'].blit(self.panel_font.render(self.description_setting[i],True, (0, 0, 0)), (50, 140 + i * 50))
+        
 
     def draw_sprite(self):
         for i in range(len(ui_state_list)):
@@ -102,6 +117,8 @@ class Icon:
             self.draw_value()
         elif self.state == 'sprite':
             self.draw_sprite()
+        elif self.state == 'setting':
+            self.draw_setting()
 
     def check_mouse_left_event(self, pos):
         if self.state == 'main':
