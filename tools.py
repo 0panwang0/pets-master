@@ -163,7 +163,7 @@ def random_choose_enermy(enermy_list, scroll_map):
 
 
 # 检查什么时候触发战斗
-def check_battle(player, scroll_map, screen):
+def check_battle(player, scroll_map, screen, dialog):
     if scroll_map.nobattle_area:
         if not pygame.sprite.spritecollideany(player, scroll_map.nobattle_area) and player.moving:
             start_batlle = random.randint(0, 250)
@@ -171,7 +171,7 @@ def check_battle(player, scroll_map, screen):
                 scroll_map.BGM.stop()
                 enermy_list = []
                 random_choose_enermy(enermy_list, scroll_map)
-                battle = Battle(screen, player, enermy_list)
+                battle = Battle(screen, player, enermy_list, dialog)
                 battle.start_battle()
                 player.state = "rest_" + player.moving[-1][5:]
                 player.moving.clear()
