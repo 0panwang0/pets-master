@@ -57,7 +57,7 @@ while running:
     player.update(time)
     check_collision(player, scroll_map)
     scroll_map.center(player.rect.center)
-    check_battle(player, scroll_map, screen)
+    check_battle(player, scroll_map, screen, dialog)
     scroll_map.sprite_update()
 
     if player.controller == 'main':

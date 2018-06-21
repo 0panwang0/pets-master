@@ -9,8 +9,9 @@ import const
 
 
 class Battle:
-    def __init__(self, screen, player, enermy_pets):
+    def __init__(self, screen, player, enermy_pets, dialog):
         self.screen = screen
+        self.dialog = dialog
         self.pet_width = (self.screen.get_width() - 40) / 4
         self.pet_height = 80
         self.button_width = self.screen.get_width() / 2
@@ -121,8 +122,7 @@ class Battle:
                 beated_exp += killed_enermy.beated_exp
                 beated_money += killed_enermy.beated_money
             self.player.gain_money(beated_money)
-            info = ["获得金币：", "    " + str(beated_exp)]
-            print(info)
+            self.dialog.write("获得金币", [str(beated_exp)])
             ori_lv = self.player.level
             ori_hp = self.player.max_hp
             ori_mp = self.player.max_mp
@@ -140,7 +140,7 @@ class Battle:
                 info.append("法力值:  " + str(ori_mp) + " -> " + str(dst_mp))
                 info.append("攻击力:  " + str(ori_attack) + " -> " + str(dst_attack))
                 info.append("防御力：  " + str(ori_defense) + " -> " + str(dst_defense))
-                print(info)
+                self.dialog.write("Test", info)
             for pet in self.player.battle_list:
                 ori_lv = pet.level
                 ori_effort = pet.get_effort()
@@ -152,7 +152,7 @@ class Battle:
                     info.append("等 级:  " + str(ori_lv) + " -> " + str(dst_lv))
                     info.append("技能：  " + pet.pet_skill.skill_name)
                     info.append("威力：  " + str(ori_effort) + " -> " + str(dst_effort))
-                    print(info)
+                    self.dialog.write("Test", info)
         else:
             pass
 
@@ -367,11 +367,11 @@ class Battle:
         self.mp_bar.draw()
 
     def click_button(self):
-        if self.battle_region != None and self.battle_state == BattleState.SelectAction:
+        if self.battle_region is not None and self.battle_state == BattleState.SelectAction:
             self.button_images[self.battle_region].click()
 
     def release_button(self):
-        if self.battle_region != None:
+        if self.battle_region is not None:
             self.button_images[self.battle_region].release()
 
     def friend_round(self):
