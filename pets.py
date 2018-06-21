@@ -1,5 +1,5 @@
 from enum import Enum
-
+import const
 
 class BattleState(Enum):
     SelectAction = 0
@@ -46,11 +46,7 @@ class Pet:
         self.exp = exp
         self.beated_exp = beated_exp
         self.beated_money = beated_money
-        self.exp_list = {
-            1: 1000,
-            2: 10000,
-            3: 100000
-        }
+        self.lvup_exp = pow((self.level + 1), const.DOD) * 1000 + pow(self.level, 1 / const.DOD) * 1000
 
     def get_name(self):
         return self.pet_name
@@ -77,10 +73,10 @@ class Pet:
 
     def gain_exp(self, exp):
         self.exp += exp
-        if self.exp >= self.exp_list[self.level]:
-            while self.exp >= self.exp_list[self.level]:
+        if self.exp >= self.lvup_exp:
+            while self.exp >= self.lvup_exp:
                 self.level = self.level + 1
-                self.exp -= self.exp_list[self.level]
+                self.exp -= self.lvup_exp
             return True
         else:
             return False

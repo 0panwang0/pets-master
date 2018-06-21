@@ -1,4 +1,6 @@
 import pygame
+from math import *
+import const
 
 class Person(pygame.sprite.Sprite):
     def __init__(self, file_addr, row, col):
@@ -79,21 +81,17 @@ class Hero(Person):
         self.level = 1
         self.exp = 0
         self.battle_nums = 4
-        self.exp_list = {
-            1: 1000,
-            2: 2000,
-            3: 4000
-        }
+        self.lvup_exp = pow((self.level+1), const.DOD) * 1000 + pow(self.level, 1 / const.DOD) * 1000
 
     def gain_exp(self, exp):
         self.exp += exp
-        if self.exp >= self.exp_list[self.level]:
-            while self.exp >= self.exp_list[self.level]:
+        if self.exp >= self.lvup_exp:
+            while self.exp >= self.lvup_exp:
                 self.level = self.level + 1
                 self.attack = int(self.attack * 1.2)    # 增加攻击力
                 self.max_hp = int(self.max_hp * 1.2)    # 增加血量
                 self.max_mp = int(self.max_mp * 1.2)    # 增加蓝量
-                self.exp -= self.exp_list[self.level]
+                self.exp -= self.lvup_exp
             self.hp = self.max_hp
             self.mp = self.max_mp
             return True
