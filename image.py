@@ -37,7 +37,7 @@ class PetImage:
 
 
 class ButtonImage:
-    def __init__(self, screen, width, height, button_file, text, font_size):
+    def __init__(self, screen, width, height, button_file, text, font_name, font_size):
         """初始化按钮的属性"""
         self.screen = screen
         self.screen_rect = self.screen.get_rect()
@@ -54,7 +54,7 @@ class ButtonImage:
         self.button_rect.center = self.rect.center
 
         self.text = text
-        self.font = pygame.font.SysFont(None, font_size)
+        self.font = pygame.font.Font(font_name, font_size)
         self.text_image = self.font.render(self.text, True, (255, 255, 255))
         self.text_rect = self.text_image.get_rect()
         self.text_rect.center = self.rect.center
