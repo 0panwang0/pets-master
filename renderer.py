@@ -57,7 +57,7 @@ class ScrollMap(Map):
         self.image_sprites = []  # 储存精灵图片对象
         self.screen = screen
         self.BGM = bgm
-        self.BGM_VOL = 1.0
+        self.BGM_VOL = 10
         self.create_sprite_object()
 
 
@@ -89,14 +89,14 @@ class ScrollMap(Map):
             sprite.update(0)
 
     def BGMUP(self):
-        if self.BGM_VOL < 1.0:
-            self.BGM_VOL += 0.1
-            self.BGM.set_volume(self.BGM_VOL)
+        if self.BGM_VOL < 10:
+            self.BGM_VOL += 1
+            self.BGM.set_volume(self.BGM_VOL / 10)
 
     def BGMDOWN(self):
-        if self.BGM_VOL > 0.0:
-            self.BGM_VOL -= 0.1
-            self.BGM.set_volume(self.BGM_VOL)
+        if self.BGM_VOL > 0:
+            self.BGM_VOL -= 1
+            self.BGM.set_volume(self.BGM_VOL / 10)
 
 class Object(pygame.sprite.Sprite):
     def __init__(self, rect, type=''):
