@@ -17,6 +17,7 @@ icon_file_name = "resources/images/IconSet.png"
 arrow_file_name = "resources/images/arrow.png"
 plus_file_name = "resources/images/plus.tga"
 minus_file_name = "resources/images/minus.tga"
+board_file_name = "resources/images/board.tga"
 
 
 item_dict = { '萝卜':(0, 18), '洋葱':(1, 18), '土豆':(2, 18), '生肉':(3, 18), '鲜鱼':(4, 18),}
@@ -53,6 +54,24 @@ class Icon:
     def get_image(self, pos):
         return self.icon.subsurface(24 * pos[0], 24 * pos[1], 24, 24)
 
+    def draw(self):
+        for i in range(len(icon_location)):
+            image = self.get_image(icon_location[i])
+            image.set_alpha(icon_alpha[i])
+            self.screen.blit(image, (20 + 50*i , 20))
+        self.draw_board()
+        if self.state != 'main':
+            self.screen.blit(self.ui[self.state], ui_location[self.state])
+        if self.state == 'bag':
+            self.update_bag()
+            self.draw_item()
+        elif self.state == 'panel':
+            self.draw_value()
+        elif self.state == 'sprite':
+            self.draw_sprite()
+        elif self.state == 'setting':
+            self.draw_setting()
+
     def get_item(self, item_name):
         self.item_name.append(item_name)
 
@@ -63,6 +82,56 @@ class Icon:
             row = i % 6
             self.ui[self.state].blit(self.get_image(item_dict[self.item_name[i]]), (22 + 40 * row, 134 + 40 * col))
             self.item_position.append((72 + 40 * row, 184 + 40 * col))
+
+    def use_item(self, item_name):
+        if item_name == "萝卜":
+            self.player.hp += const.CARROT_HP
+            if self.player.hp > self.player.max_hp:
+                self.dialog.info('回复了' + str(const.CARROT_HP - self.player.hp + self.player.max_hp) + '生命')
+                self.player.hp = self.player.max_hp
+            else:
+                self.dialog.info('回复了' + str(const.CARROT_HP) + '生命')
+        elif item_name == "洋葱":
+            self.player.mp += const.ONION_MP
+            if self.player.mp > self.player.max_mp:
+                self.dialog.info('回复了' + str(const.ONION_MP - self.player.mp + self.player.max_mp) + '魔法')
+                self.player.mp = self.player.max_mp
+            else:
+                self.dialog.info('回复了' + str(const.ONION_MP) + '魔法')
+        elif item_name == "土豆":
+            self.player.hp += const.POTATO_HP
+            self.player.mp += const.POTATO_MP
+            if self.player.hp > self.player.max_hp:
+                self.dialog.info('回复了' + str(const.POTATO_HP - self.player.hp + self.player.max_hp) + '生命')
+                self.player.hp = self.player.max_hp
+            else:
+                self.dialog.info('回复了' + str(const.POTATO_HP) + '生命')
+            if self.player.mp > self.player.max_mp:
+                self.dialog.info('回复了' + str(const.POTATO_MP - self.player.mp + self.player.max_mp) + '魔法')
+                self.player.mp = self.player.max_mp
+            else:
+                self.dialog.info('回复了' + str(const.POTATO_MP) + '魔法')
+        elif item_name == "生肉":
+            self.player.max_hp += const.MEAT_MAX_HP
+            self.dialog.info('生命上限+10')
+        elif item_name == "鲜鱼":
+            self.player.max_mp += const.FISH_MAX_MP
+            self.dialog.info('魔法上限+10')
+
+
+    def update_bag(self):
+        for i in range(len(ui_state_list)):
+            if ui_state_list[i] == 'bag':
+                self.ui['bag'] = pygame.image.load(ui_file_name[i]).convert_alpha()
+        self.ui['bag'].blit(self.bag_font.render('背包', True, (0, 0, 0)), (96, 65))
+        self.ui['bag'].blit(self.gold_font.render('金币', True, (0, 0, 0)), (200, 468))
+        gold_font = self.gold_font.render(str(self.player.money), True, (254, 254, 65))
+        self.ui['bag'].blit(gold_font, (110 - gold_font.get_width()/2, 468))
+
+    def draw_board(self):
+        board = self.panel_font.render(self.scroll_map.info.sprites()[0].properties['world'], True, (255, 255, 255))
+        self.screen.blit(board, (750, 20))
+
 
     def draw_value(self):
         for i in range(len(ui_state_list)):
@@ -84,6 +153,8 @@ class Icon:
         for i in range(len(self.description_setting)):
             self.ui['setting'].blit(self.panel_font.render(self.description_setting[i],True, (0, 0, 0)), (50, 140 + i * 50))
         self.ui['setting'].blit(self.plus, (300, 140))
+        vol = self.panel_font.render(str(self.scroll_map.BGM_VOL), True, (0, 0, 0))
+        self.ui['setting'].blit(vol, (265-vol.get_width()/2, 140))
         self.ui['setting'].blit(self.minus, (200, 140))
 
     def draw_sprite(self):
@@ -109,23 +180,6 @@ class Icon:
         self.ui['sprite'].blit(sprite_image, (50, 150))
         for i in range(len(self.description_item)):
             self.ui['sprite'].blit(self.description_font.render(self.description_item[i]+"："+sprite_value[i], True, (0, 0, 0)), (200, 120 + i * 30))
-
-    def draw(self):
-        for i in range(len(icon_location)):
-            image = self.get_image(icon_location[i])
-            image.set_alpha(icon_alpha[i])
-            self.screen.blit(image, (20 + 50*i , 20))
-        if self.state != 'main':
-            self.screen.blit(self.ui[self.state], ui_location[self.state])
-        if self.state == 'bag':
-            self.update_bag()
-            self.draw_item()
-        elif self.state == 'panel':
-            self.draw_value()
-        elif self.state == 'sprite':
-            self.draw_sprite()
-        elif self.state == 'setting':
-            self.draw_setting()
 
     def check_mouse_left_event(self, pos):
         if self.state == 'main':
@@ -182,51 +236,6 @@ class Icon:
                 if self.player.own_list[self.sprite_index] in self.player.battle_list:
                     self.player.battle_list.remove(self.player.own_list[self.sprite_index])
                 self.draw_sprite()
-
-    def use_item(self, item_name):
-        if item_name == "萝卜":
-            self.player.hp += const.CARROT_HP
-            if self.player.hp > self.player.max_hp:
-                self.dialog.info('回复了' + str(const.CARROT_HP - self.player.hp + self.player.max_hp) + '生命')
-                self.player.hp = self.player.max_hp
-            else:
-                self.dialog.info('回复了' + str(const.CARROT_HP) + '生命')
-        elif item_name == "洋葱":
-            self.player.mp += const.ONION_MP
-            if self.player.mp > self.player.max_mp:
-                self.dialog.info('回复了' + str(const.ONION_MP - self.player.mp + self.player.max_mp) + '魔法')
-                self.player.mp = self.player.max_mp
-            else:
-                self.dialog.info('回复了' + str(const.ONION_MP) + '魔法')
-        elif item_name == "土豆":
-            self.player.hp += const.POTATO_HP
-            self.player.mp += const.POTATO_MP
-            if self.player.hp > self.player.max_hp:
-                self.dialog.info('回复了' + str(const.POTATO_HP - self.player.hp + self.player.max_hp) + '生命')
-                self.player.hp = self.player.max_hp
-            else:
-                self.dialog.info('回复了' + str(const.POTATO_HP) + '生命')
-            if self.player.mp > self.player.max_mp:
-                self.dialog.info('回复了' + str(const.POTATO_MP - self.player.mp + self.player.max_mp) + '魔法')
-                self.player.mp = self.player.max_mp
-            else:
-                self.dialog.info('回复了' + str(const.POTATO_MP) + '魔法')
-        elif item_name == "生肉":
-            self.player.max_hp += const.MEAT_MAX_HP
-            self.dialog.info('生命上限+10')
-        elif item_name == "鲜鱼":
-            self.player.max_mp += const.FISH_MAX_MP
-            self.dialog.info('魔法上限+10')
-
-
-    def update_bag(self):
-        for i in range(len(ui_state_list)):
-            if ui_state_list[i] == 'bag':
-                self.ui['bag'] = pygame.image.load(ui_file_name[i]).convert_alpha()
-        self.ui['bag'].blit(self.bag_font.render('背包', True, (0, 0, 0)), (96, 65))
-        self.ui['bag'].blit(self.gold_font.render('金币', True, (0, 0, 0)), (200, 468))
-        gold_font = self.gold_font.render(str(self.player.money), True, (254, 254, 65))
-        self.ui['bag'].blit(gold_font, (110 - gold_font.get_width()/2, 468))
 
     def check_mouse_move_event(self, pos):
         if self.state == 'main':
