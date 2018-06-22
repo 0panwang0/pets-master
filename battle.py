@@ -9,10 +9,10 @@ import const
 
 
 class Battle:
-    def __init__(self, screen, player, enermy_pets, dialog, scroll_map):
+    def __init__(self, screen, player, enermy_pets, dialog, scene):
         self.screen = screen
         self.dialog = dialog
-        self.scroll_map = scroll_map
+        self.scene = scene
         self.pet_width = (self.screen.get_width() - 40) / 4
         self.pet_height = 80
         self.button_width = self.screen.get_width() / 2
@@ -61,12 +61,19 @@ class Battle:
         self.select_enermy = 0
 
         self.click_sound = pygame.mixer.Sound(const.MUSIC_DIR + "click_sound.ogg")
+        self.click_sound.set_volume(const.BGM_VOL / 10)
         self.open_sound = pygame.mixer.Sound(const.MUSIC_DIR + "open_sound.ogg")
+        self.open_sound.set_volume(const.BGM_VOL / 10)
         self.hit_sound = pygame.mixer.Sound(const.MUSIC_DIR + "hit_sound.ogg")
+        self.hit_sound.set_volume(const.BGM_VOL / 10)
         self.catch_sound = pygame.mixer.Sound(const.MUSIC_DIR + "catch_sound.ogg")
+        self.catch_sound.set_volume(const.BGM_VOL / 10)
         self.heal_sound = pygame.mixer.Sound(const.MUSIC_DIR + "heal_sound.ogg")
+        self.heal_sound.set_volume(const.BGM_VOL / 10)
         self.victory_sound = pygame.mixer.Sound(const.MUSIC_DIR + "victory_sound.ogg")
+        self.victory_sound.set_volume(const.BGM_VOL / 10)
         self.defeat_sound = pygame.mixer.Sound(const.MUSIC_DIR + "defeat_sound.ogg")
+        self.defeat_sound.set_volume(const.BGM_VOL / 10)
 
     def start_battle(self):
         if self.player.hp <= 0:
@@ -411,7 +418,7 @@ class Battle:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         sys.exit()
-                move += (current_time - last_time) * 50
+                move += (current_time - last_time) * 80
                 if move > 20:
                     break
                 self.update_screen()
@@ -428,7 +435,7 @@ class Battle:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         sys.exit()
-                move -= (current_time - last_time) * 80
+                move -= (current_time - last_time) * 50
                 if move < 0:
                     break
                 self.update_screen()
@@ -445,6 +452,46 @@ class Battle:
             self.heal_sound.play()
         elif self.skill_type == SkillType.CatchPet:
             self.catch_sound.play()
+            while True:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        sys.exit()
+                move += (current_time - last_time) * 120
+                if move > 20:
+                    break
+                self.update_screen()
+                self.enermy_pet_images[self.select_enermy].update((self.enermy_image_startx + self.select_enermy * self.pet_width + move, self.enermy_image_starty))
+                self.draw_screen()
+                pygame.display.flip()
+                last_time = current_time
+                current_time = time.time()
+            while True:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        sys.exit()
+                move -= (current_time - last_time) * 120
+                if move < -20:
+                    break
+                self.update_screen()
+                self.enermy_pet_images[self.select_enermy].update((self.enermy_image_startx + self.select_enermy * self.pet_width + move, self.enermy_image_starty))
+                self.draw_screen()
+                pygame.display.flip()
+                last_time = current_time
+                current_time = time.time()
+            while True:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        sys.exit()
+                move += (current_time - last_time) * 120
+                if move > 0:
+                    break
+                self.update_screen()
+                self.enermy_pet_images[self.select_enermy].update(
+                    (self.enermy_image_startx + self.select_enermy * self.pet_width + move, self.enermy_image_starty))
+                self.draw_screen()
+                pygame.display.flip()
+                last_time = current_time
+                current_time = time.time()
         while current_time - initial_time < 1:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
