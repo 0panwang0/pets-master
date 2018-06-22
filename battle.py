@@ -74,7 +74,7 @@ class Battle:
             return
         self.battle_info("战斗开始!", self.open_sound, 1)
         pygame.mixer.music.load(const.MUSIC_DIR + "battle_bgm.ogg")
-        pygame.mixer.music.set_volume(self.scroll_map.BGM_VOL / 10)
+        pygame.mixer.music.set_volume(const.BGM_VOL / 10)
         pygame.mixer.music.play(loops=-1)
         while True:
             self.check_events()
