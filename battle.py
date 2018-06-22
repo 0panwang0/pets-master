@@ -59,8 +59,10 @@ class Battle:
         self.skill_cost = 0
         self.select_enermy = 0
 
+        self.click_sound = pygame.mixer.Sound(const.MUSIC_DIR + "click_sound.ogg")
         self.open_sound = pygame.mixer.Sound(const.MUSIC_DIR + "open_sound.ogg")
         self.hit_sound = pygame.mixer.Sound(const.MUSIC_DIR + "hit_sound.ogg")
+        self.catch_sound = pygame.mixer.Sound(const.MUSIC_DIR + "catch_sound.ogg")
         self.heal_sound = pygame.mixer.Sound(const.MUSIC_DIR + "heal_sound.ogg")
         self.victory_sound = pygame.mixer.Sound(const.MUSIC_DIR + "victory_sound.ogg")
         self.defeat_sound = pygame.mixer.Sound(const.MUSIC_DIR + "defeat_sound.ogg")
@@ -97,6 +99,7 @@ class Battle:
                     self.gain_reward()
                 break
             pygame.display.flip()
+        time.sleep(0.2)
 
     def battle_info(self, text, music, delay):
         music.play()
@@ -123,7 +126,9 @@ class Battle:
                 beated_exp += killed_enermy.beated_exp
                 beated_money += killed_enermy.beated_money
             self.dialog.info("获得金币:  " + str(beated_exp), "mid")
+            self.click_sound.play()
             self.dialog.info("获得经验:  " + str(beated_exp), "mid")
+            self.click_sound.play()
             self.player.gain_money(beated_money)
             ori_lv = self.player.level
             ori_hp = self.player.max_hp
@@ -143,6 +148,7 @@ class Battle:
                 info.append("攻击力: " + str(ori_attack) + " -> " + str(dst_attack))
                 info.append("防御力: " + str(ori_defense) + " -> " + str(dst_defense))
                 self.dialog.write("勇者", info)
+                self.click_sound.play()
             for pet in self.player.battle_list:
                 ori_lv = pet.level
                 ori_effort = pet.get_effort()
@@ -155,6 +161,7 @@ class Battle:
                     info.append("技能： " + skill_name)
                     info.append("威力： " + str(ori_effort) + " -> " + str(dst_effort))
                     self.dialog.write(pet.pet_name, info)
+                    self.click_sound.play()
         if len(self.caught_enermys) > 0:
             for pet in self.caught_enermys:
                 lv = pet.level
@@ -166,6 +173,7 @@ class Battle:
                 info.append("技能： " + skill_name)
                 info.append("威力： " + str(effort))
                 self.dialog.write("新宠物", info)
+                self.click_sound.play()
 
     def check_events(self):
         for event in pygame.event.get():
@@ -315,6 +323,8 @@ class Battle:
         if self.battle_state == BattleState.SelectAction:
             for i in range(len(self.button_images)):
                 if self.button_images[i].rect.collidepoint(pos):
+                    self.click_sound.play()
+                    time.sleep(0.2)
                     print("Selected Region:\t", (0, i))
                     self.battle_continue = True
                     return i
@@ -431,6 +441,8 @@ class Battle:
                 current_time = time.time()
         elif self.skill_type == SkillType.Heal:
             self.heal_sound.play()
+        elif self.skill_type == SkillType.CatchPet:
+            self.catch_sound.play()
         while current_time - initial_time < 1:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
