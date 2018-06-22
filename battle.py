@@ -9,10 +9,10 @@ import const
 
 
 class Battle:
-    def __init__(self, screen, player, enermy_pets, dialog, scroll_map):
+    def __init__(self, screen, player, enermy_pets, dialog, scene):
         self.screen = screen
         self.dialog = dialog
-        self.scroll_map = scroll_map
+        self.scene = scene
         self.pet_width = (self.screen.get_width() - 40) / 4
         self.pet_height = 80
         self.button_width = self.screen.get_width() / 2
