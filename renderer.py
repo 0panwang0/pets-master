@@ -42,7 +42,7 @@ class Map(object):
 
 
 class ScrollMap(Map):
-    def __init__(self, filename, screen):
+    def __init__(self, filename, screen, bgm):
         super().__init__(filename)
         self.map_data = pyscroll.data.TiledMapData(self.tmx_data)
         self.map_layer = pyscroll.BufferedRenderer(self.map_data, (screen.get_rect().width
@@ -55,7 +55,8 @@ class ScrollMap(Map):
         self.nobattle_area = make_object(self, 'nobattle')  # 非战斗区域
         self.image_sprites = []  # 储存精灵图片对象
         self.screen = screen
-        self.BGM = ''
+        self.BGM = bgm
+        self.BGM_VOL = 1.0
         self.create_sprite_object()
 
 
@@ -86,6 +87,15 @@ class ScrollMap(Map):
         for sprite in self.image_sprites:
             sprite.update(0)
 
+    def BGMUP(self):
+        if self.BGM_VOL < 1.0:
+            self.BGM_VOL += 0.1
+            self.BGM.set_volume(self.BGM_VOL)
+
+    def BGMDOWN(self):
+        if self.BGM_VOL > 0.0:
+            self.BGM_VOL -= 0.1
+            self.BGM.set_volume(self.BGM_VOL)
 
 class Object(pygame.sprite.Sprite):
     def __init__(self, rect, type=''):

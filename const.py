@@ -16,3 +16,6 @@ PETBIN_DIR = "resources\\pet_bin\\"
 
 # 难度系数，用于计算每一级的经验, degree of difficulty
 DOD = 1.4
+
+# 最大宠物出战数量
+MAXPETS = 3

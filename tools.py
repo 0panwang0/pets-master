@@ -125,7 +125,7 @@ def check_switch_scene(player, scroll_map, screen):
         scroll_map.BGM.stop()
         screen.fill((0, 0, 0))
         pygame.display.flip()
-        scroll_map = ScrollMap(TMX[door_list[0].properties['type']], screen)
+        scroll_map = ScrollMap(TMX[door_list[0].properties['type']], screen, pygame.mixer.Sound(const.MUSIC_DIR + door_list[0].properties['type'] + ".ogg"))
         for door in scroll_map.doors.sprites():
             if door.properties['type'] == door_list[0].properties['world']:
                 for start_point in scroll_map.start_points.sprites():
@@ -135,7 +135,6 @@ def check_switch_scene(player, scroll_map, screen):
                         player.rect.bottom = start_point.rect.bottom
         scroll_map.add(player)
         scroll_map.center(player.rect.center)
-        scroll_map.BGM = pygame.mixer.Sound(const.MUSIC_DIR + door_list[0].properties['type'] + ".ogg")
         scroll_map.BGM.play(loops=-1)
     return scroll_map
 
