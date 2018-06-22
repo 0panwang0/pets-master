@@ -189,17 +189,14 @@ def check_battle(player, scroll_map, screen, dialog):
 
 
 def hotel(player, dialog):
-    if player.money >= 100:
+    if player.money >= const.HOTEL_MONEY:
         dialog.info('小伙子，来客栈休息一下吧~', 'mid')
-        player.hp += int(player.max_hp * const.HOTEL_COFF)
-        if player.hp > player.max_hp:
-            player.hp = player.max_hp
-        player.mp += int(player.max_mp * const.HOTEL_COFF)
-        if player.mp > player.max_mp:
-            player.mp = player.max_mp
-        dialog.info('人物恢复最大生命的' + str(const.HOTEL_COFF * 100) + '%', 'mid')
+        player.hp = player.max_hp
+        player.mp = player.max_mp
+        dialog.info('人物恢复最佳状态', 'mid')
         dialog.info('失去' + str(const.HOTEL_MONEY) + '金币', 'mid')
         player.money -= const.HOTEL_MONEY
+        const.HOTEL_MONEY = int(const.HOTEL_MONEY + const.HOTEL_MONEY * 0.5)
     else:
         dialog.info('小伙子，你没钱不能在这里休息啊！', 'mid')
 

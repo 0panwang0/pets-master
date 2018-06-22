@@ -69,12 +69,12 @@ class Hero(Person):
         super().__init__(file_addr, row, col)
         self.moving = [] # 这是一个堆，玩家可能同时按下多个移动键，储存这些状态，当玩家释放移动键时可以选择角色下一个状态
         self.tasks = [1, 2, 3, 4, -1]
-        self.money = 100    # 人物拥有的金钱
+        self.money = 1000    # 人物拥有的金钱
         self.hp = 200   # 人物当前血量
         self.max_hp = 200   # 人物最大血量
         self.mp = 60    # 人物当前魔法值
         self.max_mp = 60    # 人物最大魔法值
-        self.attack = 17    # 人物攻击
+        self.attack = 5    # 人物攻击
         self.defense = 13   # 人物防御
         self.own_list = []  # 拥有的宠物
         self.battle_list = []   # 出战宠物
