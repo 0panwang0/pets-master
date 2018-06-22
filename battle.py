@@ -9,9 +9,10 @@ import const
 
 
 class Battle:
-    def __init__(self, screen, player, enermy_pets, dialog):
+    def __init__(self, screen, player, enermy_pets, dialog, scroll_map):
         self.screen = screen
         self.dialog = dialog
+        self.scroll_map = scroll_map
         self.pet_width = (self.screen.get_width() - 40) / 4
         self.pet_height = 80
         self.button_width = self.screen.get_width() / 2
@@ -73,6 +74,7 @@ class Battle:
             return
         self.battle_info("战斗开始!", self.open_sound, 1)
         pygame.mixer.music.load(const.MUSIC_DIR + "battle_bgm.ogg")
+        pygame.mixer.music.set_volume(self.scroll_map.BGM_VOL / 10)
         pygame.mixer.music.play(loops=-1)
         while True:
             self.check_events()

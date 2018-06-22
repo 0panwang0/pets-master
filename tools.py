@@ -181,7 +181,7 @@ def check_battle(player, scroll_map, screen, dialog):
                 scroll_map.BGM.stop()
                 enermy_list = []
                 random_choose_enermy(enermy_list, scroll_map)
-                battle = Battle(screen, player, enermy_list, dialog)
+                battle = Battle(screen, player, enermy_list, dialog, scroll_map)
                 battle.start_battle()
                 player.state = "rest_" + player.moving[-1][5:]
                 player.moving.clear()

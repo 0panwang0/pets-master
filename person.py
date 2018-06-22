@@ -126,7 +126,10 @@ class Hero(Person):
         return self.get_skill_type(index), self.get_skill_effort(index), self.get_skill_cost(index)
 
     def take_damage(self, attack):
-        self.hp -= attack
+        damage = int(attack - self.defense * 0.2)
+        if damage <= 0:
+            damage = 1
+        self.hp -= damage
         if self.hp < 0:
             self.hp = 0
 
