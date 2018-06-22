@@ -41,7 +41,7 @@
   <object id="7" name="blocker" x="256.182" y="16.5455" width="63.6364" height="70"/>
   <object id="8" name="blocker" x="291" y="304" width="25.5" height="15"/>
   <object id="9" name="blocker" x="3.25" y="304" width="25.5" height="15"/>
-  <object id="11" name="door" type="town" x="144" y="320" width="31.058" height="33.3333">
+  <object id="11" name="door" type="town" x="140.25" y="320" width="40.558" height="33.3333">
    <properties>
     <property name="start" value="start_point_1"/>
     <property name="state" value="down"/>
