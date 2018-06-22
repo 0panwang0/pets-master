@@ -22,8 +22,9 @@ minus_file_name = "resources/images/minus.tga"
 item_dict = { '萝卜':(0, 18), '洋葱':(1, 18), '土豆':(2, 18), '生肉':(3, 18), '鲜鱼':(4, 18),}
 
 class Icon:
-    def __init__(self, player, dialog, screen):
+    def __init__(self, scroll_map, player, dialog, screen):
         self.icon = pygame.image.load(icon_file_name).convert()
+        self.scroll_map = scroll_map
         self.player = player
         self.dialog = dialog
         self.screen = screen
@@ -33,6 +34,10 @@ class Icon:
         self.description_font = pygame.font.Font(font_file_name, 20)
         self.panel_font = pygame.font.Font(font_file_name, 25)
         self.gold_font = pygame.font.Font(font_file_name, 20)
+        self.plus = pygame.image.load(plus_file_name).convert()
+        self.minus = pygame.image.load(minus_file_name).convert()
+        self.plus.set_alpha(180)
+        self.minus.set_alpha(180)
         self.ui = {}
         self.item_name = []
         self.item_position = []
@@ -78,16 +83,15 @@ class Icon:
         self.ui['setting'].blit(title, ((self.ui['sprite'].get_width()-title.get_width())/2, 65))
         for i in range(len(self.description_setting)):
             self.ui['setting'].blit(self.panel_font.render(self.description_setting[i],True, (0, 0, 0)), (50, 140 + i * 50))
-        plus = pygame.image.load(plus_file_name)
-        minus = pygame.image.load(minus_file_name)
-        self.ui['setting'].blit(plus, (200, 140))
-        self.ui['setting'].blit(minus, (300, 140))
+        self.ui['setting'].blit(self.plus, (300, 140))
+        self.ui['setting'].blit(self.minus, (200, 140))
 
     def draw_sprite(self):
         for i in range(len(ui_state_list)):
             if ui_state_list[i] == 'sprite':
                 self.ui['sprite'] = pygame.image.load(ui_file_name[i]).convert_alpha()
         self.ui['sprite'].blit(self.arrow, (320, 280))
+        self.ui['sprite'].blit(self.description_font.render('第'+str(self.sprite_index+1)+'页', True, (0, 0, 0)),(260, 275))
         sprite = self.player.own_list[self.sprite_index]
         name = self.sprite_font.render(sprite.pet_name, True, (0, 0, 0))
         self.ui['sprite'].blit(name, ((self.ui['sprite'].get_width()-name.get_width())/2, 65))
@@ -147,6 +151,11 @@ class Icon:
                     else:
                         self.dialog.info("宠物出战数量已达上限","mid")
                 self.draw_sprite()
+        elif self.state == 'setting':
+            if pygame.Rect(550, 200, self.plus.get_width(), self.plus.get_height()).collidepoint(pos):
+                self.scroll_map.BGMUP()
+            elif pygame.Rect(450, 200, self.minus.get_width(), self.minus.get_height()).collidepoint(pos):
+                self.scroll_map.BGMDOWN()
 
     def check_mouse_right_event(self, pos):
         if self.state == 'bag':
@@ -226,3 +235,12 @@ class Icon:
                     icon_alpha[i] = 255
                 else:
                     icon_alpha[i] = 180
+        elif self.state == 'setting':
+            if pygame.Rect(550, 200, self.plus.get_width(), self.plus.get_height()).collidepoint(pos):
+                self.plus.set_alpha(255)
+            else:
+                self.plus.set_alpha(180)
+            if pygame.Rect(450, 200, self.minus.get_width(), self.minus.get_height()).collidepoint(pos):
+                self.minus.set_alpha(255)
+            else:
+                self.minus.set_alpha(180)
