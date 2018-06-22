@@ -130,7 +130,7 @@ class Icon:
 
     def draw_board(self):
         board = self.panel_font.render(self.scroll_map.info.sprites()[0].properties['world'], True, (255, 255, 255))
-        self.screen.blit(board, (750, 20))
+        self.screen.blit(board, (770-board.get_width(), 20))
 
 
     def draw_value(self):
