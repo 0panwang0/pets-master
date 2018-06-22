@@ -37,7 +37,7 @@ class Icon:
         self.item_name = []
         self.item_position = []
         self.sprite_index = 0
-        self.description_item = ["等级", "经验", "伤害", "技能", "状态"]
+        self.description_item = ["等级", "经验", "威力", "技能", "状态"]
         self.description_setting = ["音量", "存档", "读档"]
         for i in range(len(ui_file_name)):
             self.ui[ui_state_list[i]] = pygame.image.load(ui_file_name[i]).convert_alpha()
@@ -96,7 +96,7 @@ class Icon:
         sprite_value = []
         sprite_value.append(str(sprite.level))
         sprite_value.append(str(sprite.exp))
-        sprite_value.append(str(sprite.pet_damage))
+        sprite_value.append(str(sprite.get_effort()))
         sprite_value.append(str(sprite.pet_skill.skill_name))
         if sprite in self.player.battle_list:
             sprite_value.append("已出战")
@@ -142,7 +142,10 @@ class Icon:
                 self.sprite_index = (self.sprite_index + 1) % len(self.player.own_list)
             elif pygame.Rect(50+(screen_size[0]-self.ui['sprite'].get_width())/2,75+(screen_size[1]-self.ui['sprite'].get_height())/2,sprite_image.get_width(),sprite_image.get_height()).collidepoint(pos):
                 if self.player.own_list[self.sprite_index] not in self.player.battle_list:
-                    self.player.battle_list.append(self.player.own_list[self.sprite_index])
+                    if len(self.player.battle_list) < 3:
+                        self.player.battle_list.append(self.player.own_list[self.sprite_index])
+                    else:
+                        self.dialog.info("宠物出战数量已达上限","mid")
                 self.draw_sprite()
 
     def check_mouse_right_event(self, pos):

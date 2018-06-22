@@ -23,7 +23,9 @@ skill1 = Skill("霸王拳", SkillType.DirectDamage, 6, 5)
 skill2 = Skill("霸王若水", SkillType.Heal, 10, 5)
 frined_pet1 = Pet("秋田犬", 20, 5, skill1, 1, 20, 500, 20, const.PET_DIR + "pet00.png", 18)
 frined_pet2 = Pet("皮尤", 20, 5, skill2, 1, 20, 500, 20, const.PET_DIR + "pet01.png", 18)
-player.own_list = [frined_pet1, frined_pet2]
+frined_pet3 = Pet("皮尤", 20, 5, skill2, 1, 20, 500, 20, const.PET_DIR + "pet01.png", 18)
+frined_pet4 = Pet("皮尤", 20, 5, skill2, 1, 20, 500, 20, const.PET_DIR + "pet01.png", 18)
+player.own_list = [frined_pet1, frined_pet2,frined_pet3,frined_pet4]
 player.battle_list = [frined_pet1, frined_pet2]
 
 scroll_map = ScrollMap(const.TMX_DIR + "home.tmx", screen, pygame.mixer.Sound(const.MUSIC_DIR + "home.ogg"))
