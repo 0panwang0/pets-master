@@ -495,5 +495,3 @@ class Battle:
             self.draw_screen()
             pygame.display.flip()
             current_time = time.time()
-
-
