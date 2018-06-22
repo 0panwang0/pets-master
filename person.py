@@ -2,6 +2,7 @@ import pygame
 from math import *
 import const
 
+
 class Person(pygame.sprite.Sprite):
     def __init__(self, file_addr, row, col):
         pygame.sprite.Sprite.__init__(self)
@@ -19,7 +20,6 @@ class Person(pygame.sprite.Sprite):
         self.last_frame = 2     #人物的最后一个图片
         self.last_time = 0      #人物图片变换的最近一次时间(时间以pygame.init()为起点)
         self.change_image_time = 150  # 人物图片变换的时间间隔 ms
-
 
     def get_image(self, _image, row, col):
         image = {"move_down": [(0, self.speed)],
@@ -69,20 +69,20 @@ class Hero(Person):
         super().__init__(file_addr, row, col)
         self.moving = [] # 这是一个堆，玩家可能同时按下多个移动键，储存这些状态，当玩家释放移动键时可以选择角色下一个状态
         self.tasks = [1, 2, 3, 4, -1]
-        self.money = 100
-        self.hp = 200
-        self.max_hp = 250
-        self.mp = 55
-        self.max_mp = 60
-        self.attack = 17
-        self.defense = 13
-        self.own_list = []
-        self.battle_list = []
-        self.level = 1
-        self.exp = 0
+        self.money = 100    # 人物拥有的金钱
+        self.hp = 200   # 人物当前血量
+        self.max_hp = 250   # 人物最大血量
+        self.mp = 55    # 人物当前魔法值
+        self.max_mp = 60    # 人物最大魔法值
+        self.attack = 17    # 人物攻击
+        self.defense = 13   # 人物防御
+        self.own_list = []  # 拥有的宠物
+        self.battle_list = []   # 出战宠物
+        self.level = 1  # 人物当前等级
+        self.exp = 0    # 人物当前经验
         self.battle_nums = 4
         self.place = []  # 储存人物去过的有怪物的地方
-        self.lvup_exp = floor(pow((self.level+1), const.DOD) * 100 + pow(self.level, 1 / const.DOD) * 100)
+        self.lvup_exp = floor(pow((self.level+1), const.DOD) * 100 + pow(self.level, 1 / const.DOD) * 100)  # 人物下一级所需经验
 
     def gain_exp(self, exp):
         self.exp += exp
@@ -146,13 +146,15 @@ class Hero(Person):
             # 提示出战宠物已满
             pass
 
-    # 参战宠物休息
     def rest_pet(self, index):
+        """
+        参战宠物休息
+        """
         del self.battle_list[index]
 
     def move_back(self):
-        """ If called after an update, the sprite can move back to give the
-            illusion of the sprite not moving.
+        """
+            碰撞后恢复原来的位置
         """
         self.state = self.old_state
         self.rect.topleft = self.old_rect.topleft
