@@ -136,7 +136,7 @@ def check_switch_scene(player, scroll_map, screen):
         scroll_map.add(player)
         scroll_map.center(player.rect.center)
         scroll_map.BGM = pygame.mixer.Sound(const.MUSIC_DIR + door_list[0].properties['type'] + ".ogg")
-        scroll_map.BGM.play()
+        scroll_map.BGM.play(loops=-1)
     return scroll_map
 
 

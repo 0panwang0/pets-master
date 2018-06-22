@@ -217,11 +217,11 @@
     <property name="world" value="town"/>
    </properties>
   </object>
-  <object id="83" name="door" x="800.304" y="31" width="29.3913" height="33.3333">
+  <object id="83" name="door" type="rocks" x="800.304" y="31" width="29.3913" height="33.3333">
    <properties>
     <property name="start" value="start_point_3"/>
     <property name="state" value="right"/>
-    <property name="world" value="home"/>
+    <property name="world" value="town"/>
    </properties>
   </object>
   <object id="84" name="door" type="forest" x="-29.1957" y="32.3333" width="29.3913" height="31.3333">
