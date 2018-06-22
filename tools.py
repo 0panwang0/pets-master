@@ -139,8 +139,10 @@ def check_switch_scene(player, scroll_map, screen, dialog):
         scroll_map.sprite_update()
         scroll_map.draw()
         if scroll_map.info:
-            if player.level < int(scroll_map.info.sprites()[0].properties['level']):
+            if player.level < int(scroll_map.info.sprites()[0].properties['level']) and \
+                    door_list[0].properties['type'] not in player.place:
                 dialog.info('危险！推荐等级为' + scroll_map.info.sprites()[0].properties['level'], 'mid')
+                player.place.append(door_list[0].properties['type'])
         if player.moving:
             player.state = 'rest' + player.moving[-1][4:]
             player.moving.clear()

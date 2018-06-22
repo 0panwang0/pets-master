@@ -98,6 +98,7 @@ class ScrollMap(Map):
             self.BGM_VOL -= 1
             self.BGM.set_volume(self.BGM_VOL / 10)
 
+
 class Object(pygame.sprite.Sprite):
     def __init__(self, rect, type=''):
         pygame.sprite.Sprite.__init__(self)
