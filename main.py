@@ -53,7 +53,7 @@ while running:
     time = pygame.time.get_ticks()  #获得以pygame.init()为起点的时间，用于图片变换
 
     running = check_event(player, scroll_map, icon, dialog, shop)
-    scroll_map = check_switch_scene(player, scroll_map, screen)
+    scroll_map = check_switch_scene(player, scroll_map, screen, dialog)
 
     player.update(time)
     check_collision(player, scroll_map)
@@ -61,10 +61,9 @@ while running:
     check_battle(player, scroll_map, screen, dialog)
     scroll_map.sprite_update()
 
-    if player.controller == 'main':
-        scroll_map.draw()
-        icon.draw()
-        pygame.display.flip()
+    scroll_map.draw()
+    icon.draw()
+    pygame.display.flip()
     # elif player.controller == 'battle':
     #     battle = Battle(screen, player, enermy_list)
     #     battle.start_battle()

@@ -6,6 +6,10 @@ POTATO_MP = 50
 MEAT_MAX_HP = 10
 FISH_MAX_MP = 10
 
+# 客栈休息花费的金币
+HOTEL_MONEY = 100
+HOTEL_COFF = 0.2 # 恢复最大生命/魔法的百分比
+
 # 路径
 IMAGE_DIR = "resources\\images\\"
 PET_DIR = IMAGE_DIR + "Pets\\"

@@ -53,6 +53,7 @@ class ScrollMap(Map):
         self.start_points = make_object(self, 'start point')    # 角色在一张地图的起始点
         self.sprites = make_object(self, 'sprite')  # 精灵对象
         self.nobattle_area = make_object(self, 'nobattle')  # 非战斗区域
+        self.info = make_object(self, 'info')
         self.image_sprites = []  # 储存精灵图片对象
         self.screen = screen
         self.BGM = bgm

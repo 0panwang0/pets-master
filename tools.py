@@ -113,7 +113,7 @@ def load_all_tmx(directory, accept=('.tmx')):
     return tmxs
 
 
-def check_switch_scene(player, scroll_map, screen):
+def check_switch_scene(player, scroll_map, screen, dialog):
     '''
     :param player: 玩家对象
     :param scroll_map: 地图对象
@@ -136,6 +136,14 @@ def check_switch_scene(player, scroll_map, screen):
         scroll_map.add(player)
         scroll_map.center(player.rect.center)
         scroll_map.BGM.play(loops=-1)
+        scroll_map.draw()
+        if scroll_map.info:
+            if player.level < int(scroll_map.info.sprites()[0].properties['level']):
+                dialog.info('危险！推荐等级为' + scroll_map.info.sprites()[0].properties['level'], 'mid')
+        if player.moving:
+            player.state = 'rest' + player.moving[-1][4:]
+            player.moving.clear()
+
     return scroll_map
 
 
@@ -176,6 +184,23 @@ def check_battle(player, scroll_map, screen, dialog):
                 player.moving.clear()
                 scroll_map.BGM.play(loops=True)
 
+
+def hotel(player, dialog):
+    if player.money >= 100:
+        dialog.info('小伙子，来客栈休息一下吧~', 'mid')
+        player.hp += int(player.max_hp * const.HOTEL_COFF)
+        if player.hp > player.max_hp:
+            player.hp = player.max_hp
+        player.mp += int(player.max_mp * const.HOTEL_COFF)
+        if player.mp > player.max_mp:
+            player.mp = player.max_mp
+        dialog.info('人物恢复最大生命的' + str(const.HOTEL_COFF * 100) + '%', 'mid')
+        dialog.info('失去' + str(const.HOTEL_MONEY) + '金币', 'mid')
+        player.money -= const.HOTEL_MONEY
+    else:
+        dialog.info('小伙子，你没钱不能在这里休息啊！', 'mid')
+
+
 def check_dialogue(player, scroll_map, dialog, shop):
     for sprite in scroll_map.image_sprites:
         left = Object(pygame.Rect(sprite.rect.left-sprite.rect.width, sprite.rect.top, sprite.rect.width, sprite.rect.height))
@@ -183,14 +208,28 @@ def check_dialogue(player, scroll_map, dialog, shop):
         up = Object(pygame.Rect(sprite.rect.left, sprite.rect.top-sprite.rect.height, sprite.rect.width, sprite.rect.height))
         down = Object(pygame.Rect(sprite.rect.left, sprite.rect.top+sprite.rect.height, sprite.rect.width, sprite.rect.height))
         if pygame.sprite.collide_rect(player, left) and player.state[5:] == "right":
-            sprite.state = "rest_left"
-            player.moving.clear()
+            if sprite.file_name == "shop":
+                dialog.info('欢迎，我们为您提供了许多东西~',  'mid')
+                shop.draw()
+            else:
+                sprite.state = "rest_left"
+                player.moving.clear()
         elif pygame.sprite.collide_rect(player, right) and player.state[5:] == "left":
-            sprite.state = "rest_right"
-            player.moving.clear()
+            if sprite.file_name == "shop":
+                dialog.info('欢迎，我们为您提供了许多东西~',  'mid')
+                shop.draw()
+            elif sprite.file_name == "hotel":
+                hotel(player, dialog)
+            else:
+                sprite.state = "rest_right"
+                player.moving.clear()
         elif pygame.sprite.collide_rect(player, up) and player.state[5:] == "down":
-            sprite.state = "rest_up"
-            player.moving.clear()
+            if sprite.file_name == "shop":
+                dialog.info('欢迎，我们为您提供了许多东西~',  'mid')
+                shop.draw()
+            else:
+                sprite.state = "rest_up"
+                player.moving.clear()
         elif pygame.sprite.collide_rect(player, down) and player.state[5:] == "up":
             if sprite.file_name == "shop":
                 dialog.info('欢迎，我们为您提供了许多东西~',  'mid')
@@ -205,7 +244,6 @@ def check_dialogue(player, scroll_map, dialog, shop):
         scroll_map.draw()
         pygame.display.update()
         dialog.run(sprite)
-
 
 
 TMX = load_all_tmx(os.path.join('resources', 'tmx'))
