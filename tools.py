@@ -126,7 +126,7 @@ def check_switch_scene(player, scroll_map, screen, dialog):
         screen.fill((0, 0, 0))
         pygame.display.flip()
         pygame.mixer.music.load(const.MUSIC_DIR + door_list[0].properties['type'] + ".ogg")
-        scroll_map = ScrollMap(TMX[door_list[0].properties['type']], screen)
+        scroll_map.reload(TMX[door_list[0].properties['type']], screen)
         for door in scroll_map.doors.sprites():
             if door.properties['type'] == door_list[0].properties['world']:
                 for start_point in scroll_map.start_points.sprites():
@@ -147,7 +147,6 @@ def check_switch_scene(player, scroll_map, screen, dialog):
         if player.moving:
             player.state = 'rest' + player.moving[-1][4:]
             player.moving.clear()
-
     return scroll_map
 
 
@@ -182,7 +181,7 @@ def check_battle(player, scroll_map, screen, dialog):
                 scroll_map.BGM.stop()
                 enermy_list = []
                 random_choose_enermy(enermy_list, scroll_map)
-                battle = Battle(screen, player, enermy_list, dialog, scroll_map)
+                battle = Battle(screen, player, enermy_list, dialog, scroll_map.doors.sprites[0].properties['world'])
                 battle.start_battle()
                 player.state = "rest_" + player.moving[-1][5:]
                 player.moving.clear()
