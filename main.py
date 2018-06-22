@@ -31,7 +31,7 @@ player.battle_list = [frined_pet1, frined_pet2]
 scroll_map = ScrollMap(const.TMX_DIR + "home.tmx", screen, pygame.mixer.Sound(const.MUSIC_DIR + "home.ogg"))
 scroll_map.BGM.play(loops=-1)
 dialog = Dialog(player, screen)
-icon = Icon(player, dialog, screen)
+icon = Icon(scroll_map, player, dialog, screen)
 shop = Shop(player, icon, screen)
 player.controller = "main"
 scroll_map.add(player)
