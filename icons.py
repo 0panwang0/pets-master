@@ -153,7 +153,7 @@ class Icon:
         for i in range(len(self.description_setting)):
             self.ui['setting'].blit(self.panel_font.render(self.description_setting[i],True, (0, 0, 0)), (50, 140 + i * 50))
         self.ui['setting'].blit(self.plus, (300, 140))
-        vol = self.panel_font.render(str(self.scroll_map.BGM_VOL), True, (0, 0, 0))
+        vol = self.panel_font.render(str(const.BGM_VOL), True, (0, 0, 0))
         self.ui['setting'].blit(vol, (265-vol.get_width()/2, 140))
         self.ui['setting'].blit(self.minus, (200, 140))
 
