@@ -71,8 +71,8 @@ class Hero(Person):
         self.tasks = [1, 2, 3, 4, -1]
         self.money = 100    # 人物拥有的金钱
         self.hp = 200   # 人物当前血量
-        self.max_hp = 250   # 人物最大血量
-        self.mp = 55    # 人物当前魔法值
+        self.max_hp = 200   # 人物最大血量
+        self.mp = 60    # 人物当前魔法值
         self.max_mp = 60    # 人物最大魔法值
         self.attack = 17    # 人物攻击
         self.defense = 13   # 人物防御
