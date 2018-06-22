@@ -122,10 +122,11 @@ def check_switch_scene(player, scroll_map, screen, dialog):
     '''
     door_list = pygame.sprite.spritecollide(player, scroll_map.doors, False)
     if door_list and door_list[0].properties['state'] == player.state[5:]:
-        scroll_map.BGM.stop()
+        pygame.mixer.music.stop()
         screen.fill((0, 0, 0))
         pygame.display.flip()
-        scroll_map = ScrollMap(TMX[door_list[0].properties['type']], screen, pygame.mixer.Sound(const.MUSIC_DIR + door_list[0].properties['type'] + ".ogg"))
+        pygame.mixer.music.load(const.MUSIC_DIR + door_list[0].properties['type'] + ".ogg")
+        scroll_map.reload(TMX[door_list[0].properties['type']], screen)
         for door in scroll_map.doors.sprites():
             if door.properties['type'] == door_list[0].properties['world']:
                 for start_point in scroll_map.start_points.sprites():
@@ -135,7 +136,7 @@ def check_switch_scene(player, scroll_map, screen, dialog):
                         player.rect.bottom = start_point.rect.bottom
         scroll_map.add(player)
         scroll_map.center(player.rect.center)
-        scroll_map.BGM.play(loops=-1)
+        pygame.mixer.music.play(loops=-1)
         scroll_map.sprite_update()
         scroll_map.draw()
         if scroll_map.info:
@@ -146,7 +147,6 @@ def check_switch_scene(player, scroll_map, screen, dialog):
         if player.moving:
             player.state = 'rest' + player.moving[-1][4:]
             player.moving.clear()
-
     return scroll_map
 
 
@@ -181,7 +181,7 @@ def check_battle(player, scroll_map, screen, dialog):
                 scroll_map.BGM.stop()
                 enermy_list = []
                 random_choose_enermy(enermy_list, scroll_map)
-                battle = Battle(screen, player, enermy_list, dialog, scroll_map)
+                battle = Battle(screen, player, enermy_list, dialog, scroll_map.doors.sprites[0].properties['world'])
                 battle.start_battle()
                 player.state = "rest_" + player.moving[-1][5:]
                 player.moving.clear()

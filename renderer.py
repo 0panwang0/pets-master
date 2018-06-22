@@ -42,7 +42,7 @@ class Map(object):
 
 
 class ScrollMap(Map):
-    def __init__(self, filename, screen, bgm):
+    def __init__(self, filename, screen):
         super().__init__(filename)
         self.map_data = pyscroll.data.TiledMapData(self.tmx_data)
         self.map_layer = pyscroll.BufferedRenderer(self.map_data, (screen.get_rect().width
@@ -56,10 +56,25 @@ class ScrollMap(Map):
         self.info = make_object(self, 'info')
         self.image_sprites = []  # 储存精灵图片对象
         self.screen = screen
-        self.BGM = bgm
         self.create_sprite_object()
-        self.BGM.set_volume(const.BGM_VOL / 10)
+        pygame.mixer.music.set_volume(const.BGM_VOL / 10)
 
+    def reload(self, filename, screen):
+        super().__init__(filename)
+        self.map_data = pyscroll.data.TiledMapData(self.tmx_data)
+        self.map_layer = pyscroll.BufferedRenderer(self.map_data, (screen.get_rect().width
+                                                                   , screen.get_rect().height), clamp_camera=True)
+        self.group = pyscroll.PyscrollGroup(map_layer=self.map_layer)
+        self.blockers = make_object(self, 'blocker')  # 禁止角色横跨的位置
+        self.doors = make_object(self, 'door')  # 通往其它地图的门
+        self.start_points = make_object(self, 'start point')  # 角色在一张地图的起始点
+        self.sprites = make_object(self, 'sprite')  # 精灵对象
+        self.nobattle_area = make_object(self, 'nobattle')  # 非战斗区域
+        self.info = make_object(self, 'info')
+        self.image_sprites = []  # 储存精灵图片对象
+        self.screen = screen
+        self.create_sprite_object()
+        pygame.mixer.music.set_volume(const.BGM_VOL / 10)
 
     def add(self, sprite):
         self.group.add(sprite)
@@ -91,12 +106,12 @@ class ScrollMap(Map):
     def BGMUP(self):
         if const.BGM_VOL < 10:
             const.BGM_VOL += 1
-            self.BGM.set_volume(const.BGM_VOL / 10)
+            pygame.mixer.music.set_volume(const.BGM_VOL / 10)
 
     def BGMDOWN(self):
         if const.BGM_VOL > 0:
             const.BGM_VOL -= 1
-            self.BGM.set_volume(const.BGM_VOL / 10)
+            pygame.mixer.music.set_volume(const.BGM_VOL / 10)
 
 
 class Object(pygame.sprite.Sprite):

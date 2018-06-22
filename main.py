@@ -27,9 +27,10 @@ frined_pet2 = Pet("皮尤", 20, 5, skill2, 1, 20, 500, 20, const.PET_DIR + "pet0
 frined_pet3 = Pet("仙人兽", 20, 5, skill3, 1, 20, 500, 20, const.PET_DIR + "pet02.png", 18)
 player.own_list = [frined_pet1, frined_pet2, frined_pet3]
 player.battle_list = [frined_pet1, frined_pet2, frined_pet3]
-
-scroll_map = ScrollMap(const.TMX_DIR + "home.tmx", screen, pygame.mixer.Sound(const.MUSIC_DIR + "home.ogg"))
-scroll_map.BGM.play(loops=-1)
+pygame.mixer.music.load(const.MUSIC_DIR + "home.ogg")
+pygame.mixer.music.set_volume(const.BGM_VOL)
+scroll_map = ScrollMap(const.TMX_DIR + "home.tmx", screen)
+pygame.mixer.music.play(loops=-1)
 dialog = Dialog(player, screen)
 icon = Icon(scroll_map, player, dialog, screen)
 shop = Shop(player, icon, screen)
