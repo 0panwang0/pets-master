@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" infinite="0" nextobjectid="26">
+<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" infinite="0" nextobjectid="27">
  <tileset firstgid="1" name="屋内" tilewidth="16" tileheight="16" tilecount="960" columns="16">
   <image source="../images/屋内.png" width="256" height="960"/>
  </tileset>
@@ -73,6 +73,12 @@
     <property name="actor" value="1"/>
     <property name="filename" value="drama1"/>
     <property name="state" value="rest_down"/>
+   </properties>
+  </object>
+  <object id="26" name="info" x="347.25" y="-24.5" width="85" height="78">
+   <properties>
+    <property name="level" value="1"/>
+    <property name="world" value="家"/>
    </properties>
   </object>
  </objectgroup>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="25" height="25" tilewidth="16" tileheight="16" infinite="0" nextobjectid="16">
+<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="25" height="25" tilewidth="16" tileheight="16" infinite="0" nextobjectid="17">
  <tileset firstgid="1" name="室内" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
   <image source="../images/室内.png" width="512" height="512"/>
  </tileset>
@@ -124,5 +124,11 @@
   <object id="13" name="blocker" x="112.917" y="225.125" width="159.5" height="31.0833"/>
   <object id="14" name="blocker" x="15.5833" y="400.458" width="159.5" height="31.0833"/>
   <object id="15" name="blocker" x="255.583" y="402.458" width="144.833" height="31.0833"/>
+  <object id="16" name="info" x="446.5" y="93.5" width="85" height="78">
+   <properties>
+    <property name="level" value="1"/>
+    <property name="world" value="商店"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

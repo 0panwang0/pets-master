@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextobjectid="116">
+<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextobjectid="117">
  <tileset firstgid="1" name="外部草地1" tilewidth="16" tileheight="16" tilecount="576" columns="16">
   <image source="../images/外部草地1.png" width="256" height="576"/>
  </tileset>
@@ -286,6 +286,12 @@
     <property name="actor" value="3"/>
     <property name="filename" value="drama3"/>
     <property name="state" value="rest_right"/>
+   </properties>
+  </object>
+  <object id="116" name="info" x="847" y="18.5" width="85" height="78">
+   <properties>
+    <property name="level" value="1"/>
+    <property name="world" value="训者休息地"/>
    </properties>
   </object>
  </objectgroup>

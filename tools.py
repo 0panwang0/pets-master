@@ -136,6 +136,7 @@ def check_switch_scene(player, scroll_map, screen, dialog):
         scroll_map.add(player)
         scroll_map.center(player.rect.center)
         scroll_map.BGM.play(loops=-1)
+        scroll_map.sprite_update()
         scroll_map.draw()
         if scroll_map.info:
             if player.level < int(scroll_map.info.sprites()[0].properties['level']):

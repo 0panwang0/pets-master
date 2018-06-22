@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextobjectid="45">
+<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextobjectid="46">
  <tileset firstgid="1" name="tileset2" tilewidth="16" tileheight="16" tilecount="110" columns="10">
   <image source="../images/tileset2.png" width="160" height="180"/>
  </tileset>
@@ -158,6 +158,12 @@
     <property name="actor" value="7"/>
     <property name="filename" value="drama4"/>
     <property name="state" value="rest_up"/>
+   </properties>
+  </object>
+  <object id="45" name="info" x="-97.5" y="-53" width="85" height="78">
+   <properties>
+    <property name="level" value="1"/>
+    <property name="world" value="神秘屋"/>
    </properties>
   </object>
  </objectgroup>
