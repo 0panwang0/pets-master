@@ -10,6 +10,9 @@ import const
 
 class Battle:
     def __init__(self, screen, player, enermy_pets, dialog, scene):
+        if player.hp <= 0:
+            print("Player seriously injured, could not enter a battle!!!")
+            return
         self.screen = screen
         self.dialog = dialog
         self.scene = scene
@@ -75,14 +78,12 @@ class Battle:
         self.defeat_sound = pygame.mixer.Sound(const.MUSIC_DIR + "defeat_sound.ogg")
         self.defeat_sound.set_volume(const.BGM_VOL / 10)
 
-    def start_battle(self):
-        if self.player.hp <= 0:
-            print("Player seriously injured, could not enter a battle!!!")
-            return
-        self.battle_info("战斗开始!", self.open_sound, 1)
         pygame.mixer.music.load(const.MUSIC_DIR + "battle_bgm.ogg")
         pygame.mixer.music.set_volume(const.BGM_VOL / 10)
         pygame.mixer.music.play(loops=-1)
+
+    def start_battle(self):
+        self.battle_info("战斗开始!", self.open_sound, 1)
         while True:
             self.check_events()
             self.execute_state()
