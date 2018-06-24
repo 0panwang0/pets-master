@@ -127,6 +127,7 @@ def check_switch_scene(player, scroll_map, screen, dialog):
         screen.fill((0, 0, 0))
         pygame.display.flip()
         pygame.mixer.music.load(const.MUSIC_DIR + door_list[0].properties['type'] + ".ogg")
+        pygame.mixer.music.play(loops=-1)
         scroll_map.reload(TMX[door_list[0].properties['type']], screen)
         for door in scroll_map.doors.sprites():
             if door.properties['type'] == door_list[0].properties['world']:
@@ -137,7 +138,6 @@ def check_switch_scene(player, scroll_map, screen, dialog):
                         player.rect.bottom = start_point.rect.bottom
         scroll_map.add(player)
         scroll_map.center(player.rect.center)
-        pygame.mixer.music.play(loops=-1)
         scroll_map.sprite_update()
         scroll_map.draw()
         if scroll_map.info:
