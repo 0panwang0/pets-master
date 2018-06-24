@@ -178,14 +178,15 @@ def check_battle(player, scroll_map, screen, dialog):
         if not pygame.sprite.spritecollideany(player, scroll_map.nobattle_area) and player.moving:
             start_batlle = random.randint(0, 250)
             if start_batlle < 5:
-                scroll_map.BGM.stop()
+                pygame.mixer.music.stop()
                 enermy_list = []
                 random_choose_enermy(enermy_list, scroll_map)
-                battle = Battle(screen, player, enermy_list, dialog, scroll_map.doors.sprites[0].properties['world'])
+                battle = Battle(screen, player, enermy_list, dialog, scroll_map.doors.sprites()[0].properties['world'])
                 battle.start_battle()
                 player.state = "rest_" + player.moving[-1][5:]
                 player.moving.clear()
-                scroll_map.BGM.play(loops=True)
+                pygame.mixer.music.load(const.MUSIC_DIR + scroll_map.doors.sprites()[0].properties['world'] + '.ogg')
+                pygame.mixer.music.play(loops=True)
 
 
 def hotel(player, dialog):
