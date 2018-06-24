@@ -5,6 +5,7 @@ from shop import *
 import random
 import os
 import pickle
+import time
 
 def check_keydown(event, player, scroll_map, dialog, shop):
     '''
