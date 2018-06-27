@@ -19,6 +19,7 @@ BUTTON_DIR = IMAGE_DIR + "Buttons\\"
 MUSIC_DIR = "resources\\music\\"
 TMX_DIR = "resources\\tmx\\"
 PETBIN_DIR = "resources\\pet_bin\\"
+SAVE_DIR = "resources\\save\\"
 
 # 难度系数，用于计算每一级的经验, degree of difficulty
 DOD = 1.4

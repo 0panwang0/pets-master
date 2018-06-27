@@ -5,7 +5,9 @@ from shop import *
 import random
 import os
 import pickle
-import time
+from dialog import Dialog
+from shop import Shop
+
 
 def check_keydown(event, player, scroll_map, dialog, shop):
     '''
@@ -128,7 +130,7 @@ def check_switch_scene(player, scroll_map, screen, dialog):
         pygame.display.flip()
         pygame.mixer.music.load(const.MUSIC_DIR + door_list[0].properties['type'] + ".ogg")
         pygame.mixer.music.play(loops=-1)
-        scroll_map.reload(TMX[door_list[0].properties['type']], screen)
+        scroll_map.reload(TMX[door_list[0].properties['type']], screen, const.MUSIC_DIR + door_list[0].properties['type'] + ".ogg")
         for door in scroll_map.doors.sprites():
             if door.properties['type'] == door_list[0].properties['world']:
                 for start_point in scroll_map.start_points.sprites():
@@ -246,6 +248,52 @@ def check_dialogue(player, scroll_map, dialog, shop):
         scroll_map.draw()
         pygame.display.update()
         dialog.run(sprite)
+
+
+def save_game(scroll_map, player, icon, shop, dialog):
+    scroll_map_packet = pickle.dumps(scroll_map)
+    player_packet = pickle.dumps(player)
+    icon_packet = pickle.dumps(icon)
+    shop_packet = pickle.dumps(shop)
+    dialog_packet = pickle.dumps(dialog)
+    with open(const.SAVE_DIR + "scroll_map.bin", "wb") as ob:
+        ob.write(scroll_map_packet)
+    with open(const.SAVE_DIR + "player.bin", "wb") as ob:
+        ob.write(player_packet)
+    with open(const.SAVE_DIR + "icons.bin", "wb") as ob:
+        ob.write(icon_packet)
+    with open(const.SAVE_DIR + "shop.bin", "wb") as ob:
+        ob.write(shop_packet)
+    with open(const.SAVE_DIR + "dialog.bin", "wb") as ob:
+        ob.write(dialog_packet)
+
+
+def load_game(screen):
+    pygame.mixer.music.stop()
+    screen.fill((0, 0, 0))
+    pygame.display.flip()
+    with open(const.SAVE_DIR + "player.bin", "rb") as ob:
+        bin = ob.read()
+        player = pickle.loads(bin)
+    with open(const.SAVE_DIR + "scroll_map.bin", "rb") as ob:
+        bin = ob.read()
+        scroll_map = pickle.loads(bin)
+    scroll_map = ScrollMap(scroll_map.filename, screen, scroll_map.music)
+    scroll_map.add(player)
+    scroll_map.center(player.rect.center)
+    dialog = Dialog(player, screen)
+    with open(const.SAVE_DIR + "icon.bin", "rb") as ob:
+        bin = ob.read()
+        icon = pickle.loads(bin)
+    icon.scroll_map = scroll_map
+    icon.player = player
+    icon.dialog = dialog
+    icon.screen = screen
+    shop = Shop(player, icon, screen)
+    pygame.mixer.music.load(scroll_map.music)
+    pygame.mixer.music.set_volume(const.BGM_VOL)
+    pygame.mixer.music.play(loops=-1)
+    return player, scroll_map, dialog, icon, shop
 
 
 TMX = load_all_tmx(os.path.join('resources', 'tmx'))

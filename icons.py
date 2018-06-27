@@ -207,9 +207,9 @@ class Icon:
                 self.draw_sprite()
         elif self.state == 'setting':
             if pygame.Rect(550, 200, self.plus.get_width(), self.plus.get_height()).collidepoint(pos):
-                self.scroll_map.BGMUP()
+                self.scroll_map.bgm_up()
             elif pygame.Rect(450, 200, self.minus.get_width(), self.minus.get_height()).collidepoint(pos):
-                self.scroll_map.BGMDOWN()
+                self.scroll_map.bgm_down()
 
     def check_mouse_right_event(self, pos):
         if self.state == 'bag':

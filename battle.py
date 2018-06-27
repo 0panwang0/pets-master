@@ -268,7 +268,7 @@ class Battle:
                         for i in range(len(self.enermy_pets)):
                             if not self.enermy_pets[i].is_alive():
                                 print("\tEnermy ", self.enermy_pets[i].get_name(), " die.")
-                                self.killed_enermys.append(self.enermy_pets[self.select_enermy])
+                                self.killed_enermys.append(self.enermy_pets[i])
                                 del(self.enermy_pets[i])
                                 finish = False
                                 break

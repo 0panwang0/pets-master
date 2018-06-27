@@ -42,8 +42,10 @@ class Map(object):
 
 
 class ScrollMap(Map):
-    def __init__(self, filename, screen):
+    def __init__(self, filename, screen, music):
         super().__init__(filename)
+        self.filename = filename
+        self.music = music
         self.map_data = pyscroll.data.TiledMapData(self.tmx_data)
         self.map_layer = pyscroll.BufferedRenderer(self.map_data, (screen.get_rect().width
                                                                    , screen.get_rect().height), clamp_camera=True)
@@ -59,8 +61,10 @@ class ScrollMap(Map):
         self.create_sprite_object()
         pygame.mixer.music.set_volume(const.BGM_VOL / 10)
 
-    def reload(self, filename, screen):
+    def reload(self, filename, screen, music):
         super().__init__(filename)
+        self.filename = filename
+        self.music = music
         self.map_data = pyscroll.data.TiledMapData(self.tmx_data)
         self.map_layer = pyscroll.BufferedRenderer(self.map_data, (screen.get_rect().width
                                                                    , screen.get_rect().height), clamp_camera=True)
@@ -103,12 +107,12 @@ class ScrollMap(Map):
         for sprite in self.image_sprites:
             sprite.update(0)
 
-    def BGMUP(self):
+    def bgm_up(self):
         if const.BGM_VOL < 10:
             const.BGM_VOL += 1
             pygame.mixer.music.set_volume(const.BGM_VOL / 10)
 
-    def BGMDOWN(self):
+    def bgm_down(self):
         if const.BGM_VOL > 0:
             const.BGM_VOL -= 1
             pygame.mixer.music.set_volume(const.BGM_VOL / 10)

@@ -65,7 +65,7 @@ class Person(pygame.sprite.Sprite):
 
 
 class Hero(Person):
-    def __init__(self, file_addr, row, col, screen):
+    def __init__(self, file_addr, row, col):
         super().__init__(file_addr, row, col)
         self.moving = [] # 这是一个堆，玩家可能同时按下多个移动键，储存这些状态，当玩家释放移动键时可以选择角色下一个状态
         self.tasks = [1, 2, 3, 4, -1]
@@ -83,6 +83,7 @@ class Hero(Person):
         self.battle_nums = 4
         self.place = []  # 储存人物去过的有怪物的地方
         self.lvup_exp = floor(pow((self.level+1), const.DOD) * 100 + pow(self.level, 1 / const.DOD) * 100)  # 人物下一级所需经验
+
 
     def gain_exp(self, exp):
         self.exp += exp
