@@ -40,8 +40,6 @@ class Icon:
         self.plus.set_alpha(180)
         self.minus.set_alpha(180)
         self.ui = {}
-        self.item_name = []
-        self.item_position = []
         self.sprite_index = 0
         self.description_item = ["等级", "经验", "威力", "技能", "状态"]
         self.description_setting = ["音量", "存档", "读档"]
@@ -73,15 +71,15 @@ class Icon:
             self.draw_setting()
 
     def get_item(self, item_name):
-        self.item_name.append(item_name)
+        self.player.item_name.append(item_name)
 
     def draw_item(self):
-        self.item_position.clear()
-        for i in range(len(self.item_name)):
+        self.player.item_position.clear()
+        for i in range(len(self.player.item_name)):
             col = i // 6
             row = i % 6
-            self.ui[self.state].blit(self.get_image(item_dict[self.item_name[i]]), (22 + 40 * row, 134 + 40 * col))
-            self.item_position.append((72 + 40 * row, 184 + 40 * col))
+            self.ui[self.state].blit(self.get_image(item_dict[self.player.item_name[i]]), (22 + 40 * row, 134 + 40 * col))
+            self.player.item_position.append((72 + 40 * row, 184 + 40 * col))
 
     def use_item(self, item_name):
         if item_name == "萝卜":
@@ -214,15 +212,15 @@ class Icon:
     def check_mouse_right_event(self, pos):
         if self.state == 'bag':
             use = -1
-            for i in range(len(self.item_position)):
-                if pygame.Rect(self.item_position[i], (40, 40)).collidepoint(pos):
+            for i in range(len(self.player.item_position)):
+                if pygame.Rect(self.player.item_position[i], (40, 40)).collidepoint(pos):
                     use = i
                     break
             if use < 0:
                 return
             self.update_bag()
-            item_name = self.item_name[use]
-            del self.item_name[use]
+            item_name = self.player.item_name[use]
+            del self.player.item_name[use]
             self.draw_item()
             pygame.display.update()
             self.dialog.info("使用了物品["+item_name+"]!")

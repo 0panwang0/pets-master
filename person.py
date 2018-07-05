@@ -83,6 +83,8 @@ class Hero(Person):
         self.battle_nums = 4
         self.place = []  # 储存人物去过的有怪物的地方
         self.lvup_exp = floor(pow((self.level+1), const.DOD) * 100 + pow(self.level, 1 / const.DOD) * 100)  # 人物下一级所需经验
+        self.item_name = []
+        self.item_position = []
 
     def gain_exp(self, exp):
         self.exp += exp
