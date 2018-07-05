@@ -67,6 +67,9 @@ class Person(pygame.sprite.Sprite):
 class Hero(Person):
     def __init__(self, file_addr, row, col):
         super().__init__(file_addr, row, col)
+        self.file_addr = file_addr
+        self.row = row
+        self.col = col
         self.moving = [] # 这是一个堆，玩家可能同时按下多个移动键，储存这些状态，当玩家释放移动键时可以选择角色下一个状态
         self.tasks = [1, 2, 3, 4, -1]
         self.money = 1000    # 人物拥有的金钱
@@ -85,6 +88,45 @@ class Hero(Person):
         self.lvup_exp = floor(pow((self.level+1), const.DOD) * 100 + pow(self.level, 1 / const.DOD) * 100)  # 人物下一级所需经验
         self.item_name = []
         self.item_position = []
+
+    def save(self):
+        list = []
+        list.append(self.file_addr)
+        list.append(self.row)
+        list.append(self.col)
+        list.append(self.moving)
+        list.append(self.tasks)
+        list.append(self.money)
+        list.append(self.hp)
+        list.append(self.max_hp)
+        list.append(self.mp)
+        list.append(self.max_mp)
+        list.append(self.attack)
+        list.append(self.defense)
+        list.append(self.level)
+        list.append(self.exp)
+        list.append(self.place)
+        list.append(self.item_name)
+        list.append(self.item_position)
+        list.append(self.rect.center)
+        return list
+
+    def load(self, list):
+        self.moving = list[3]
+        self.tasks = list[4]
+        self.money = list[5]
+        self.hp = list[6]
+        self.max_hp = list[7]
+        self.mp = list[8]
+        self.max_mp = list[9]
+        self.attack = list[10]
+        self.defense = list[11]
+        self.level = list[12]
+        self.exp = list[13]
+        self.place = list[14]
+        self.item_name = list[15]
+        self.item_position = list[16]
+        self.rect.center = list[17]
 
     def gain_exp(self, exp):
         self.exp += exp

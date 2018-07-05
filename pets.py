@@ -49,6 +49,31 @@ class Pet:
         self.beated_money = beated_money
         self.lvup_exp = floor(pow((self.level + 1), const.DOD) * 100 + pow(self.level, 1 / const.DOD) * 100)
 
+    def save(self):
+        list = []
+        skill_type = 0
+        for i in range(5):
+            if self.pet_skill.skill_type.value == i:
+                skill_type = i
+                break
+        skill = [self.pet_skill.skill_name, skill_type, self.pet_skill.skill_effort, self.pet_skill.skill_cost]
+        list.append(self.pet_name)
+        list.append(self.pet_hp)
+        list.append(self.pet_damage)
+        list.append(skill)
+        list.append(self.level)
+        list.append(self.exp)
+        list.append(self.beated_exp)
+        list.append(self.beated_money)
+        list.append(self.pet_file)
+        list.append(self.image_number)
+        list.append(self.pet_hp_left)
+
+        return list
+
+    def load(self, list):
+        self.pet_hp_left = list[-1]
+
     def get_name(self):
         return self.pet_name
 
