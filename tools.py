@@ -7,7 +7,7 @@ import os
 import pickle
 from dialog import Dialog
 from shop import Shop
-
+from icons import Icon
 
 def check_keydown(event, player, scroll_map, dialog, shop):
     '''
@@ -262,10 +262,6 @@ def save_game(scroll_map, player, icon, shop, dialog):
         ob.write(player_packet)
     with open(const.SAVE_DIR + "icons.bin", "wb") as ob:
         ob.write(icon_packet)
-    with open(const.SAVE_DIR + "shop.bin", "wb") as ob:
-        ob.write(shop_packet)
-    with open(const.SAVE_DIR + "dialog.bin", "wb") as ob:
-        ob.write(dialog_packet)
 
 
 def load_game(screen):
@@ -282,13 +278,7 @@ def load_game(screen):
     scroll_map.add(player)
     scroll_map.center(player.rect.center)
     dialog = Dialog(player, screen)
-    with open(const.SAVE_DIR + "icon.bin", "rb") as ob:
-        bin = ob.read()
-        icon = pickle.loads(bin)
-    icon.scroll_map = scroll_map
-    icon.player = player
-    icon.dialog = dialog
-    icon.screen = screen
+    icon = Icon(scroll_map, player, dialog, screen)
     shop = Shop(player, icon, screen)
     pygame.mixer.music.load(scroll_map.music)
     pygame.mixer.music.set_volume(const.BGM_VOL)
