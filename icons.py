@@ -17,6 +17,8 @@ icon_file_name = "resources/images/IconSet.png"
 arrow_file_name = "resources/images/arrow.png"
 plus_file_name = "resources/images/plus.tga"
 minus_file_name = "resources/images/minus.tga"
+download_file_name = "resources/images/download.png"
+upload_file_name = "resources/images/upload.png"
 board_file_name = "resources/images/board.tga"
 
 
@@ -37,8 +39,12 @@ class Icon:
         self.gold_font = pygame.font.Font(font_file_name, 20)
         self.plus = pygame.image.load(plus_file_name).convert()
         self.minus = pygame.image.load(minus_file_name).convert()
+        self.download = pygame.image.load(download_file_name).convert()
+        self.upload = pygame.image.load(upload_file_name).convert()
         self.plus.set_alpha(180)
         self.minus.set_alpha(180)
+        self.download.set_alpha(180)
+        self.upload.set_alpha(180)
         self.ui = {}
         self.sprite_index = 0
         self.description_item = ["等级", "经验", "威力", "技能", "状态"]
@@ -154,6 +160,8 @@ class Icon:
         vol = self.panel_font.render(str(const.BGM_VOL), True, (0, 0, 0))
         self.ui['setting'].blit(vol, (265-vol.get_width()/2, 140))
         self.ui['setting'].blit(self.minus, (200, 140))
+        self.ui['setting'].blit(self.upload, (193, 210))
+        self.ui['setting'].blit(self.download, (293, 210))
 
     def draw_sprite(self):
         for i in range(len(ui_state_list)):
@@ -208,6 +216,10 @@ class Icon:
                 self.scroll_map.bgm_up()
             elif pygame.Rect(450, 200, self.minus.get_width(), self.minus.get_height()).collidepoint(pos):
                 self.scroll_map.bgm_down()
+            elif pygame.Rect(550, 270, self.download.get_width(), self.download.get_height()).collidepoint(pos):
+                const.LOAD = 1
+            elif pygame.Rect(450, 270, self.upload.get_width(), self.upload.get_height()).collidepoint(pos):
+                const.SAVE = 1
 
     def check_mouse_right_event(self, pos):
         if self.state == 'bag':
@@ -251,3 +263,11 @@ class Icon:
                 self.minus.set_alpha(255)
             else:
                 self.minus.set_alpha(180)
+            if pygame.Rect(450, 270, self.upload.get_width(), self.upload.get_height()).collidepoint(pos):
+                self.upload.set_alpha(255)
+            else:
+                self.upload.set_alpha(180)
+            if pygame.Rect(550, 270, self.download.get_width(), self.download.get_height()).collidepoint(pos):
+                self.download.set_alpha(255)
+            else:
+                self.download.set_alpha(180)

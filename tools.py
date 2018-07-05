@@ -257,6 +257,7 @@ def save_game(scroll_map, player):
         ob.write(scroll_map_packet)
     with open(const.SAVE_DIR + "player.bin", "wb") as ob:
         ob.write(player_packet)
+    const.SAVE = 0
 
 
 def load_game(screen):
@@ -278,6 +279,7 @@ def load_game(screen):
     pygame.mixer.music.load(scroll_map.music)
     pygame.mixer.music.set_volume(const.BGM_VOL)
     pygame.mixer.music.play(loops=-1)
+    const.LOAD = 0
     return player, scroll_map, dialog, icon, shop
 
 
