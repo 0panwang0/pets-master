@@ -16,4 +16,4 @@ for num, pet in enumerate(pets):
     with open(const.PETBIN_DIR + 'rocks\\' + str(num) + '.bin', "wb") as object:
         object.write(pet_packet)
 
-print(os.listdir('D:/pyCharm/procedures/pets-master/resources/pet_bin/forest'))
+print(os.listdir('D:/pyCharm/procedures/pets-master/resources/pet/forest'))

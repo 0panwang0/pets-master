@@ -165,10 +165,10 @@ def check_collision(player, scroll_map):
 # 随机生成怪物
 def random_choose_enermy(enermy_list, scroll_map):
     random_num = random.randint(1, 4)
-    enermy_num = len(os.listdir('resources/pet_bin/forest'))
+    enermy_num = len(os.listdir('resources/pet/forest'))
     for _ in range(random_num):
         random_enermy = random.randint(0, enermy_num-1)
-        with open('resources\pet_bin\\' + scroll_map.doors.sprites()[0].properties['world']
+        with open('resources\pet\\' + scroll_map.doors.sprites()[0].properties['world']
                   + '\\' + str(random_enermy) + '.bin', "rb") as object:
             bin = object.read()
             enermy = pickle.loads(bin)
