@@ -108,7 +108,6 @@ class Dialog:
                     exit()
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE or event.type == pygame.MOUSEBUTTONDOWN:
                     flag = False
-                    break
 
     def write(self, title, text):
         up_image = pygame.image.load(up_file_name).convert_alpha()
