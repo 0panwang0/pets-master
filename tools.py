@@ -250,18 +250,13 @@ def check_dialogue(player, scroll_map, dialog, shop):
         dialog.run(sprite)
 
 
-def save_game(scroll_map, player, icon, shop, dialog):
+def save_game(scroll_map, player):
     scroll_map_packet = pickle.dumps(scroll_map)
     player_packet = pickle.dumps(player)
-    icon_packet = pickle.dumps(icon)
-    shop_packet = pickle.dumps(shop)
-    dialog_packet = pickle.dumps(dialog)
     with open(const.SAVE_DIR + "scroll_map.bin", "wb") as ob:
         ob.write(scroll_map_packet)
     with open(const.SAVE_DIR + "player.bin", "wb") as ob:
         ob.write(player_packet)
-    with open(const.SAVE_DIR + "icons.bin", "wb") as ob:
-        ob.write(icon_packet)
 
 
 def load_game(screen):

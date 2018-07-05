@@ -57,8 +57,11 @@ while running:
     time = pygame.time.get_ticks()  #获得以pygame.init()为起点的时间，用于图片变换
 
     running = check_event(player, scroll_map, icon, dialog, shop)
+    if const.SAVE:
+        player, scroll_map, dialog, icon, shop = load_game(screen)
+    elif const.LOAD:
+        save_game(scroll_map, player)
     scroll_map = check_switch_scene(player, scroll_map, screen, dialog)
-
     player.update(time)
     check_collision(player, scroll_map)
     scroll_map.center(player.rect.center)

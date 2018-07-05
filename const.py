@@ -26,3 +26,7 @@ DOD = 1.4
 
 # 最大宠物出战数量
 MAXPETS = 3
+
+# save和load标志
+SAVE = 0
+LOAD = 0
