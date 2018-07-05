@@ -52,14 +52,14 @@ else:
 # main loop
 running = True
 while running:
-
     frame_rate.tick(60)    # 设置帧数
     time = pygame.time.get_ticks()  #获得以pygame.init()为起点的时间，用于图片变换
 
     running = check_event(player, scroll_map, icon, dialog, shop)
-    if const.SAVE:
+    if const.LOAD:
         player, scroll_map, dialog, icon, shop = load_game(screen)
-    elif const.LOAD:
+        continue
+    elif const.SAVE:
         save_game(scroll_map, player)
     scroll_map = check_switch_scene(player, scroll_map, screen, dialog)
     player.update(time)
@@ -71,8 +71,5 @@ while running:
     scroll_map.draw()
     icon.draw()
     pygame.display.flip()
-    # elif player.controller == 'battle':
-    #     battle = Battle(screen, player, enermy_list)
-    #     battle.start_battle()
 
 pygame.quit()

@@ -8,6 +8,9 @@ import pickle
 from dialog import Dialog
 from shop import Shop
 from icons import Icon
+import json
+from person import Hero
+from pets import *
 
 def check_keydown(event, player, scroll_map, dialog, shop):
     '''
@@ -250,36 +253,97 @@ def check_dialogue(player, scroll_map, dialog, shop):
         dialog.run(sprite)
 
 
+def del_file(path):
+    ls = os.listdir(path)
+    for i in ls:
+        c_path = os.path.join(path, i)
+        if os.path.isdir(c_path):
+            del_file(c_path)
+        else:
+            os.remove(c_path)
+
+
 def save_game(scroll_map, player):
-    scroll_map_packet = pickle.dumps(scroll_map)
-    player_packet = pickle.dumps(player)
-    with open(const.SAVE_DIR + "scroll_map.bin", "wb") as ob:
-        ob.write(scroll_map_packet)
-    with open(const.SAVE_DIR + "player.bin", "wb") as ob:
-        ob.write(player_packet)
+    del_file("resources\\save")
+
+    save_scroll_map = []
+    save_scroll_map.append(scroll_map.filename)
+    save_scroll_map.append(scroll_map.music)
+    with open("resources\\save\\scroll_map.json", "w") as ob:
+        json.dump(save_scroll_map, ob)
+
+    save_hero = player.save()
+    with open("resources\\save\\hero.json", "w") as ob:
+        json.dump(save_hero, ob)
+
+    save_own_pet = []
+    for i in range(len(player.own_list)):
+        save_own_pet.append(player.own_list[i].save())
+    with open("resources\\save\\own_list.json", "w") as ob:
+        json.dump(save_own_pet, ob)
+
+    save_battle_pet = []
+    for i in range(len(player.battle_list)):
+        save_battle_pet.append(player.battle_list[i].save())
+    with open("resources\\save\\battle_pet.json", "w") as ob:
+        json.dump(save_battle_pet, ob)
+
     const.SAVE = 0
+
+
+def pet_list(path):
+    with open(path, "r") as ob:
+        load_pet = json.load(ob)
+
+    list = []
+    for i in range(len(load_pet)):
+        if load_pet[i][3][1] == SkillType.DirectDamage.value:
+            skill = Skill(load_pet[i][3][0], SkillType.DirectDamage, load_pet[i][3][2], load_pet[i][3][3])
+        elif load_pet[i][3][1] == SkillType.AreaDamage.value:
+            skill = Skill(load_pet[i][3][0], SkillType.AreaDamage, load_pet[i][3][2], load_pet[i][3][3])
+        else:
+            skill = Skill(load_pet[i][3][0], SkillType.Heal, load_pet[i][3][2], load_pet[i][3][3])
+        pet = Pet(load_pet[i][0], load_pet[i][1], load_pet[i][2], skill, load_pet[i][4], load_pet[i][5],
+                  load_pet[i][6], load_pet[i][7], load_pet[i][8], load_pet[i][9])
+        list.append(pet)
+
+    return list
 
 
 def load_game(screen):
     pygame.mixer.music.stop()
     screen.fill((0, 0, 0))
     pygame.display.flip()
-    with open(const.SAVE_DIR + "player.bin", "rb") as ob:
-        bin = ob.read()
-        player = pickle.loads(bin)
-    with open(const.SAVE_DIR + "scroll_map.bin", "rb") as ob:
-        bin = ob.read()
-        scroll_map = pickle.loads(bin)
-    scroll_map = ScrollMap(scroll_map.filename, screen, scroll_map.music)
+
+    own_list = pet_list("resources\\save\\own_list.json")
+    battle_list = pet_list("resources\\save\\battle_pet.json")
+
+    with open("resources\\save\\hero.json", "r") as ob:
+        load_hero = json.load(ob)
+    player = Hero(load_hero[0], load_hero[1], load_hero[2])
+    player.load(load_hero)
+    player.own_list = own_list
+    player.battle_list = battle_list
+
+
+    with open("resources\\save\\scroll_map.json", "r") as ob:
+        load_scroll_map = json.load(ob)
+    scroll_map = ScrollMap(load_scroll_map[0], screen, load_scroll_map[1])
     scroll_map.add(player)
     scroll_map.center(player.rect.center)
+
     dialog = Dialog(player, screen)
+
     icon = Icon(scroll_map, player, dialog, screen)
+
     shop = Shop(player, icon, screen)
+
     pygame.mixer.music.load(scroll_map.music)
     pygame.mixer.music.set_volume(const.BGM_VOL)
     pygame.mixer.music.play(loops=-1)
+
     const.LOAD = 0
+
     return player, scroll_map, dialog, icon, shop
 
 
