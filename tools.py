@@ -191,6 +191,11 @@ def check_battle(player, scroll_map, screen, dialog):
                 random_choose_enemy(enermy_list, scroll_map)
                 battle = Battle(screen, player, enermy_list, dialog, scroll_map.doors.sprites()[0].properties['world'])
                 battle.start_battle()
+                if player.hp == 0:
+                    pygame.mixer.music.load(const.MUSIC_DIR + "startGame.ogg")
+                    pygame.mixer.music.set_volume(const.BGM_VOL)
+                    pygame.mixer.music.play()
+                    return
                 player.state = "rest_" + player.moving[-1][5:]
                 player.moving.clear()
                 pygame.mixer.music.load(const.MUSIC_DIR + scroll_map.doors.sprites()[0].properties['world'] + '.ogg')
@@ -380,5 +385,25 @@ def load_game(screen):
 
     return player, scroll_map, dialog, icon, shop
 
+
+def initial_game(screen):
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load(const.MUSIC_DIR + "home.ogg")
+    pygame.mixer.music.set_volume(const.BGM_VOL)
+    player = Hero('resources/images/Actor/Actor1.png', 0, 0)
+    load_tasks(player)
+    player.controller = "main"
+    dialog = Dialog(player, screen)
+    scroll_map = ScrollMap(const.TMX_DIR + "home.tmx", screen, const.MUSIC_DIR + "home.ogg")
+    pygame.mixer.music.play(loops=-1)
+    icon = Icon(scroll_map, player, dialog, screen)
+    shop = Shop(player, icon, screen)
+    scroll_map.add(player)
+    for start_point in scroll_map.start_points:
+        if start_point.properties['__name__'] == 'start_point':
+            player.rect.center = (start_point.rect.left, start_point.rect.top)
+            break
+    scroll_map.center(player.rect.center)
+    return player, scroll_map, dialog, icon, shop
 
 TMX = load_all_tmx(os.path.join('resources', 'tmx'))

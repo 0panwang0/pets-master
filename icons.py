@@ -256,6 +256,10 @@ class Icon:
                 task = self.player.tasks_list[self.task_index]
                 if task.present_material >= task.max_material:
                     self.dialog.info("任务完成!","mid")
+                    self.player.money += task.money
+                    self.player.gain_exp(task.exp)
+                    self.dialog.info("获得" + str(task.money) + "金币", "mid")
+                    self.dialog.info("获得" + str(task.exp) + "经验", "mid")
                     self.player.tasks_list[self.task_index].finish = True
                 else:
                     self.dialog.info("完成进度不足!", "mid")
