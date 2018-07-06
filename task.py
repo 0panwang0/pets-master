@@ -2,7 +2,7 @@ import json
 
 
 class Task:
-    def __init__(self, task_num, info, money, exp, material_name, task_name, max_material, present_material):
+    def __init__(self, task_num, info, money, exp, material_name, max_material, present_material, task_name):
         self.task_num = task_num
         self.info = info
         self.money = money

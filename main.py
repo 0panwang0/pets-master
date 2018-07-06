@@ -49,8 +49,8 @@ else:
             break
     scroll_map.center(player.rect.center)
 
-start = Start(screen)
-start.draw()
+# start = Start(screen)
+# start.draw()
 
 
 # main loop
