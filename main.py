@@ -4,7 +4,6 @@ from icons import *
 from dialog import *
 from person import *
 from shop import *
-from task import *
 
 
 # global
@@ -53,9 +52,6 @@ else:
 # main loop
 running = True
 
-task = Task(screen)
-
-task.draw()
 
 while running:
     frame_rate.tick(60)    # 设置帧数

@@ -7,11 +7,11 @@ import const
 screen_size = (800, 600)
 
 icon_size = (32, 32)
-icon_alpha = [180, 180, 180, 180, 180]
-icon_location = [(8, 16), (7, 14), (9, 7), (3, 7), (5, 7)]
-ui_location = {'bag':(50, 60), 'map':(100, 70), 'panel':(150, 60), 'sprite':(200, 60),'setting':(250, 60)}
-ui_state_list = ['bag', 'map', 'panel', 'sprite', 'setting','main']
-ui_file_name = ["resources/images/bag.tga", "resources/images/map.png", "resources/images/panel.tga", "resources/images/sprite.tga", "resources/images/setting.tga"]
+icon_alpha = [180, 180, 180, 180, 180, 190]
+icon_location = [(8, 16), (7, 14), (9, 7), (3, 7), (14, 14), (5, 7)]
+ui_location = {'bag':(50, 60), 'map':(100, 70), 'panel':(150, 60), 'sprite':(200, 60),'task':(250, 60), 'setting':(300, 60)}
+ui_state_list = ['bag', 'map', 'panel', 'sprite', 'task', 'setting','main']
+ui_file_name = ["resources/images/bag.tga", "resources/images/map.png", "resources/images/panel.tga", "resources/images/sprite.tga", "resources/images/task.tga", "resources/images/setting.tga"]
 font_file_name = "resources/fonts/ink.ttf"
 icon_file_name = "resources/images/IconSet.png"
 arrow_file_name = "resources/images/arrow.png"
@@ -19,9 +19,8 @@ plus_file_name = "resources/images/plus.tga"
 minus_file_name = "resources/images/minus.tga"
 download_file_name = "resources/images/download.png"
 upload_file_name = "resources/images/upload.png"
+exit_file_name = "resources/images/exit.png"
 board_file_name = "resources/images/board.tga"
-
-
 item_dict = { '萝卜':(0, 18), '洋葱':(1, 18), '土豆':(2, 18), '生肉':(3, 18), '鲜鱼':(4, 18),}
 
 class Icon:
@@ -34,6 +33,7 @@ class Icon:
         self.bag_font = pygame.font.Font(font_file_name, 40)
         self.setting_font = pygame.font.Font(font_file_name, 35)
         self.sprite_font = pygame.font.Font(font_file_name, 30)
+        self.task_font  = pygame.font.Font(font_file_name, 30)
         self.description_font = pygame.font.Font(font_file_name, 20)
         self.panel_font = pygame.font.Font(font_file_name, 25)
         self.gold_font = pygame.font.Font(font_file_name, 20)
@@ -41,14 +41,17 @@ class Icon:
         self.minus = pygame.image.load(minus_file_name).convert()
         self.download = pygame.image.load(download_file_name).convert()
         self.upload = pygame.image.load(upload_file_name).convert()
+        self.exit = pygame.image.load(exit_file_name).convert()
         self.plus.set_alpha(180)
         self.minus.set_alpha(180)
         self.download.set_alpha(180)
         self.upload.set_alpha(180)
+        self.exit.set_alpha(180)
         self.ui = {}
         self.sprite_index = 0
+        self.task_index = 0
         self.description_item = ["等级", "经验", "威力", "技能", "状态"]
-        self.description_setting = ["音量", "存档", "读档"]
+        self.description_setting = ["音量", "读写", "退出"]
         for i in range(len(ui_file_name)):
             self.ui[ui_state_list[i]] = pygame.image.load(ui_file_name[i]).convert_alpha()
         self.arrow = pygame.image.load(arrow_file_name).convert_alpha()
@@ -136,7 +139,6 @@ class Icon:
         board = self.panel_font.render(self.scroll_map.info.sprites()[0].properties['world'], True, (255, 255, 255))
         self.screen.blit(board, (770-board.get_width(), 20))
 
-
     def draw_value(self):
         for i in range(len(ui_state_list)):
             if ui_state_list[i] == 'panel':
@@ -147,6 +149,9 @@ class Icon:
         self.ui['panel'].blit(self.panel_font.render('防御力：' + str(self.player.defense), True, (0, 0, 0)), (25, 250))
         self.ui['panel'].blit(self.panel_font.render('经验值：' + str(self.player.exp) + '/' + str(self.player.lvup_exp), True, (0, 0, 0)), (25, 290))
         self.ui['panel'].blit(self.bag_font.render('人物', True, (0, 0, 0)), (96, 65))
+
+    def draw_task(self):
+       pass
 
     def draw_setting(self):
         for i in range(len(ui_state_list)):
@@ -160,8 +165,9 @@ class Icon:
         vol = self.panel_font.render(str(const.BGM_VOL), True, (0, 0, 0))
         self.ui['setting'].blit(vol, (265-vol.get_width()/2, 140))
         self.ui['setting'].blit(self.minus, (200, 140))
-        self.ui['setting'].blit(self.upload, (193, 210))
-        self.ui['setting'].blit(self.download, (293, 210))
+        self.ui['setting'].blit(self.upload, (200, 190))
+        self.ui['setting'].blit(self.download, (300, 190))
+        self.ui['setting'].blit(self.exit, (200, 240))
 
     def draw_sprite(self):
         for i in range(len(ui_state_list)):
@@ -212,14 +218,17 @@ class Icon:
                         self.dialog.info("宠物出战数量已达上限","mid")
                 self.draw_sprite()
         elif self.state == 'setting':
-            if pygame.Rect(550, 200, self.plus.get_width(), self.plus.get_height()).collidepoint(pos):
+            if pygame.Rect(600, 200, self.plus.get_width(), self.plus.get_height()).collidepoint(pos):
                 self.scroll_map.bgm_up()
-            elif pygame.Rect(450, 200, self.minus.get_width(), self.minus.get_height()).collidepoint(pos):
+            elif pygame.Rect(500, 200, self.minus.get_width(), self.minus.get_height()).collidepoint(pos):
                 self.scroll_map.bgm_down()
-            elif pygame.Rect(550, 270, self.download.get_width(), self.download.get_height()).collidepoint(pos):
+            elif pygame.Rect(600, 250, self.download.get_width(), self.download.get_height()).collidepoint(pos):
                 const.LOAD = 1
-            elif pygame.Rect(450, 270, self.upload.get_width(), self.upload.get_height()).collidepoint(pos):
+            elif pygame.Rect(500, 250, self.upload.get_width(), self.upload.get_height()).collidepoint(pos):
                 const.SAVE = 1
+            elif pygame.Rect(500, 300, self.exit.get_width(), self.exit.get_height()).collidepoint(pos):
+                pygame.quit()
+                exit()
 
     def check_mouse_right_event(self, pos):
         if self.state == 'bag':
@@ -255,19 +264,23 @@ class Icon:
                 else:
                     icon_alpha[i] = 180
         elif self.state == 'setting':
-            if pygame.Rect(550, 200, self.plus.get_width(), self.plus.get_height()).collidepoint(pos):
+            if pygame.Rect(600, 200, self.plus.get_width(), self.plus.get_height()).collidepoint(pos):
                 self.plus.set_alpha(255)
             else:
                 self.plus.set_alpha(180)
-            if pygame.Rect(450, 200, self.minus.get_width(), self.minus.get_height()).collidepoint(pos):
+            if pygame.Rect(500, 200, self.minus.get_width(), self.minus.get_height()).collidepoint(pos):
                 self.minus.set_alpha(255)
             else:
                 self.minus.set_alpha(180)
-            if pygame.Rect(450, 270, self.upload.get_width(), self.upload.get_height()).collidepoint(pos):
+            if pygame.Rect(500, 250, self.upload.get_width(), self.upload.get_height()).collidepoint(pos):
                 self.upload.set_alpha(255)
             else:
                 self.upload.set_alpha(180)
-            if pygame.Rect(550, 270, self.download.get_width(), self.download.get_height()).collidepoint(pos):
+            if pygame.Rect(600, 250, self.download.get_width(), self.download.get_height()).collidepoint(pos):
                 self.download.set_alpha(255)
             else:
                 self.download.set_alpha(180)
+            if pygame.Rect(500, 300, self.exit.get_width(), self.exit.get_height()).collidepoint(pos):
+                self.exit.set_alpha(255)
+            else:
+                self.exit.set_alpha(180)
