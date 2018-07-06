@@ -21,6 +21,9 @@ download_file_name = "resources/images/download.png"
 upload_file_name = "resources/images/upload.png"
 exit_file_name = "resources/images/exit.png"
 board_file_name = "resources/images/board.tga"
+finish_file_name = "resources/images/finish.png"
+summit_file_name = "resources/images/summit.png"
+
 item_dict = { '萝卜':(0, 18), '洋葱':(1, 18), '土豆':(2, 18), '生肉':(3, 18), '鲜鱼':(4, 18),}
 
 class Icon:
@@ -42,7 +45,10 @@ class Icon:
         self.download = pygame.image.load(download_file_name).convert()
         self.upload = pygame.image.load(upload_file_name).convert()
         self.exit = pygame.image.load(exit_file_name).convert()
+        self.summit = pygame.image.load(summit_file_name).convert()
+        self.finish = pygame.image.load(finish_file_name).convert_alpha()
         self.exit.set_colorkey((255, 255, 255))
+        self.summit.set_alpha(180)
         self.plus.set_alpha(180)
         self.minus.set_alpha(180)
         self.download.set_alpha(180)
@@ -169,7 +175,11 @@ class Icon:
         for i in range(len(task.info)):
             self.ui['task'].blit(self.description_font.render(task.info[i], True, (0, 0, 0)), (80, 200+30*i))
         self.ui['task'].blit(self.arrow, (320, 280))
-        self.ui['task'].blit(self.description_font.render('第' + str(self.sprite_index + 1) + '页', True, (0, 0, 0)),(260, 275))
+        self.ui['task'].blit(self.description_font.render('第' + str(self.task_index + 1) + '页', True, (0, 0, 0)),(260, 275))
+        if not task.finish:
+            self.ui['task'].blit(self.summit, (320, 65))
+        else:
+            self.ui['task'].blit(self.finish, (320, 65))
 
     def draw_setting(self):
         for i in range(len(ui_state_list)):
@@ -242,6 +252,13 @@ class Icon:
         elif self.state == 'task':
             if pygame.Rect(370 +(screen_size[0]-self.ui['task'].get_width())/2,215+(screen_size[1]-self.ui['task'].get_height())/2,self.arrow.get_width(),self.arrow.get_height()).collidepoint(pos):
                 self.task_index = (self.task_index + 1) % len(self.player.tasks_list)
+            if pygame.Rect(570, 125, self.summit.get_width(), self.summit.get_height()).collidepoint(pos):
+                task = self.player.tasks_list[self.task_index]
+                if task.present_material >= task.max_material:
+                    self.dialog.info("任务完成!","mid")
+                    self.player.tasks_list[self.task_index].finish = True
+                else:
+                    self.dialog.info("完成进度不足!", "mid")
         elif self.state == 'setting':
             if pygame.Rect(600, 200, self.plus.get_width(), self.plus.get_height()).collidepoint(pos):
                 self.scroll_map.bgm_up()
@@ -309,3 +326,8 @@ class Icon:
                 self.exit.set_alpha(255)
             else:
                 self.exit.set_alpha(180)
+        elif self.state == 'task':
+            if pygame.Rect(570, 125, self.summit.get_width(), self.summit.get_height()).collidepoint(pos):
+                self.summit.set_alpha(255)
+            else:
+                self.summit.set_alpha(180)
