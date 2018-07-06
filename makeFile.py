@@ -18,28 +18,28 @@ from task import *
 
 # print(os.listdir('D:/pyCharm/procedures/pets-master/resources/pet/forest'))
 
-# task = Task(1, [ "秋田犬又在肆虐家园了，快去剿灭它们吧！"], 100, 1000, "秋田犬", 5, 0, "秋田犬之殇")
-# task_packet = pickle.dumps(task)
-#
-# with open("resources\\task\\1.bin", "wb") as object:
-#     object.write(task_packet)
+task = Task(1, [ "秋田犬又在肆虐家园了，", "快去剿灭它们吧！"], 100, 1000, "秋田犬", 5, 0, "秋田犬之殇")
+task_packet = pickle.dumps(task)
 
-# task = Task(2, [ "仙人刺可以作成织毛衣的针呢，快去收集一些吧！"], 100, 1000, "仙人掌", 10, 0, "缝缝补补")
-# task_packet = pickle.dumps(task)
-#
-# with open("resources\\task\\2.bin", "wb") as object:
-#     object.write(task_packet)
+with open("resources\\task\\1.bin", "wb") as object:
+    object.write(task_packet)
 
-task = Task(3, ["皮尤可以松土哦，捉一些给菜园子里的那个家伙，他肯定很高兴的。"], 100, 1000, "皮尤", 2, 0, "可怜的皮尤")
+task = Task(2, [ "仙人刺可以作成织毛衣的针呢，", "快去收集一些吧！"], 100, 1000, "仙人掌", 10, 0, "缝缝补补")
+task_packet = pickle.dumps(task)
+
+with open("resources\\task\\2.bin", "wb") as object:
+    object.write(task_packet)
+
+task = Task(3, ["皮尤可以松土哦，捉一些给菜园子", "里的那个家伙，他肯定很高兴的。"], 100, 1000, "皮尤", 2, 0, "可怜的皮尤")
 task_packet = pickle.dumps(task)
 
 with open("resources\\task\\3.bin", "wb") as object:
     object.write(task_packet)
 
-# task = Task(4, [ "女孩子很喜欢可爱的宠物呢，你一定也想捉一些作为礼物吧？"], 200, 5000, "小飞天", 3, 0, "宠物真的可爱吗？")
-# task_packet = pickle.dumps(task)
-#
-# with open("resources\\task\\4.bin", "wb") as object:
-#     object.write(task_packet)
+task = Task(4, [ "女孩子很喜欢可爱的宠物呢，", "你一定也想捉一些作为礼物吧？"], 200, 5000, "小飞天", 3, 0, "宠物真的可爱吗？")
+task_packet = pickle.dumps(task)
+
+with open("resources\\task\\4.bin", "wb") as object:
+    object.write(task_packet)
 
 print(os.listdir('D:\pyCharm\procedures\pets-master\\resources\\task'))
