@@ -42,6 +42,7 @@ class Icon:
         self.download = pygame.image.load(download_file_name).convert()
         self.upload = pygame.image.load(upload_file_name).convert()
         self.exit = pygame.image.load(exit_file_name).convert()
+        self.exit.set_colorkey((255, 255, 255))
         self.plus.set_alpha(180)
         self.minus.set_alpha(180)
         self.download.set_alpha(180)
