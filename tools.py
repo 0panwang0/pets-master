@@ -13,6 +13,7 @@ from person import Hero
 from pets import *
 import time
 
+
 def check_keydown(event, player, scroll_map, dialog, shop, screen):
     '''
     :param event: 获取事件
@@ -106,7 +107,7 @@ def check_event(player, scroll_map, icon, dialog, shop, screen):
     return True
 
 
-def load_all_tmx(directory, accept=('.tmx')):
+def load_all_tmx(directory, accept='.tmx'):
     '''
     :param directory: 文件路径
     :param accept: 文件属性
@@ -167,16 +168,16 @@ def check_collision(player, scroll_map):
 
 
 # 随机生成怪物
-def random_choose_enermy(enermy_list, scroll_map):
+def random_choose_enemy(enemy_list, scroll_map):
     random_num = random.randint(1, 4)
-    enermy_num = len(os.listdir('resources/pet/forest'))
+    enemy_num = len(os.listdir('resources/pet/forest'))
     for _ in range(random_num):
-        random_enermy = random.randint(0, enermy_num-1)
+        random_enemy = random.randint(0, enemy_num-1)
         with open('resources\pet\\' + scroll_map.doors.sprites()[0].properties['world']
-                  + '\\' + str(random_enermy) + '.bin', "rb") as object:
-            bin = object.read()
-            enermy = pickle.loads(bin)
-        enermy_list.append(enermy)
+                  + '\\' + str(random_enemy) + '.bin', "rb") as object:
+            bin_data = object.read()
+            enemy = pickle.loads(bin_data)
+        enemy_list.append(enemy)
 
 
 # 检查什么时候触发战斗
@@ -187,7 +188,7 @@ def check_battle(player, scroll_map, screen, dialog):
             if start_batlle < 5:
                 pygame.mixer.music.stop()
                 enermy_list = []
-                random_choose_enermy(enermy_list, scroll_map)
+                random_choose_enemy(enermy_list, scroll_map)
                 battle = Battle(screen, player, enermy_list, dialog, scroll_map.doors.sprites()[0].properties['world'])
                 battle.start_battle()
                 player.state = "rest_" + player.moving[-1][5:]
@@ -214,10 +215,14 @@ def hotel(player, dialog, screen):
 
 def check_dialogue(player, scroll_map, dialog, shop, screen):
     for sprite in scroll_map.image_sprites:
-        left = Object(pygame.Rect(sprite.rect.left-sprite.rect.width, sprite.rect.top, sprite.rect.width, sprite.rect.height))
-        right = Object(pygame.Rect(sprite.rect.left+sprite.rect.width, sprite.rect.top, sprite.rect.width, sprite.rect.height))
-        up = Object(pygame.Rect(sprite.rect.left, sprite.rect.top-sprite.rect.height, sprite.rect.width, sprite.rect.height))
-        down = Object(pygame.Rect(sprite.rect.left, sprite.rect.top+sprite.rect.height, sprite.rect.width, sprite.rect.height))
+        left = Object(pygame.Rect(sprite.rect.left-sprite.rect.width, sprite.rect.top,
+                                  sprite.rect.width, sprite.rect.height))
+        right = Object(pygame.Rect(sprite.rect.left+sprite.rect.width, sprite.rect.top,
+                                   sprite.rect.width, sprite.rect.height))
+        up = Object(pygame.Rect(sprite.rect.left, sprite.rect.top-sprite.rect.height,
+                                sprite.rect.width, sprite.rect.height))
+        down = Object(pygame.Rect(sprite.rect.left, sprite.rect.top+sprite.rect.height,
+                                  sprite.rect.width, sprite.rect.height))
         if pygame.sprite.collide_rect(player, left) and player.state[5:] == "right":
             if sprite.file_name == "shop":
                 dialog.info('欢迎，我们为您提供了许多东西~',  'mid')
@@ -300,7 +305,7 @@ def pet_list(path):
     with open(path, "r") as ob:
         load_pet = json.load(ob)
 
-    list = []
+    pet_info = []
     for i in range(len(load_pet)):
         if load_pet[i][3][1] == SkillType.DirectDamage.value:
             skill = Skill(load_pet[i][3][0], SkillType.DirectDamage, load_pet[i][3][2], load_pet[i][3][3])
@@ -310,9 +315,9 @@ def pet_list(path):
             skill = Skill(load_pet[i][3][0], SkillType.Heal, load_pet[i][3][2], load_pet[i][3][3])
         pet = Pet(load_pet[i][0], load_pet[i][1], load_pet[i][2], skill, load_pet[i][4], load_pet[i][5],
                   load_pet[i][6], load_pet[i][7], load_pet[i][8], load_pet[i][9])
-        list.append(pet)
+        pet_info.append(pet)
 
-    return list
+    return pet_info
 
 
 def load_game(screen):
@@ -329,7 +334,6 @@ def load_game(screen):
     player.load(load_hero)
     player.own_list = own_list
     player.battle_list = battle_list
-
 
     with open("resources\\save\\scroll_map.json", "r") as ob:
         load_scroll_map = json.load(ob)
