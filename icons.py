@@ -78,6 +78,8 @@ class Icon:
             self.draw_sprite()
         elif self.state == 'setting':
             self.draw_setting()
+        elif self.state == 'task':
+            self.draw_task()
 
     def get_item(self, item_name):
         self.player.item_name.append(item_name)
@@ -151,7 +153,14 @@ class Icon:
         self.ui['panel'].blit(self.bag_font.render('人物', True, (0, 0, 0)), (96, 65))
 
     def draw_task(self):
-       pass
+        for i in range(len(ui_state_list)):
+            if ui_state_list[i] == 'task':
+                self.ui['task'] = pygame.image.load(ui_file_name[i]).convert_alpha()
+        title = self.setting_font.render('任务', True, (0, 0, 0))
+        self.ui['task'].blit(title, ((self.ui['task'].get_width() - title.get_width()) / 2, 65))
+        self.ui['task'].blit(self.arrow, (320, 280))
+        self.ui['task'].blit(self.description_font.render('第' + str(self.sprite_index + 1) + '页', True, (0, 0, 0)),(260, 275))
+
 
     def draw_setting(self):
         for i in range(len(ui_state_list)):
