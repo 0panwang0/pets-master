@@ -128,7 +128,6 @@ class Icon:
             self.player.max_mp += const.FISH_MAX_MP
             self.dialog.info('魔法上限+10')
 
-
     def update_bag(self):
         for i in range(len(ui_state_list)):
             if ui_state_list[i] == 'bag':
@@ -159,6 +158,16 @@ class Icon:
                 self.ui['task'] = pygame.image.load(ui_file_name[i]).convert_alpha()
         title = self.setting_font.render('任务', True, (0, 0, 0))
         self.ui['task'].blit(title, ((self.ui['task'].get_width() - title.get_width()) / 2, 65))
+        description_item = ["名称", "进度", "说明"]
+        for i in range(len(description_item)):
+            description_name = self.description_font.render(description_item[i], True, (0, 0, 0))
+            self.ui['task'].blit(description_name, (30, 120+40*i))
+        description_value = []
+        task = self.player.tasks_list[self.task_index]
+        self.ui['task'].blit(self.description_font.render(task.task_name, True, (0, 0, 0)), (80, 120))
+        self.ui['task'].blit(self.description_font.render(str(task.present_material)+'/'+str(task.max_material), True, (0, 0, 0)), (80, 160))
+        for i in range(len(task.info)):
+            self.ui['task'].blit(self.description_font.render(task.info[i], True, (0, 0, 0)), (80, 200+30*i))
         self.ui['task'].blit(self.arrow, (320, 280))
         self.ui['task'].blit(self.description_font.render('第' + str(self.sprite_index + 1) + '页', True, (0, 0, 0)),(260, 275))
 
@@ -182,6 +191,10 @@ class Icon:
         for i in range(len(ui_state_list)):
             if ui_state_list[i] == 'sprite':
                 self.ui['sprite'] = pygame.image.load(ui_file_name[i]).convert_alpha()
+        if not self.player.own_list:
+            name = self.sprite_font.render("没有宠物!", True, (0, 0, 0))
+            self.ui['sprite'].blit(name, ((self.ui['sprite'].get_width() - name.get_width()) / 2, (self.ui['sprite'].get_height() - name.get_height()) / 2))
+            return
         self.ui['sprite'].blit(self.arrow, (320, 280))
         self.ui['sprite'].blit(self.description_font.render('第'+str(self.sprite_index+1)+'页', True, (0, 0, 0)),(260, 275))
         sprite = self.player.own_list[self.sprite_index]
@@ -213,7 +226,7 @@ class Icon:
                     break
             icon_alpha[i] = 180
             self.state = 'main'
-        if self.state == 'sprite':
+        if self.state == 'sprite' and self.player.own_list:
             sprite = self.player.own_list[self.sprite_index]
             pet_file_name = sprite.pet_file[:-3] + "gif"
             sprite_image = pygame.image.load(pet_file_name).convert_alpha()
