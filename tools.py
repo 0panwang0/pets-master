@@ -272,7 +272,7 @@ def del_file(path):
             os.remove(c_path)
 
 
-def save_game(scroll_map, player):
+def save_game(scroll_map, player, dialog):
     del_file("resources\\save")
 
     save_scroll_map = []
@@ -293,11 +293,13 @@ def save_game(scroll_map, player):
 
     save_battle_pet = []
     for i in range(len(player.battle_list)):
-        save_battle_pet.append(player.battle_list[i].save())
-    with open("resources\\save\\battle_pet.json", "w") as ob:
+        save_battle_pet.append(player.own_list.index(player.battle_list[i]))
+    with open("resources\\save\\battle_list.json", "w") as ob:
         json.dump(save_battle_pet, ob)
 
     const.SAVE = 0
+
+    dialog.info("保存成功", "mid")
 
 
 # 返回储存有宠物信息的列表
@@ -326,7 +328,11 @@ def load_game(screen):
     pygame.display.flip()
 
     own_list = pet_list("resources\\save\\own_list.json")
-    battle_list = pet_list("resources\\save\\battle_pet.json")
+    battle_list = []
+    with open("resources\\save\\battle_list.json", "r") as ob:
+        load_battle_list = json.load(ob)
+    for i in range(len(load_battle_list)):
+        battle_list.append(own_list[load_battle_list[i]])
 
     with open("resources\\save\\hero.json", "r") as ob:
         load_hero = json.load(ob)

@@ -9,6 +9,9 @@ FISH_MAX_MP = 10
 # 客栈休息花费的金币
 HOTEL_MONEY = 100
 
+# 任务数量
+TASK = 5
+
 # 音量
 BGM_VOL = 10
 

@@ -88,6 +88,7 @@ class Hero(Person):
         self.lvup_exp = floor(pow((self.level+1), const.DOD) * 100 + pow(self.level, 1 / const.DOD) * 100)  # 人物下一级所需经验
         self.item_name = []
         self.item_position = []
+        self.material = []
 
     def save(self):
         list = []

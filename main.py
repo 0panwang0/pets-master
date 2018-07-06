@@ -62,7 +62,7 @@ while running:
         player, scroll_map, dialog, icon, shop = load_game(screen)
         continue
     elif const.SAVE:
-        save_game(scroll_map, player)
+        save_game(scroll_map, player, dialog)
     scroll_map = check_switch_scene(player, scroll_map, screen, dialog)
     player.update(time)
     check_collision(player, scroll_map)
