@@ -35,3 +35,7 @@ MAXPETS = 3
 # save和load标志
 SAVE = 0
 LOAD = 0
+
+# new game 和 continue game
+NEWGAME = 0
+CONTINUEGAME = 0
