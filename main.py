@@ -30,6 +30,7 @@ else:
     frined_pet3 = Pet("仙人兽", 20, 5, skill3, 1, 20, 500, 20, const.PET_DIR + "pet02.png", 18)
     player.own_list = [frined_pet1, frined_pet2, frined_pet3]
     player.battle_list = [frined_pet1, frined_pet2, frined_pet3]
+    load_tasks(player)
     pygame.mixer.music.load(const.MUSIC_DIR + "home.ogg")
     pygame.mixer.music.set_volume(const.BGM_VOL)
     scroll_map = ScrollMap(const.TMX_DIR + "home.tmx", screen, const.MUSIC_DIR + "home.ogg")

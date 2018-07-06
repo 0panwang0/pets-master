@@ -10,7 +10,7 @@ FISH_MAX_MP = 10
 HOTEL_MONEY = 100
 
 # 任务数量
-TASK = 5
+TASK = 4
 
 # 音量
 BGM_VOL = 10

@@ -272,6 +272,22 @@ def del_file(path):
             os.remove(c_path)
 
 
+def save_tasks(player):
+    for i in range(len(player.tasks_list)):
+        task_packet = pickle.dumps(player.tasks_list[i])
+        with open("resources\\task\\" + str(i+1) + ".bin", "wb") as object:
+            object.write(task_packet)
+
+
+def load_tasks(player):
+    tasks_list = []
+    for i in range(const.TASK):
+        with open("resources\\task\\" + str(i + 1) + ".bin", "rb") as ob:
+            bin_data = ob.read()
+            tasks_list.append(pickle.loads(bin_data))
+    player.tasks_list = tasks_list
+
+
 def save_game(scroll_map, player, dialog):
     del_file("resources\\save")
 
@@ -296,6 +312,8 @@ def save_game(scroll_map, player, dialog):
         save_battle_pet.append(player.own_list.index(player.battle_list[i]))
     with open("resources\\save\\battle_list.json", "w") as ob:
         json.dump(save_battle_pet, ob)
+
+    save_tasks(player)
 
     const.SAVE = 0
 
@@ -340,6 +358,7 @@ def load_game(screen):
     player.load(load_hero)
     player.own_list = own_list
     player.battle_list = battle_list
+    load_tasks(player)
 
     with open("resources\\save\\scroll_map.json", "r") as ob:
         load_scroll_map = json.load(ob)

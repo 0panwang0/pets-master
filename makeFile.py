@@ -15,18 +15,13 @@ from task import *
 #     pet_packet = pickle.dumps(pet)
 #     with open(const.PETBIN_DIR + 'rocks\\' + str(num) + '.bin', "wb") as object:
 #         object.write(pet_packet)
-#
-# print(os.listdir('D:/pyCharm/procedures/pets-master/resources/pet/forest'))
-#
-# task_list = [1, "秋田犬最近非常猖狂，去清剿一下它们吧。", 100, 1000, "秋田犬", 5, 0, "秋田犬之殇"]
-# with open("resources\\task\\0.json", "w") as object:
-#     json.dump(task_list, object)
-#
-# with open("resources\\task\\0.json", "r") as object:
-#     print(json.load(object))
-task_list = [2, "秋田犬最近非常猖狂，去清剿一下它们吧。", 100, 1000, "秋田犬", 5, 0, "秋田犬之殇"]
-with open("resources\\task\\2.json", "w") as object:
-    json.dump(task_list, object)
 
-with open("resources\\task\\2.json", "r") as object:
-    print(json.load(object))
+# print(os.listdir('D:/pyCharm/procedures/pets-master/resources/pet/forest'))
+
+task = Task(1, [ "秋田犬又在肆虐家园了，快去剿灭它们吧！"], 100, 1000, "秋田犬", 5, 0, "秋田犬之殇")
+task_packet = pickle.dumps(task)
+
+with open("resources\\task\\1.bin", "wb") as object:
+    object.write(task_packet)
+
+print(os.listdir('D:\pyCharm\procedures\pets-master\\resources\\task'))
