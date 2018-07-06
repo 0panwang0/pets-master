@@ -239,6 +239,9 @@ class Icon:
                     else:
                         self.dialog.info("宠物出战数量已达上限","mid")
                 self.draw_sprite()
+        elif self.state == 'task':
+            if pygame.Rect(370 +(screen_size[0]-self.ui['task'].get_width())/2,215+(screen_size[1]-self.ui['task'].get_height())/2,self.arrow.get_width(),self.arrow.get_height()).collidepoint(pos):
+                self.task_index = (self.task_index + 1) % len(self.player.tasks_list)
         elif self.state == 'setting':
             if pygame.Rect(600, 200, self.plus.get_width(), self.plus.get_height()).collidepoint(pos):
                 self.scroll_map.bgm_up()
