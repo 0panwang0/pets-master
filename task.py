@@ -11,6 +11,7 @@ class Task:
         self.max_material = max_material
         self.present_material = present_material
         self.task_name = task_name
+        self.finish = False
 
 
 def read_task(task_num):
