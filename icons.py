@@ -161,7 +161,6 @@ class Icon:
         self.ui['task'].blit(self.arrow, (320, 280))
         self.ui['task'].blit(self.description_font.render('第' + str(self.sprite_index + 1) + '页', True, (0, 0, 0)),(260, 275))
 
-
     def draw_setting(self):
         for i in range(len(ui_state_list)):
             if ui_state_list[i] == 'setting':

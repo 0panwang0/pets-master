@@ -4,7 +4,7 @@ from icons import *
 from dialog import *
 from person import *
 from shop import *
-
+from start import *
 
 # global
 sprites = []
@@ -48,6 +48,9 @@ else:
             player.rect.center = (start_point.rect.left, start_point.rect.top)
             break
     scroll_map.center(player.rect.center)
+
+start = Start(screen)
+start.draw()
 
 
 # main loop
