@@ -19,6 +19,7 @@ BGM_VOL = 10
 IMAGE_DIR = "resources\\images\\"
 PET_DIR = IMAGE_DIR + "Pets\\"
 BUTTON_DIR = IMAGE_DIR + "Buttons\\"
+ANAMITION_DIR = IMAGE_DIR + "Anamitions\\"
 MUSIC_DIR = "resources\\music\\"
 TMX_DIR = "resources\\tmx\\"
 PETBIN_DIR = "resources\\pet\\"

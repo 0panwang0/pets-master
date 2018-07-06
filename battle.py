@@ -230,7 +230,8 @@ class Battle:
                             self.battle_state = BattleState.SelectEnermy
                             self.battle_continue = False
                     else:
-                        print("\tPlayer MP:\t", self.player.mp_left)
+                        self.dialog.info("法力值不足!", "mid")
+                        print("\tPlayer MP:\t", self.player.mp)
                         print("\tMP Not Enough!")
                         self.battle_continue = False
             elif self.battle_state == BattleState.SelectEnermy:
@@ -326,6 +327,7 @@ class Battle:
                     self.battle_result = BattleResult.Match
                     self.battle_state = BattleState.SelectAction
                     self.battle_continue = False
+                    self.dialog.info("逃跑失败!", "mid")
                     print("\tEscape Fail!")
 
     def check_region(self, pos):
@@ -409,18 +411,17 @@ class Battle:
     def friend_round(self):
         initial_time = time.time()
         current_time = time.time()
-        last_time = current_time
         move = 0
         if self.skill_type == SkillType.AreaDamage or self.skill_type == SkillType.DirectDamage or self.skill_type == SkillType.NormalAttack:
             self.hit_sound.play()
             if self.skill_type == SkillType.DirectDamage:
-                image = pygame.image.load(const.IMAGE_DIR + "Anamitions\\direct.png").convert_alpha()
+                image = pygame.image.load(const.ANAMITION_DIR + "direct.png").convert_alpha()
                 max_index = 11
-            elif  self.skill_type == SkillType.NormalAttack:
-                image = pygame.image.load(const.IMAGE_DIR + "Anamitions\\normal.png").convert_alpha()
+            elif self.skill_type == SkillType.NormalAttack:
+                image = pygame.image.load(const.ANAMITION_DIR + "normal.png").convert_alpha()
                 max_index = 7
             else:
-                image = pygame.image.load(const.IMAGE_DIR + "Anamitions\\area.png").convert_alpha()
+                image = pygame.image.load(const.ANAMITION_DIR + "area.png").convert_alpha()
                 max_index = 11
             images = [image.subsurface(pygame.Rect(i * image.get_width() // max_index, 0, image.get_width() // max_index, image.get_height())) for i in range(max_index)]
             while True:
@@ -435,7 +436,7 @@ class Battle:
                 if self.skill_type == SkillType.DirectDamage or self.skill_type == SkillType.NormalAttack:
                     self.screen.blit(images[index], (self.enermy_image_startx + self.select_enermy * self.pet_width, self.enermy_image_starty))
                 else:
-                    self.screen.blit(images[index], ((self.screen.get_width() - images[index].get_width()) / 2, self.enermy_image_starty))
+                    self.screen.blit(images[index], ((self.screen.get_width() - images[index].get_width()) / 2, self.enermy_bar_starty))
                 pygame.display.flip()
                 current_time = time.time()
 
@@ -477,8 +478,41 @@ class Battle:
                 current_time = time.time()
         elif self.skill_type == SkillType.Heal:
             self.heal_sound.play()
+            image = pygame.image.load(const.ANAMITION_DIR + "heal.png").convert_alpha()
+            max_index = 10
+            images = [image.subsurface(pygame.Rect(i * image.get_width() // max_index, 0, image.get_width() // max_index, image.get_height())) for i in range(max_index)]
+            while True:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        sys.exit()
+                index = int((current_time - initial_time) * 12)
+                if index >= max_index:
+                    break
+                self.update_screen()
+                self.draw_screen()
+                self.screen.blit(images[index], ((self.screen.get_width() - images[index].get_width()) / 2, self.enermy_image_starty + self.pet_height))
+                pygame.display.flip()
+                current_time = time.time()
         elif self.skill_type == SkillType.CatchPet:
             self.catch_sound.play()
+            image = pygame.image.load(const.ANAMITION_DIR + "catch.png").convert_alpha()
+            max_index = 20
+            images = [image.subsurface(pygame.Rect(i * image.get_width() // max_index, 0, image.get_width() // max_index, image.get_height())) for i in range(max_index)]
+            while True:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        sys.exit()
+                index = int((current_time - initial_time) * 12)
+                if index >= max_index:
+                    break
+                self.update_screen()
+                self.draw_screen()
+                self.screen.blit(images[index], (self.enermy_image_startx + self.select_enermy * self.pet_width, self.enermy_image_starty))
+                pygame.display.flip()
+                current_time = time.time()
+
+            current_time = time.time()
+            last_time = current_time
             while True:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
