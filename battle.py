@@ -18,7 +18,7 @@ class Battle:
         self.button_width = self.screen.get_width() / 2
         self.button_height = 80
         self.bar_height = 15
-        self.background_image = pygame.image.load(const.IMAGE_DIR + "background.png").convert()
+        self.background_image = pygame.image.load(const.BACKGROUND_DIR + self.scene + ".png").convert()
 
         self.button_image_startx = 0
         self.button_image_starty = self.screen.get_height() - 3 * self.button_height
@@ -79,10 +79,10 @@ class Battle:
         if self.player.hp <= 0:
             print("Player seriously injured, could not enter a battle!!!")
             return
-        pygame.mixer.music.load(const.MUSIC_DIR + "battle_bgm.ogg")
+        pygame.mixer.music.load(const.MUSIC_DIR + self.scene + "_bgm.ogg")
         pygame.mixer.music.set_volume(const.BGM_VOL / 10)
-        pygame.mixer.music.play(loops=-1)
         self.battle_info("战斗开始!", self.open_sound, 1)
+        pygame.mixer.music.play(loops=-1)
         while True:
             self.check_events()
             self.execute_state()
@@ -116,7 +116,7 @@ class Battle:
         initial_time = time.time()
         current_time = time.time()
         font = pygame.font.Font("resources//fonts//ink.ttf", 48)
-        text_image = font.render(text, True, (25, 25, 112))
+        text_image = font.render(text, True, (255, 255, 255))
         text_rect = text_image.get_rect()
         text_rect.center = self.screen.get_rect().center
         while current_time - initial_time < delay:
