@@ -135,6 +135,13 @@ class Battle:
             for killed_enermy in self.killed_enermys:
                 beated_exp += killed_enermy.beated_exp
                 beated_money += killed_enermy.beated_money
+                for task in self.player.tasks_list:
+                    if killed_enermy.pet_name == task.material_name and not task.finish:
+                        task.present_material += 1
+                        if task.present_material == task.max_material:
+                            task.present_material = task.max_material
+                            task.finish = True
+
             self.dialog.info("获得金币:  " + str(beated_exp), "mid")
             self.click_sound.play()
             self.dialog.info("获得经验:  " + str(beated_exp), "mid")
@@ -284,6 +291,7 @@ class Battle:
                     print("\tJudge Num:\t", judge)
                     if judge < 10 * (6 + self.player.level - self.enermy_pets[self.select_enermy].level *
                             (1 - 0.4 * self.enermy_pets[self.select_enermy].pet_hp_left / self.enermy_pets[self.select_enermy].pet_hp)):
+                        self.dialog.info("捕捉成功!", "mid")
                         print("\tCatch Successful!")
                         self.caught_enermys.append(self.enermy_pets[self.select_enermy])
                         self.player.own_list.append(self.enermy_pets[self.select_enermy])
@@ -292,6 +300,7 @@ class Battle:
                         for pet in self.player.own_list:
                             print("\t\t", pet.get_name())
                     else:
+                        self.dialog.info("捕捉失败!", "mid")
                         print("\tCatch Fail!")
                 else:
                     pass
