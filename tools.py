@@ -11,8 +11,9 @@ from icons import Icon
 import json
 from person import Hero
 from pets import *
+import time
 
-def check_keydown(event, player, scroll_map, dialog, shop):
+def check_keydown(event, player, scroll_map, dialog, shop, screen):
     '''
     :param event: 获取事件
     :param player: 角色
@@ -33,7 +34,7 @@ def check_keydown(event, player, scroll_map, dialog, shop):
         player.state = 'move_down'
         player.moving.append(player.state)
     elif event.key == pygame.K_SPACE:
-        check_dialogue(player, scroll_map, dialog, shop)
+        check_dialogue(player, scroll_map, dialog, shop, screen)
 
 
 def check_keyup(event, player):
@@ -80,7 +81,7 @@ def check_keyup(event, player):
             player.state = 'rest_down'
 
 
-def check_event(player, scroll_map, icon, dialog, shop):
+def check_event(player, scroll_map, icon, dialog, shop, screen):
     '''
     :param player: 玩家对象
     :return: 如果
@@ -89,7 +90,7 @@ def check_event(player, scroll_map, icon, dialog, shop):
         if event.type == pygame.QUIT:
             return False
         elif event.type == pygame.KEYDOWN:
-            check_keydown(event, player, scroll_map, dialog, shop)
+            check_keydown(event, player, scroll_map, dialog, shop, screen)
         if event.type == pygame.KEYUP:
             check_keyup(event, player)
         elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -195,9 +196,12 @@ def check_battle(player, scroll_map, screen, dialog):
                 pygame.mixer.music.play(loops=True)
 
 
-def hotel(player, dialog):
+def hotel(player, dialog, screen):
     if player.money >= const.HOTEL_MONEY:
         dialog.info('小伙子，来客栈休息一下吧~', 'mid')
+        screen.fill((0, 0, 0))
+        pygame.display.flip()
+        time.sleep(1)
         player.hp = player.max_hp
         player.mp = player.max_mp
         dialog.info('人物恢复最佳状态', 'mid')
@@ -208,7 +212,7 @@ def hotel(player, dialog):
         dialog.info('小伙子，你没钱不能在这里休息啊！', 'mid')
 
 
-def check_dialogue(player, scroll_map, dialog, shop):
+def check_dialogue(player, scroll_map, dialog, shop, screen):
     for sprite in scroll_map.image_sprites:
         left = Object(pygame.Rect(sprite.rect.left-sprite.rect.width, sprite.rect.top, sprite.rect.width, sprite.rect.height))
         right = Object(pygame.Rect(sprite.rect.left+sprite.rect.width, sprite.rect.top, sprite.rect.width, sprite.rect.height))
@@ -226,7 +230,7 @@ def check_dialogue(player, scroll_map, dialog, shop):
                 dialog.info('欢迎，我们为您提供了许多东西~',  'mid')
                 shop.draw()
             elif sprite.file_name == "hotel":
-                hotel(player, dialog)
+                hotel(player, dialog, screen)
             else:
                 sprite.state = "rest_right"
                 player.moving.clear()
@@ -291,6 +295,7 @@ def save_game(scroll_map, player):
     const.SAVE = 0
 
 
+# 返回储存有宠物信息的列表
 def pet_list(path):
     with open(path, "r") as ob:
         load_pet = json.load(ob)

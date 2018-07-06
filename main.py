@@ -57,7 +57,7 @@ while running:
     frame_rate.tick(60)    # 设置帧数
     time = pygame.time.get_ticks()  #获得以pygame.init()为起点的时间，用于图片变换
 
-    running = check_event(player, scroll_map, icon, dialog, shop)
+    running = check_event(player, scroll_map, icon, dialog, shop, screen)
     if const.LOAD:
         player, scroll_map, dialog, icon, shop = load_game(screen)
         continue

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="100" height="110" tilewidth="16" tileheight="16" infinite="0" nextobjectid="150">
+<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="100" height="110" tilewidth="16" tileheight="16" infinite="0" nextobjectid="153">
  <tileset firstgid="1" name="rocky_zone" tilewidth="16" tileheight="16" tilecount="775" columns="31">
   <image source="../images/rocky_zone.png" width="511" height="404"/>
  </tileset>
@@ -527,5 +527,19 @@
   <object id="147" name="nobattle" x="80" y="80" width="254.667" height="128.668"/>
   <object id="148" name="nobattle" x="336" y="128" width="352" height="80.668"/>
   <object id="149" name="nobattle" x="464" y="1584" width="258" height="16.0007"/>
+  <object id="150" name="blocker" x="557.959" y="1607.17" width="97.582" height="0.181818"/>
+  <object id="151" name="door" type="cave" x="557.72" y="1600.35" width="98.1966" height="6.21133">
+   <properties>
+    <property name="start" value="start_point_2"/>
+    <property name="state" value="down"/>
+    <property name="world" value="rocks"/>
+   </properties>
+  </object>
+  <object id="152" name="start point" x="592" y="1568" width="31.75" height="31.3826">
+   <properties>
+    <property name="__name__" value="start_point_2"/>
+    <property name="state" value="rest_up"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
