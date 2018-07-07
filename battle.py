@@ -141,7 +141,7 @@ class Battle:
                         if task.present_material == task.max_material:
                             task.present_material = task.max_material
 
-            self.dialog.info("获得金币:  " + str(beated_exp), "mid")
+            self.dialog.info("获得金币:  " + str(beated_money), "mid")
             self.click_sound.play()
             self.dialog.info("获得经验:  " + str(beated_exp), "mid")
             self.click_sound.play()
