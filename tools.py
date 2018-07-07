@@ -14,7 +14,7 @@ from pets import *
 import time
 
 
-def check_keydown(event, player, scroll_map, dialog, shop, screen):
+def check_keydown(event, player, scroll_map, dialog, shop, screen, icon):
     '''
     :param event: 获取事件
     :param player: 角色
@@ -35,7 +35,7 @@ def check_keydown(event, player, scroll_map, dialog, shop, screen):
         player.state = 'move_down'
         player.moving.append(player.state)
     elif event.key == pygame.K_SPACE:
-        check_dialogue(player, scroll_map, dialog, shop, screen)
+        check_dialogue(player, scroll_map, dialog, shop, screen, icon)
 
 
 def check_keyup(event, player):
@@ -91,7 +91,7 @@ def check_event(player, scroll_map, icon, dialog, shop, screen):
         if event.type == pygame.QUIT:
             return False
         elif event.type == pygame.KEYDOWN:
-            check_keydown(event, player, scroll_map, dialog, shop, screen)
+            check_keydown(event, player, scroll_map, dialog, shop, screen, icon)
         if event.type == pygame.KEYUP:
             check_keyup(event, player)
         elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -225,7 +225,7 @@ def check_task(player, task_num):
     return False
 
 
-def check_dialogue(player, scroll_map, dialog, shop, screen):
+def check_dialogue(player, scroll_map, dialog, shop, screen, icon):
     for sprite in scroll_map.image_sprites:
         left = Object(pygame.Rect(sprite.rect.left-sprite.rect.width, sprite.rect.top,
                                   sprite.rect.width, sprite.rect.height))
@@ -272,6 +272,10 @@ def check_dialogue(player, scroll_map, dialog, shop, screen):
         scroll_map.draw()
         pygame.display.update()
         dialog.run(sprite)
+        if sprite.file_name == "drama9" and player.have_got[0] == 1:
+            icon.get_item("土豆")
+            dialog.info("获得了物品[土豆]！")
+            player.have_got[0] = 0;
         if len(sprite.file_name) < 4 and not check_task(player, int(sprite.file_name)):
             with open("resources\\task\\initial\\" + sprite.file_name + ".bin", "rb") as ob:
                 bin_data = ob.read()

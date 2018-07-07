@@ -89,6 +89,7 @@ class Hero(Person):
         self.item_name = []
         self.item_position = []
         self.tasks_list = []
+        self.have_got = [1]
 
     def save(self):
         list = []
