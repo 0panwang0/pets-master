@@ -15,7 +15,7 @@ class Person(pygame.sprite.Sprite):
         self.old_state = self.state     # 人物旧的状态
         self.rect = self.image.get_rect()   #人物的位置
         self.old_rect = pygame.Rect(self.rect)  # 人物旧的位置
-        self.frame = 1      # 人物的当前图片
+        self.frame = 1          # 人物的当前图片
         self.first_frame = 1    #人物的第一个图片
         self.last_frame = 2     #人物的最后一个图片
         self.last_time = 0      #人物图片变换的最近一次时间(时间以pygame.init()为起点)
@@ -71,7 +71,7 @@ class Hero(Person):
         self.row = row
         self.col = col
         self.moving = [] # 这是一个堆，玩家可能同时按下多个移动键，储存这些状态，当玩家释放移动键时可以选择角色下一个状态
-        self.tasks = [1, 2, 11, 12, 71, 72, 73, -1]
+        self.tasks = [1, 2, 3, 4, 71, 72, 73, 74, -1]
         self.money = 1000    # 人物拥有的金钱
         self.hp = 100   # 人物当前血量
         self.max_hp = 100   # 人物最大血量
