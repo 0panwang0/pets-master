@@ -14,7 +14,7 @@ from pets import *
 import time
 
 
-def check_keydown(event, player, scroll_map, dialog, shop, screen):
+def check_keydown(event, player, scroll_map, dialog, shop, screen, icon):
     '''
     :param event: 获取事件
     :param player: 角色
@@ -35,7 +35,7 @@ def check_keydown(event, player, scroll_map, dialog, shop, screen):
         player.state = 'move_down'
         player.moving.append(player.state)
     elif event.key == pygame.K_SPACE:
-        check_dialogue(player, scroll_map, dialog, shop, screen)
+        check_dialogue(player, scroll_map, dialog, shop, screen, icon)
 
 
 def check_keyup(event, player):
@@ -91,7 +91,7 @@ def check_event(player, scroll_map, icon, dialog, shop, screen):
         if event.type == pygame.QUIT:
             return False
         elif event.type == pygame.KEYDOWN:
-            check_keydown(event, player, scroll_map, dialog, shop, screen)
+            check_keydown(event, player, scroll_map, dialog, shop, screen, icon)
         if event.type == pygame.KEYUP:
             check_keyup(event, player)
         elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -184,7 +184,7 @@ def random_choose_enemy(enemy_list, scroll_map):
 def check_battle(player, scroll_map, screen, dialog):
     if scroll_map.nobattle_area:
         if not pygame.sprite.spritecollideany(player, scroll_map.nobattle_area) and player.moving:
-            start_batlle = 6
+            start_batlle = random.randint(0, 250)
             if start_batlle < 5:
                 pygame.mixer.music.stop()
                 enermy_list = []
@@ -225,7 +225,7 @@ def check_task(player, task_num):
     return False
 
 
-def check_dialogue(player, scroll_map, dialog, shop, screen):
+def check_dialogue(player, scroll_map, dialog, shop, screen, icon):
     for sprite in scroll_map.image_sprites:
         left = Object(pygame.Rect(sprite.rect.left-sprite.rect.width, sprite.rect.top,
                                   sprite.rect.width, sprite.rect.height))
@@ -272,19 +272,24 @@ def check_dialogue(player, scroll_map, dialog, shop, screen):
         scroll_map.draw()
         pygame.display.update()
         dialog.run(sprite)
-        if len(sprite.file_name) < 5 and not check_task(player, int(sprite.file_name)):
-            with open("resources\\task\\" + sprite.file_name + ".bin", "rb") as ob:
+        if sprite.file_name == "drama9" and player.have_got[0] == 1:
+            icon.get_item("土豆")
+            dialog.info("获得了物品[土豆]！")
+            player.have_got[0] = 0;
+        if len(sprite.file_name) < 4 and not check_task(player, int(sprite.file_name)):
+            with open("resources\\task\\initial\\" + sprite.file_name + ".bin", "rb") as ob:
                 bin_data = ob.read()
                 task = pickle.loads(bin_data)
                 player.tasks_list.append(task)
-                dialog.info("接受任务！", "mid")
+                dialog.info("接受任务[" + task.task_name + "]", "mid")
+
 
 def del_file(path):
     ls = os.listdir(path)
     for i in ls:
         c_path = os.path.join(path, i)
         if os.path.isdir(c_path):
-            del_file(c_path)
+            pass
         else:
             os.remove(c_path)
 
@@ -298,8 +303,8 @@ def save_tasks(player):
 
 def load_tasks(player):
     tasks_list = []
-    for i in range(const.TASK):
-        with open("resources\\task\\" + str(i + 1) + ".bin", "rb") as ob:
+    for task in os.listdir("resources\\task\\")[:-1]:
+        with open("resources\\task\\" + task, "rb") as ob:
             bin_data = ob.read()
             tasks_list.append(pickle.loads(bin_data))
     player.tasks_list = tasks_list
@@ -307,6 +312,7 @@ def load_tasks(player):
 
 def save_game(scroll_map, player, dialog):
     del_file("resources\\save")
+    del_file("resources\\task")
 
     save_scroll_map = []
     save_scroll_map.append(scroll_map.filename)
@@ -375,7 +381,7 @@ def load_game(screen):
     player.load(load_hero)
     player.own_list = own_list
     player.battle_list = battle_list
-    # load_tasks(player)
+    load_tasks(player)
 
     with open("resources\\save\\scroll_map.json", "r") as ob:
         load_scroll_map = json.load(ob)

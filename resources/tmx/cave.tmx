@@ -80,7 +80,7 @@
    <properties>
     <property name="__image__" value="6"/>
     <property name="actor" value="3"/>
-    <property name="filename" value="drama"/>
+    <property name="filename" value="drama11"/>
     <property name="state" value="rest_up"/>
    </properties>
   </object>

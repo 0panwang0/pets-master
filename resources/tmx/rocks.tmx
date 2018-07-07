@@ -504,7 +504,7 @@
    <properties>
     <property name="__image__" value="1"/>
     <property name="actor" value="6"/>
-    <property name="filename" value="drama"/>
+    <property name="filename" value="drama9"/>
     <property name="state" value="rest_right"/>
    </properties>
   </object>
@@ -545,7 +545,7 @@
    <properties>
     <property name="__image__" value="2"/>
     <property name="actor" value="5"/>
-    <property name="filename" value="drama"/>
+    <property name="filename" value="drama10"/>
     <property name="state" value="rest_left"/>
    </properties>
   </object>

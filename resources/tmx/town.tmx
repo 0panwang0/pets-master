@@ -187,7 +187,7 @@
   <object id="42" name="blocker" x="0" y="768" width="799" height="32"/>
   <object id="43" name="blocker" x="770" y="64" width="29" height="704"/>
   <object id="45" name="blocker" x="0" y="64" width="30.6667" height="704"/>
-  <object id="46" name="blocker" x="-82.5" y="-1" width="800" height="32"/>
+  <object id="46" name="blocker" x="-82.5" y="-1" width="882" height="32"/>
   <object id="48" name="blocker" x="568.333" y="511" width="23.6667" height="20.6667"/>
   <object id="49" name="blocker" x="688" y="512" width="23" height="19.1667"/>
   <object id="50" name="blocker" x="688.727" y="605.333" width="22.8788" height="18.1667"/>
