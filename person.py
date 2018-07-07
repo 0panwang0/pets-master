@@ -77,7 +77,7 @@ class Hero(Person):
         self.max_hp = 100   # 人物最大血量
         self.mp = 60    # 人物当前魔法值
         self.max_mp = 60    # 人物最大魔法值
-        self.attack = 1000    # 人物攻击
+        self.attack = 5    # 人物攻击
         self.defense = 13   # 人物防御
         self.own_list = []  # 拥有的宠物
         self.battle_list = []   # 出战宠物
