@@ -413,8 +413,8 @@ class Battle:
             self.button_images[self.battle_region].click()
 
     def release_button(self):
-        if self.battle_region is not None:
-            self.button_images[self.battle_region].release()
+        for button in self.button_images:
+            button.release()
 
     def friend_round(self):
         initial_time = time.time()
