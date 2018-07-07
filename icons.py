@@ -258,6 +258,8 @@ class Icon:
                     self.dialog.info("任务完成!","mid")
                     self.player.money += task.money
                     self.player.gain_exp(task.exp)
+                    for pet in self.player.battle_list:
+                        pet.gain_exp(task.exp)
                     self.dialog.info("获得" + str(task.money) + "金币", "mid")
                     self.dialog.info("获得" + str(task.exp) + "经验", "mid")
                     self.player.tasks_list[self.task_index].finish = True

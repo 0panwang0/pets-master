@@ -24,7 +24,7 @@ task_packet = pickle.dumps(task)
 with open("resources\\task\\1.bin", "wb") as object:
     object.write(task_packet)
 
-task = Task(2, [ "仙人刺可以作成织毛衣的针呢，", "快去收集一些吧！"], 100, 1000, "仙人掌", 10, 0, "缝缝补补")
+task = Task(2, [ "仙人刺可以作成织毛衣的针呢，", "快去收集一些吧！"], 100, 1000, "仙人兽", 10, 0, "缝缝补补")
 task_packet = pickle.dumps(task)
 
 with open("resources\\task\\2.bin", "wb") as object:
