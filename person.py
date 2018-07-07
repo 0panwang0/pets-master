@@ -71,7 +71,7 @@ class Hero(Person):
         self.row = row
         self.col = col
         self.moving = [] # 这是一个堆，玩家可能同时按下多个移动键，储存这些状态，当玩家释放移动键时可以选择角色下一个状态
-        self.tasks = [1, 11, 12, 21, 22, 31, 41, 42, 61, 91, -1]
+        self.tasks = [1, 11, 12, 21, 22, 31, 41, 42, 61, 71, 72, 73, 74, 81, 82, -1]
         self.money = 1000    # 人物拥有的金钱
         self.hp = 100   # 人物当前血量
         self.max_hp = 100   # 人物最大血量
@@ -89,6 +89,7 @@ class Hero(Person):
         self.item_name = []
         self.item_position = []
         self.tasks_list = []
+        self.have_got = [1]
 
     def save(self):
         list = []
