@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="70" height="70" tilewidth="16" tileheight="16" infinite="0" nextobjectid="236">
+<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="70" height="70" tilewidth="16" tileheight="16" infinite="0" nextobjectid="237">
  <tileset firstgid="1" name="外部草地2" tilewidth="16" tileheight="16" tilecount="10480" columns="131">
   <image source="../images/外部草地2.png" width="2100" height="1280"/>
  </tileset>
@@ -336,6 +336,14 @@
   <object id="235" name="start point" x="0" y="448" width="31.3333" height="32.6667">
    <properties>
     <property name="__name__" value="start_point_2"/>
+    <property name="state" value="rest_right"/>
+   </properties>
+  </object>
+  <object id="236" name="sprite" x="560" y="656" width="32" height="32">
+   <properties>
+    <property name="__image__" value="2"/>
+    <property name="actor" value="7"/>
+    <property name="filename" value="1"/>
     <property name="state" value="rest_right"/>
    </properties>
   </object>
