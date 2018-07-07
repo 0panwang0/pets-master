@@ -7,7 +7,7 @@ class Person(pygame.sprite.Sprite):
     def __init__(self, file_addr, row, col):
         pygame.sprite.Sprite.__init__(self)
         # vary_states[self.state][0]:速度元组，vary_states[self.state][1(2)]，图片。(注意rest状态只有1张图片)
-        self.speed = 2
+        self.speed = 4
         _image = pygame.image.load(file_addr).convert_alpha()
         self.vary_states = self.get_image(_image, row, col) # 获得人物各个状态的速度及图片, row, col表示该人物块左上角的行列
         self.state = "rest_down"       # 人物状态
@@ -72,7 +72,7 @@ class Hero(Person):
         self.col = col
         self.moving = [] # 这是一个堆，玩家可能同时按下多个移动键，储存这些状态，当玩家释放移动键时可以选择角色下一个状态
         self.tasks = [1, 11, 12, 21, 22, 31, 41, 42, 51, 52, 61, 71, 72, 73, 74, 81, 82, -1]
-        self.money = 1000    # 人物拥有的金钱
+        self.money = 0    # 人物拥有的金钱
         self.hp = 100   # 人物当前血量
         self.max_hp = 100   # 人物最大血量
         self.mp = 60    # 人物当前魔法值
