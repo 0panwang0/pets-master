@@ -184,8 +184,8 @@ def random_choose_enemy(enemy_list, scroll_map):
 def check_battle(player, scroll_map, screen, dialog):
     if scroll_map.nobattle_area:
         if not pygame.sprite.spritecollideany(player, scroll_map.nobattle_area) and player.moving:
-            start_batlle = random.randint(0, 250)
-            if start_batlle < 5:
+            start_batlle = random.randint(0, 500)
+            if start_batlle in [123, 7, 222, 66, 187]:
                 pygame.mixer.music.stop()
                 enermy_list = []
                 random_choose_enemy(enermy_list, scroll_map)
