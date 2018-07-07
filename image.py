@@ -97,7 +97,7 @@ class BarImage:
         self.text_color = text_color
 
         self.text = text
-        self.font = pygame.font.SysFont(None, font_size)
+        self.font = pygame.font.Font("resources\\fonts\\title.otf", font_size)
         self.rect = pygame.Rect((self.screen_rect.left, self.screen_rect.bottom), (self.width, self.height))
 
         self.text_image = self.font.render(self.text + " " + str(self.left) + "/" + str(self.total),

@@ -41,9 +41,9 @@ class Battle:
         self.button_images = []
 
         self.hp_bar = BarImage(self.screen, self.screen.get_width() / 2, self.bar_height, (255, 0, 0),
-                               (255, 255, 255), "HP", 24, self.player.max_hp, self.player.hp)
+                               (255, 255, 255), "HP", 18, self.player.max_hp, self.player.hp)
         self.mp_bar = BarImage(self.screen, self.screen.get_width() / 2, self.bar_height, (0, 0, 255),
-                               (255, 255, 255), "MP", 24, self.player.max_mp, self.player.mp)
+                               (255, 255, 255), "MP", 18, self.player.max_mp, self.player.mp)
 
         self.create_buttons()
         self.update_screen()
@@ -357,7 +357,7 @@ class Battle:
             return None
 
     def create_buttons(self):
-        button = ButtonImage(self.screen, self.button_width, self.button_height, const.BUTTON_DIR + "button0.png", "攻击", "resources\\fonts\\ink.ttf", 24)
+        button = ButtonImage(self.screen, self.button_width, self.button_height, const.BUTTON_DIR + "button0.png", "攻击", "resources\\fonts\\ink.ttf", 28)
         self.button_images.append(button)
         button = ButtonImage(self.screen, self.button_width, self.button_height, const.BUTTON_DIR + "button1.png", "捕捉", "resources\\fonts\\ink.ttf", 24)
         self.button_images.append(button)
@@ -378,7 +378,7 @@ class Battle:
             self.enermy_pet_images.append(pet_image)
             self.enermy_pet_images[i].update((self.enermy_image_startx+i*self.pet_width, self.enermy_image_starty))
             enermy_hp_bar = BarImage(self.screen, self.pet_width, self.bar_height, (255, 0, 0),
-                                     (255, 255, 255), "HP", 22, self.enermy_pets[i].pet_hp, self.enermy_pets[i].pet_hp)
+                                     (255, 255, 255), "HP", 18, self.enermy_pets[i].pet_hp, self.enermy_pets[i].pet_hp)
             enermy_hp_bar.update(self.enermy_pets[i].get_hp(),
                                  (self.enermy_bar_startx + i * self.pet_width, self.enermy_bar_starty))
             self.enermy_hp_bars.append(enermy_hp_bar)
