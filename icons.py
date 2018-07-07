@@ -162,6 +162,10 @@ class Icon:
         for i in range(len(ui_state_list)):
             if ui_state_list[i] == 'task':
                 self.ui['task'] = pygame.image.load(ui_file_name[i]).convert_alpha()
+        if not self.player.tasks_list:
+            text = self.setting_font.render('暂时没有任务!', True, (0, 0, 0))
+            self.ui['task'].blit(text, ((self.ui['task'].get_width() - text.get_width())/2, (self.ui['task'].get_height()-text.get_height())/2))
+            return
         title = self.setting_font.render('任务', True, (0, 0, 0))
         self.ui['task'].blit(title, ((self.ui['task'].get_width() - title.get_width()) / 2, 65))
         description_item = ["名称", "进度", "说明"]
@@ -202,7 +206,7 @@ class Icon:
             if ui_state_list[i] == 'sprite':
                 self.ui['sprite'] = pygame.image.load(ui_file_name[i]).convert_alpha()
         if not self.player.own_list:
-            name = self.sprite_font.render("没有宠物!", True, (0, 0, 0))
+            name = self.sprite_font.render("暂时没有宠物!", True, (0, 0, 0))
             self.ui['sprite'].blit(name, ((self.ui['sprite'].get_width() - name.get_width()) / 2, (self.ui['sprite'].get_height() - name.get_height()) / 2))
             return
         self.ui['sprite'].blit(self.arrow, (320, 280))
@@ -249,7 +253,7 @@ class Icon:
                     else:
                         self.dialog.info("宠物出战数量已达上限","mid")
                 self.draw_sprite()
-        elif self.state == 'task':
+        elif self.state == 'task' and self.player.tasks_list:
             if pygame.Rect(370 +(screen_size[0]-self.ui['task'].get_width())/2,215+(screen_size[1]-self.ui['task'].get_height())/2,self.arrow.get_width(),self.arrow.get_height()).collidepoint(pos):
                 self.task_index = (self.task_index + 1) % len(self.player.tasks_list)
             if pygame.Rect(570, 125, self.summit.get_width(), self.summit.get_height()).collidepoint(pos):
@@ -332,7 +336,7 @@ class Icon:
                 self.exit.set_alpha(255)
             else:
                 self.exit.set_alpha(180)
-        elif self.state == 'task':
+        elif self.state == 'task' and self.player.tasks_list:
             if pygame.Rect(570, 125, self.summit.get_width(), self.summit.get_height()).collidepoint(pos):
                 self.summit.set_alpha(255)
             else:
