@@ -277,7 +277,7 @@ def check_dialogue(player, scroll_map, dialog, shop, screen):
                 bin_data = ob.read()
                 task = pickle.loads(bin_data)
                 player.tasks_list.append(task)
-                dialog.info("接受任务！")
+                dialog.info("接受任务！", "mid")
 
 def del_file(path):
     ls = os.listdir(path)
