@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="100" height="110" tilewidth="16" tileheight="16" infinite="0" nextobjectid="153">
+<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="100" height="110" tilewidth="16" tileheight="16" infinite="0" nextobjectid="154">
  <tileset firstgid="1" name="rocky_zone" tilewidth="16" tileheight="16" tilecount="775" columns="31">
   <image source="../images/rocky_zone.png" width="511" height="404"/>
  </tileset>
@@ -539,6 +539,14 @@
    <properties>
     <property name="__name__" value="start_point_2"/>
     <property name="state" value="rest_up"/>
+   </properties>
+  </object>
+  <object id="153" name="sprite" x="832" y="1520" width="32" height="32">
+   <properties>
+    <property name="__image__" value="2"/>
+    <property name="actor" value="5"/>
+    <property name="filename" value="drama"/>
+    <property name="state" value="rest_left"/>
    </properties>
   </object>
  </objectgroup>

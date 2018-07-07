@@ -218,6 +218,13 @@ def hotel(player, dialog, screen):
         dialog.info('小伙子，你没钱不能在这里休息啊！', 'mid')
 
 
+def check_task(player, task_num):
+    for task in player.tasks_list:
+        if task_num == task.task_num:
+            return True
+    return False
+
+
 def check_dialogue(player, scroll_map, dialog, shop, screen):
     for sprite in scroll_map.image_sprites:
         left = Object(pygame.Rect(sprite.rect.left-sprite.rect.width, sprite.rect.top,
@@ -265,7 +272,11 @@ def check_dialogue(player, scroll_map, dialog, shop, screen):
         scroll_map.draw()
         pygame.display.update()
         dialog.run(sprite)
-
+        if len(sprite.file_name) < 5 and not check_task(player, int(sprite.file_name)):
+            with open("resources\\task\\" + sprite.file_name + ".bin", "rb") as ob:
+                bin_data = ob.read()
+                task = pickle.loads(bin_data)
+                player.tasks_list.append(task)
 
 def del_file(path):
     ls = os.listdir(path)
