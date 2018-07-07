@@ -272,19 +272,20 @@ def check_dialogue(player, scroll_map, dialog, shop, screen):
         scroll_map.draw()
         pygame.display.update()
         dialog.run(sprite)
-        if len(sprite.file_name) < 5 and not check_task(player, int(sprite.file_name)):
-            with open("resources\\task\\" + sprite.file_name + ".bin", "rb") as ob:
+        if len(sprite.file_name) < 4 and not check_task(player, int(sprite.file_name)):
+            with open("resources\\task\\initial\\" + sprite.file_name + ".bin", "rb") as ob:
                 bin_data = ob.read()
                 task = pickle.loads(bin_data)
                 player.tasks_list.append(task)
-                dialog.info("接受任务！", "mid")
+                dialog.info("接受任务[" + task.task_name + "]", "mid")
+
 
 def del_file(path):
     ls = os.listdir(path)
     for i in ls:
         c_path = os.path.join(path, i)
         if os.path.isdir(c_path):
-            del_file(c_path)
+            pass
         else:
             os.remove(c_path)
 
@@ -298,8 +299,8 @@ def save_tasks(player):
 
 def load_tasks(player):
     tasks_list = []
-    for i in range(const.TASK):
-        with open("resources\\task\\" + str(i + 1) + ".bin", "rb") as ob:
+    for task in os.listdir("resources\\task\\")[:-1]:
+        with open("resources\\task\\" + task, "rb") as ob:
             bin_data = ob.read()
             tasks_list.append(pickle.loads(bin_data))
     player.tasks_list = tasks_list
@@ -307,6 +308,7 @@ def load_tasks(player):
 
 def save_game(scroll_map, player, dialog):
     del_file("resources\\save")
+    del_file("resources\\task")
 
     save_scroll_map = []
     save_scroll_map.append(scroll_map.filename)
@@ -375,7 +377,7 @@ def load_game(screen):
     player.load(load_hero)
     player.own_list = own_list
     player.battle_list = battle_list
-    # load_tasks(player)
+    load_tasks(player)
 
     with open("resources\\save\\scroll_map.json", "r") as ob:
         load_scroll_map = json.load(ob)

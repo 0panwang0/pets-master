@@ -163,7 +163,7 @@
    <properties>
     <property name="__image__" value="2"/>
     <property name="actor" value="1"/>
-    <property name="filename" value="drama5"/>
+    <property name="filename" value="4"/>
     <property name="state" value="rest_down"/>
    </properties>
   </object>
