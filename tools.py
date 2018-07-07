@@ -11,6 +11,7 @@ from icons import Icon
 import json
 from person import Hero
 from pets import *
+from task import *
 import time
 
 
@@ -279,9 +280,9 @@ def check_dialogue(player, scroll_map, dialog, shop, screen, icon):
         if len(sprite.file_name) < 4 and not check_task(player, int(sprite.file_name)):
             with open("resources\\task\\initial\\" + sprite.file_name + ".bin", "rb") as ob:
                 bin_data = ob.read()
-                task = pickle.loads(bin_data)
-                player.tasks_list.append(task)
-                dialog.info("接受任务[" + task.task_name + "]", "mid")
+                task_unit = pickle.loads(bin_data)
+                player.tasks_list.append(task_unit)
+                dialog.info("接受任务[" + task_unit.task_name + "]", "mid")
 
 
 def del_file(path):

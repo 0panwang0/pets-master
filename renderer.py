@@ -4,6 +4,7 @@ import pyscroll
 from person import NPC
 import const
 
+
 class Map(object):
     """
     This object renders tile maps from Tiled
