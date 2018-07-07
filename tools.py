@@ -277,6 +277,7 @@ def check_dialogue(player, scroll_map, dialog, shop, screen):
                 bin_data = ob.read()
                 task = pickle.loads(bin_data)
                 player.tasks_list.append(task)
+                dialog.info("接受任务！")
 
 def del_file(path):
     ls = os.listdir(path)
@@ -374,7 +375,7 @@ def load_game(screen):
     player.load(load_hero)
     player.own_list = own_list
     player.battle_list = battle_list
-    load_tasks(player)
+    # load_tasks(player)
 
     with open("resources\\save\\scroll_map.json", "r") as ob:
         load_scroll_map = json.load(ob)
@@ -402,7 +403,7 @@ def initial_game(screen):
     pygame.mixer.music.load(const.MUSIC_DIR + "home.ogg")
     pygame.mixer.music.set_volume(const.BGM_VOL)
     player = Hero('resources/images/Actor/Actor1.png', 0, 0)
-    load_tasks(player)
+    # load_tasks(player)
     player.controller = "main"
     dialog = Dialog(player, screen)
     scroll_map = ScrollMap(const.TMX_DIR + "home.tmx", screen, const.MUSIC_DIR + "home.ogg")
