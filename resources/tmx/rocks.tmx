@@ -510,7 +510,7 @@
   </object>
   <object id="134" name="info" x="-187" y="51" width="85" height="78">
    <properties>
-    <property name="level" value="50"/>
+    <property name="level" value="30"/>
     <property name="world" value="巴纳瓦前沿"/>
    </properties>
   </object>

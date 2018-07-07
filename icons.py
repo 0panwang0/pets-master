@@ -218,7 +218,7 @@ class Icon:
         sprite_image = pygame.image.load(pet_file_name).convert_alpha()
         sprite_value = []
         sprite_value.append(str(sprite.level))
-        sprite_value.append(str(sprite.exp))
+        sprite_value.append(str(sprite.exp)+'/'+str(sprite.lvup_exp))
         sprite_value.append(str(sprite.get_effort()))
         sprite_value.append(str(sprite.pet_skill.skill_name))
         if sprite in self.player.battle_list:
