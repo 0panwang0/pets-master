@@ -136,7 +136,8 @@ class Hero(Person):
             while self.exp >= self.lvup_exp:
                 self.level = self.level + 1
                 self.attack = int(self.attack * 1.2)    # 增加攻击力
-                self.max_hp = int(self.max_hp * 1.2)    # 增加血量1
+                self.defense = int(self.defense * 1.2)  # 增加防御力
+                self.max_hp = int(self.max_hp * 1.2)    # 增加血量
                 self.max_mp = int(self.max_mp * 1.2)    # 增加蓝量
                 self.exp -= self.lvup_exp
                 self.lvup_exp = floor(pow((self.level + 1), const.DOD) * 100 + pow(self.level, 1 / const.DOD) * 100)

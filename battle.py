@@ -104,7 +104,7 @@ class Battle:
                     delay = 2
                     text = "逃脱!"
                 self.battle_info(text, music, delay)
-                if BattleResult.Victory:
+                if self.battle_result == BattleResult.Victory:
                     self.gain_reward()
                 break
             pygame.display.flip()
